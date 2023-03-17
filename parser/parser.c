@@ -23,6 +23,8 @@ void	print(char **arr)
 
 int	contains_redirections(char **arr, int i)
 {
+	if (!arr[0] || !arr)
+		return (1);
 	if (ft_search(arr[0] , '<') || ft_search(arr[0] , '>'))
 		return (1);
 	if (ft_search(arr[i] , '<') || ft_search(arr[i] , '>'))
@@ -30,75 +32,70 @@ int	contains_redirections(char **arr, int i)
 	return (0);
 }
 
-int	count_pipes(char **arr)
+void	setup_infile(char *infile)
 {
-	int i;
+	int		fd;
 
-	if (!arr[0] || !arr)
-		return (0);
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
+	fd = open(infile, O_RDONLY);
+	if (access(infile, F_OK) < 0)
+		print_error_msg(infile, ": No such file or directory", 0, 0);
+	if (access(infile, R_OK) < 0)
+		print_error_msg(infile, ": permission denied", 1, 0);
+	dup2(fd, 0);
 }
 
-void	parse_error()
+void	setup_outfile(char *outfile)
 {
-	int		pid;
+	int		fd;
 
-	pid = fork();
-	if (pid < 0)
+	fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == - 1)
 	{
-		perror("minishell: fork");
-		exit (1);
+		perror("minishell");
+		exit(1);
 	}
-	if (pid == 0)
-	{
-		ft_putstr_fd("minishell: parse error\n", 2);
-		exit (130);
-	}
+	dup2(fd, 1);
 }
 
-int	check_pipes(char *str)
-{
-	int		i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '|' && str[i + 1] == '|' && str[i + 2] == '|')
-			return (1);
-	}
-	return (0);
-}
 
 void	store_line(char *line, char **env)
 {
-	t_shell	shell;
+	t_redirections	redirections;
+	t_shell			shell;
 
 	shell.pipes = split(line, '|');
 	shell.number_of_pipes = count_pipes(shell.pipes) - 1;
-	printf("count ==> %d\n", shell.number_of_pipes);
-	if (ft_search(line, '|'))
+	if (ft_search(line, '|') && check_pipe_error(shell.pipes, line))
+		parse_error();
+	if (!ft_search(line, '|') && !contains_redirections(shell.pipes, shell.number_of_pipes))
 	{
-		if ((!shell.pipes[0] && check_pipes(line) == 1) || count_pipes(shell.pipes) == 1 || check_pipes(line) == 1)
-			parse_error();
-	}
-	if (!ft_search(line, '|'))
-	{
-		if (shell.pipes)
-			ft_free(shell.pipes);
-		shell.simple_cmd = ft_split(line, ' ');
+		// run simple command
+		shell.simple_cmd = ft_split(shell.pipes[0], ' ');
+		ft_free(shell.pipes);
 		run_command(&shell, env);
 	}
-	if (shell.number_of_pipes > 0 && !check_pipes(line))
+	if (!ft_search(line, '|') && (ft_search(line, '>') || ft_search(line, '<')))
 	{
+		(void)redirections;
+		// run simple command with redirections
+		shell.cmds = ft_split(shell.pipes[0], ' ');
+		ft_free(shell.pipes);
+		print(shell.cmds);
+		if (!valid_redirection(shell.cmds))
+		{
+			// printf("valid \n");
+			setup_redirections(shell.cmds, &redirections);
+		}
+	}
+	if (shell.number_of_pipes > 0)
+	{
+		printf("here\n");
 		if (contains_redirections(shell.pipes, shell.number_of_pipes))
 		{
-			// handle redirections with pipes
 		}
-		else
+		else if (!check_pipe_error(shell.pipes, line))
 		{
+			// run commands with pipes
 			run_command(&shell, env);
 		}
 	}

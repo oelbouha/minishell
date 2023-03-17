@@ -37,3 +37,20 @@ void	print_error_msg(char *str, char *msg, int exit_status, char **arr)
 		ft_free(arr);
 	exit (exit_status);
 }
+
+void	parse_error()
+{
+	int		pid;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("minishell: fork");
+		exit (1);
+	}
+	if (pid == 0)
+	{
+		ft_putstr_fd("minishell: parse error\n", 2);
+		exit (130);
+	}
+}

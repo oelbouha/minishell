@@ -77,5 +77,7 @@ t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 char	*ft_search(const char *s, int c);
 char	**split(char const *s, char c);
+int		ft_strcmp(char *s1, char *s2);
+
 
 #endif

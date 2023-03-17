@@ -25,10 +25,18 @@ SRC := 	libft/ft_split.c \
 		libft/ft_strtrim.c \
 		libft/ft_putstr_fd.c \
 		libft/ft_strncmp.c \
+		libft/ft_strcmp.c \
 		libft/ft_strjoin.c \
 		libft/split.c \
+		libft/ft_strrchr.c \
+		libft/ft_lstadd_back.c \
+		libft/ft_lstnew.c \
+		libft/ft_lstlast.c \
 		parser/parser.c \
+		setup_pipes.c \
+		handle_redirections.c \
 		run_command.c \
+		handle_pipes.c \
 		execute_commands.c \
 		print_error_msg.c \
 		libft/ft_search.c \

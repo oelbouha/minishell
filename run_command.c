@@ -76,75 +76,6 @@ char	*make_path(char *cmd)
 	return (NULL);
 }
 
-void	setup_pipes_for_child(int i, int *pipe1, int *pipe2, int number_of_pipes)
-{
-	(void)number_of_pipes;
-	if (i % 2 != 0 && i > 0)
-	{
-		dup2(pipe1[0], 0);
-		dup2(pipe2[1], 1);
-		close (pipe1[1]);
-		close (pipe2[0]);
-	}
-	else if (i == 0)
-	{
-		dup2(pipe1[1], 1);
-		close(pipe1[0]);
-		close(pipe2[0]);
-		close(pipe2[1]);
-	}
-	else if (i % 2 == 0 && i > 0)
-	{
-		dup2(pipe2[0], 0);
-		dup2(pipe1[1], 1);
-		close(pipe1[0]);
-		close(pipe2[1]);
-	}
-}
-
-void	setup_pipes_for_last_child(int i, int *pipe1, int *pipe2, int number_of_pipes)
-{
-	(void)number_of_pipes;
-	if (i % 2)
-	{
-		dup2(pipe1[0], 0);
-		close (pipe1[1]);
-		close (pipe2[1]);
-		close (pipe2[0]);
-	}
-	else
-	{
-		dup2(pipe2[0], 0);
-		close (pipe1[1]);
-		close (pipe2[1]);
-		close (pipe1[0]);
-	}
-}
-
-void	setup_pipes_for_next_child(int i, int *pipe1, int *pipe2)
-{
-	if (i % 2)
-	{
-		close (pipe1[1]);
-		close (pipe1[0]);
-		if (pipe(pipe1) < 0)
-		{
-			perror("pipex: pipe");
-			exit(1);
-		}
-	}
-	else
-	{
-		close(pipe2[0]);
-		close(pipe2[1]);
-		if (pipe(pipe2) < 0)
-		{
-			perror("pipex: pipe");
-			exit(1);
-		}
-	}
-}
-
 void	simple_command(t_shell *shell, char **env)
 {
 	char	*path;
@@ -169,51 +100,47 @@ void	simple_command(t_shell *shell, char **env)
 
 void	multiple_commands(t_shell *shell, char **env)
 {
-	char 	*path;
 	char	**cmd;
-	int		pid;
 	int		i;
 
-	if (pipe(shell->pipe1) < 0 || pipe(shell->pipe2) < 0)
-	{
-		perror("minishell: pipe");
-		exit(1);
-	}
 	i = -1;
 	while (++i <= shell->number_of_pipes)
 	{	
 		cmd = ft_split(shell->pipes[i], ' ');
-		// print(cmd);
-		path = make_path(cmd[0]);
-		pid = fork();
-		if (pid < 0)
+		shell->cmd_path = make_path(cmd[0]);
+		shell->pid = fork();
+		if (shell->pid < 0)
 		{
 			perror("minishell: fork");
 			exit(1);
 		}
-		if (i < shell->number_of_pipes && pid == 0)
+		if (i < shell->number_of_pipes && shell->pid == 0)
 		{
-			setup_pipes_for_child(i, shell->pipe1, shell->pipe2, shell->number_of_pipes);
-			execute_command(cmd, path, env);
+			setup_pipes_for_child(i, shell->pipe1, shell->pipe2);
+			execute_command(cmd, shell->cmd_path, env);
 		}
-		if (i == shell->number_of_pipes && pid == 0)
+		if (i == shell->number_of_pipes && shell->pid == 0)
 		{
 			wait(NULL);
-			setup_pipes_for_last_child(i, shell->pipe1, shell->pipe2, shell->number_of_pipes);
-			execute_command(cmd, path, env);
+			setup_pipes_for_last_child(i, shell->pipe1, shell->pipe2);
+			execute_command(cmd, shell->cmd_path, env);
 		}
 		setup_pipes_for_next_child(i, shell->pipe1, shell->pipe2);
-		if (pid > 0)
+		if (shell->pid > 0)
 		{
 			ft_free(cmd);
-			free(path);
+			free(shell->cmd_path);
 		}
 	}
 }
 
 void	run_command(t_shell *shell, char **env)
 {
-
+	if (pipe(shell->pipe1) < 0 || pipe(shell->pipe2) < 0)
+	{
+		perror("minishell: pipe");
+		exit(1);
+	}
 	if (shell->number_of_pipes == 0)
 		simple_command(shell, env);
 	else
