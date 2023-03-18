@@ -67,21 +67,21 @@ char	*make_path(char *cmd)
 		cmd_path = ft_strjoin(s, cmd);
 		free(s);
 		if (access(cmd_path, X_OK) == 0)
-			return (cmd_path);
+		{
+			ft_free(path);
+			return (ft_strdup(cmd_path));
+		}
 		free(cmd_path);
-		free(path[i]);
 	i++;
 	}
-	free(path);
+	ft_free(path);
 	return (NULL);
 }
 
 void	simple_command(t_shell *shell, char **env)
 {
-	char	*path;
 	int		pid;
 
-	path = make_path(shell->simple_cmd[0]);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -89,11 +89,11 @@ void	simple_command(t_shell *shell, char **env)
 		exit(1);
 	}
 	if (pid == 0)
-		execute_command(shell->simple_cmd, path, env);
-	else
+		execute_command(shell->simple_cmd, env);
+	if (pid > 0)
 	{
 		wait(NULL);
-		free(path);
+		printf("parent ==> %d\n", pid);
 		ft_free(shell->simple_cmd);
 	}
 }
@@ -107,7 +107,6 @@ void	multiple_commands(t_shell *shell, char **env)
 	while (++i <= shell->number_of_pipes)
 	{	
 		cmd = ft_split(shell->pipes[i], ' ');
-		shell->cmd_path = make_path(cmd[0]);
 		shell->pid = fork();
 		if (shell->pid < 0)
 		{
@@ -117,20 +116,19 @@ void	multiple_commands(t_shell *shell, char **env)
 		if (i < shell->number_of_pipes && shell->pid == 0)
 		{
 			setup_pipes_for_child(i, shell->pipe1, shell->pipe2);
-			execute_command(cmd, shell->cmd_path, env);
+			execute_command(cmd, env);
 		}
 		if (i == shell->number_of_pipes && shell->pid == 0)
 		{
 			wait(NULL);
 			setup_pipes_for_last_child(i, shell->pipe1, shell->pipe2);
-			execute_command(cmd, shell->cmd_path, env);
+			execute_command(cmd, env);
 		}
 		setup_pipes_for_next_child(i, shell->pipe1, shell->pipe2);
-		if (shell->pid > 0)
-		{
+		// if (shell->pid > 0)
+		// {
 			ft_free(cmd);
-			free(shell->cmd_path);
-		}
+		// }
 	}
 }
 
@@ -144,7 +142,5 @@ void	run_command(t_shell *shell, char **env)
 	if (shell->number_of_pipes == 0)
 		simple_command(shell, env);
 	else
-	{
 		multiple_commands(shell, env);
-	}
 }

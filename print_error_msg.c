@@ -22,6 +22,19 @@ void	ft_free(char **arr)
 	free(arr);
 }
 
+void	free_lst(t_list *lst)
+{
+	t_list	*head;
+
+	while (lst != NULL)
+	{
+		head = lst;
+		lst = lst->next;
+		head->next = NULL;
+		free (head);
+	}
+}
+
 void	print_error_msg(char *str, char *msg, int exit_status, char **arr)
 {
 	char	*ptr;

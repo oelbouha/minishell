@@ -55,7 +55,7 @@ typedef struct s_redirections
 */
 
 void	print(char **arr);
-void	execute_command(char **arr, char *path, char **env);
+void	execute_command(char **arr, char **env);
 char	*make_path(char *cmd);
 char	*path_from_env(char **env);
 char	check_path(char *cmd);
@@ -78,22 +78,21 @@ int		check_pipes(char *str);
 	==========================================================================
 */
 
-int		setup_trunc_and_append_file(char *str, t_redirections *red, char *word);
-int		setup_infile_and_heredoc(char *str, t_redirections *red, char *word);
-void	setup_redirections(char **arr, t_redirections *redirections);
-int		check_here_doc(char *str);
-int		check_redirection(char *str);
+void	setup_infile(t_list *infile);
+void	setup_outfile(t_list *outfile);
+void	setup_append(t_list *append);
+void	parse_redirections(char **arr, t_redirections *redirections);
+int		check_redirection(char *str, char *next_arg);
 int		valid_redirection(char **str);
 int		setup_infile_redirection(char *str, t_redirections *red, char *word);
 int		setup_heredoc(char *str, t_redirections *red, char *word);
-int		setup_trunc_and_append_file(char *str, t_redirections *red, char *word);
-int		setup_append_file(char *str, t_redirections *red, char *word);
-int		setup_trunc_file(char *str, t_redirections *red, char *word);
+void	setup_redirections(t_redirections *red, t_shell *shell, char **env);
 
 /*							error functions
 	==========================================================================
 */
 void	parse_error();
+void	free_lst(t_list *lst);
 void	print_error_msg(char *str, char *msg, int exit_status, char **arr);
 
 #endif

@@ -32,6 +32,8 @@ SRC := 	libft/ft_split.c \
 		libft/ft_lstadd_back.c \
 		libft/ft_lstnew.c \
 		libft/ft_lstlast.c \
+		libft/ft_lstsize.c \
+		libft/ft_strdup.c \
 		parser/parser.c \
 		setup_pipes.c \
 		handle_redirections.c \

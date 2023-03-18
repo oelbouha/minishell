@@ -12,6 +12,18 @@
 
 #include "../minishell.h"
 
+void	print_list(t_list *lst)
+{
+	t_list	*temp;
+
+	temp = lst;
+	while (temp)
+	{
+		printf("lst ==> : %s\n", temp->content);
+		temp = temp->next;
+	}
+}
+
 void	print(char **arr)
 {
 	if (!arr)
@@ -23,40 +35,94 @@ void	print(char **arr)
 
 int	contains_redirections(char **arr, int i)
 {
-	if (!arr[0] || !arr)
-		return (1);
-	if (ft_search(arr[0] , '<') || ft_search(arr[0] , '>'))
-		return (1);
-	if (ft_search(arr[i] , '<') || ft_search(arr[i] , '>'))
-		return (1);
+	int		j;
+
+	j = -1;
+	while (arr[++j])
+	{
+		if (ft_search(arr[0] , '<') || ft_search(arr[0] , '>'))
+			return (1);
+		if (ft_search(arr[i] , '<') || ft_search(arr[i] , '>'))
+			return (1);
+	}
 	return (0);
 }
 
-void	setup_infile(char *infile)
+void	setup_infile(t_list *infile)
 {
 	int		fd;
+	t_list	*lst;
 
-	fd = open(infile, O_RDONLY);
-	if (access(infile, F_OK) < 0)
-		print_error_msg(infile, ": No such file or directory", 0, 0);
-	if (access(infile, R_OK) < 0)
-		print_error_msg(infile, ": permission denied", 1, 0);
-	dup2(fd, 0);
-}
-
-void	setup_outfile(char *outfile)
-{
-	int		fd;
-
-	fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == - 1)
+	lst = infile;
+	while (lst)
 	{
-		perror("minishell");
-		exit(1);
+		fd = open(lst->content, O_RDONLY);
+		if (access(lst->content, F_OK) < 0)
+			print_error_msg(lst->content, ": No such file or directory", 0, 0);
+		if (access(lst->content, R_OK) < 0)
+			print_error_msg(lst->content, ": permission denied", 1, 0);
+		dup2(fd, 0);
+		close(fd);
+		lst = lst->next;
 	}
-	dup2(fd, 1);
 }
 
+void	setup_outfile(t_list *outfile)
+{
+	int		fd;
+	t_list	*lst;
+
+	lst = outfile;
+	while (lst)
+	{
+		fd = open(lst->content, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (fd == - 1)
+		{
+			perror("minishell");
+			exit(1);
+		}
+		dup2(fd, 1);
+		close(fd);
+		lst = lst->next;
+	}
+}
+
+void	setup_append(t_list *append)
+{
+	int		fd;
+	t_list	*lst;
+
+	lst = append;
+	while (lst)
+	{
+		
+		fd = open(lst->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd == - 1)
+		{
+			perror("minishell: outfile");
+			exit(1);
+		}
+		dup2(fd, 1);
+		close(fd);
+		lst = lst->next;
+	}
+}
+
+// void	setup_here_doc(t_list *here_doc)
+// {
+// 	int		fd;
+
+// 	while (here_doc)
+// 	{
+// 		fd = open(append, O_WRONLY | O_CREAT | O_APPEND, 0644);
+// 		if (fd == - 1)
+// 		{
+// 			perror("minishell");
+// 			exit(1);
+// 		}
+// 		dup2(fd, 1);
+// 	}
+// }
 
 void	store_line(char *line, char **env)
 {
@@ -69,36 +135,38 @@ void	store_line(char *line, char **env)
 		parse_error();
 	if (!ft_search(line, '|') && !contains_redirections(shell.pipes, shell.number_of_pipes))
 	{
-		// run simple command
+		printf("++++++++ simple cmd +++++++++\n");
 		shell.simple_cmd = ft_split(shell.pipes[0], ' ');
 		ft_free(shell.pipes);
 		run_command(&shell, env);
 	}
-	if (!ft_search(line, '|') && (ft_search(line, '>') || ft_search(line, '<')))
+	else if (!ft_search(line, '|') && (ft_search(line, '>') || ft_search(line, '<')))
 	{
-		(void)redirections;
-		// run simple command with redirections
+		printf("++++++++ redirections without pipes +++++++++\n");
 		shell.cmds = ft_split(shell.pipes[0], ' ');
 		ft_free(shell.pipes);
-		print(shell.cmds);
 		if (!valid_redirection(shell.cmds))
 		{
-			// printf("valid \n");
-			setup_redirections(shell.cmds, &redirections);
+			parse_redirections(shell.cmds, &redirections);
+			// printf("====== cmds ======\n");
+			// print_list(redirections.cmds);
+			// printf("====== outfile ======\n");
+			// print_list(redirections.outfile);
+			// printf("================================\n");
+			setup_redirections(&redirections, &shell, env);
 		}
 	}
 	if (shell.number_of_pipes > 0)
 	{
-		printf("here\n");
+		printf("++++++++ pipe && redirections +++++++++\n");
 		if (contains_redirections(shell.pipes, shell.number_of_pipes))
 		{
+			printf("hnaya\n");
 		}
-		else if (!check_pipe_error(shell.pipes, line))
-		{
-			// run commands with pipes
+		else if (!check_pipe_error(shell.pipes, line) && !contains_redirections(shell.pipes, shell.number_of_pipes))
 			run_command(&shell, env);
-		}
 	}
+	free(line);
 }
 
 void	read_input(char **env)
