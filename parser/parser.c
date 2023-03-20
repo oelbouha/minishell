@@ -48,124 +48,98 @@ int	contains_redirections(char **arr, int i)
 	return (0);
 }
 
-void	setup_infile(t_list *infile)
+t_redirections  **parse_pipe_and_redirections(char **arr, t_shell *shell)
 {
-	int		fd;
-	t_list	*lst;
+	int		i;
+	char	**str;
+	t_redirections **tokens;
 
-	lst = infile;
-	while (lst)
+	tokens = malloc(shell->number_of_pipes + 2 * sizeof(*tokens));
+	if (!tokens)
+		return (NULL);
+	i = -1;
+	while (++i <= shell->number_of_pipes)
 	{
-		fd = open(lst->content, O_RDONLY);
-		if (access(lst->content, F_OK) < 0)
-			print_error_msg(lst->content, ": No such file or directory", 0, 0);
-		if (access(lst->content, R_OK) < 0)
-			print_error_msg(lst->content, ": permission denied", 1, 0);
-		dup2(fd, 0);
-		close(fd);
-		lst = lst->next;
+		tokens[i] = malloc(sizeof(t_redirections));
+		str = ft_split(arr[i], ' ');
+		parse_redirections(str, tokens[i]);
 	}
+	tokens[i] = NULL;
+	return (tokens);
 }
 
-void	setup_outfile(t_list *outfile)
+void	setup_pipe_and_red(t_redirections **tokens, t_shell *shell, char **env)
 {
-	int		fd;
-	t_list	*lst;
+	int		i;
+	int		pid;
+	char	**arr;
 
-	lst = outfile;
-	while (lst)
+	create_pipes(shell->pipe1, shell->pipe2);
+	i = -1;
+	while (++i <= shell->number_of_pipes)
 	{
-		fd = open(lst->content, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (fd == - 1)
+		arr = copy_from_list(tokens[i]->cmds);
+		pid = fork();
+		if (pid == 0)
 		{
-			perror("minishell");
-			exit(1);
+			if (i < shell->number_of_pipes)
+				setup_pipes_for_child(i, shell->pipe1, shell->pipe2);
+			if (i == shell->number_of_pipes)
+			{
+				wait(NULL);
+				setup_pipes_for_last_child(i, shell->pipe1, shell->pipe2);
+			}
+			setup_infile(tokens[i]->infile);
+			setup_outfile(tokens[i]->outfile);
+			setup_append(tokens[i]->append);
+			execute_command(arr, env);
 		}
-		dup2(fd, 1);
-		close(fd);
-		lst = lst->next;
+		setup_pipes_for_next_child(i, shell->pipe1, shell->pipe2);
 	}
 }
-
-void	setup_append(t_list *append)
-{
-	int		fd;
-	t_list	*lst;
-
-	lst = append;
-	while (lst)
-	{
-		
-		fd = open(lst->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd == - 1)
-		{
-			perror("minishell: outfile");
-			exit(1);
-		}
-		dup2(fd, 1);
-		close(fd);
-		lst = lst->next;
-	}
-}
-
-// void	setup_here_doc(t_list *here_doc)
-// {
-// 	int		fd;
-
-// 	while (here_doc)
-// 	{
-// 		fd = open(append, O_WRONLY | O_CREAT | O_APPEND, 0644);
-// 		if (fd == - 1)
-// 		{
-// 			perror("minishell");
-// 			exit(1);
-// 		}
-// 		dup2(fd, 1);
-// 	}
-// }
 
 void	store_line(char *line, char **env)
 {
 	t_redirections	redirections;
 	t_shell			shell;
+	t_redirections	**tokens;
 
+	tokens = NULL;
 	shell.pipes = split(line, '|');
 	shell.number_of_pipes = count_pipes(shell.pipes) - 1;
+	printf("shell.number_of_pipes =================| %d |\n", shell.number_of_pipes);
 	if (ft_search(line, '|') && check_pipe_error(shell.pipes, line))
 		parse_error();
-	if (!ft_search(line, '|') && !contains_redirections(shell.pipes, shell.number_of_pipes))
+	if (shell.pipes[0] && !ft_search(line, '|') && !contains_redirections(shell.pipes, shell.number_of_pipes))
 	{
-		printf("++++++++ simple cmd +++++++++\n");
+		printf("||=========================== simple cmd =========================||\n\n");
 		shell.simple_cmd = ft_split(shell.pipes[0], ' ');
-		ft_free(shell.pipes);
 		run_command(&shell, env);
 	}
-	else if (!ft_search(line, '|') && (ft_search(line, '>') || ft_search(line, '<')))
+	if (!ft_search(line, '|') && (ft_search(line, '>') || ft_search(line, '<')))
 	{
-		printf("++++++++ redirections without pipes +++++++++\n");
+		printf("||==================== redirections without pipes ================|| \n\n");
 		shell.cmds = ft_split(shell.pipes[0], ' ');
-		ft_free(shell.pipes);
 		if (!valid_redirection(shell.cmds))
 		{
 			parse_redirections(shell.cmds, &redirections);
-			// printf("====== cmds ======\n");
-			// print_list(redirections.cmds);
-			// printf("====== outfile ======\n");
-			// print_list(redirections.outfile);
-			// printf("================================\n");
 			setup_redirections(&redirections, &shell, env);
 		}
+		ft_free(shell.cmds);
 	}
-	if (shell.number_of_pipes > 0)
+	if (shell.number_of_pipes > 0 && ft_search(line, '|'))
 	{
-		printf("++++++++ pipe && redirections +++++++++\n");
+		printf("||====================== pipe && redirections ====================|| \n\n");
 		if (contains_redirections(shell.pipes, shell.number_of_pipes))
 		{
-			printf("hnaya\n");
+			tokens = parse_pipe_and_redirections(shell.pipes, &shell);
+			setup_pipe_and_red(tokens, &shell, env);
 		}
 		else if (!check_pipe_error(shell.pipes, line) && !contains_redirections(shell.pipes, shell.number_of_pipes))
 			run_command(&shell, env);
 	}
+	if (shell.pipes)
+		ft_free(shell.pipes);
 	free(line);
 }
 

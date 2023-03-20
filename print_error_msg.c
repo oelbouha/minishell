@@ -16,22 +16,29 @@ void	ft_free(char **arr)
 {
 	int	i;
 
+	if (!arr|| !arr[0])
+		return ;
+
 	i = -1;
 	while (arr[++i])
 		free(arr[i]);
 	free(arr);
 }
 
+
 void	free_lst(t_list *lst)
 {
 	t_list	*head;
 
-	while (lst != NULL)
+	if (ft_lstsize(lst))
 	{
-		head = lst;
-		lst = lst->next;
-		head->next = NULL;
-		free (head);
+		while (lst != NULL)
+		{
+			head = lst;
+			lst = lst->next;
+			head->next = NULL;
+			free (head);
+		}
 	}
 }
 

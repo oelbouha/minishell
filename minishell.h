@@ -37,6 +37,8 @@ typedef struct s_shell
 	int			number_of_cmds;
 	int			pipe1[2];
 	int			pipe2[2];
+	int			fdout;
+	int			fdin;
 	int			pid;
 }				t_shell;
 
@@ -50,11 +52,14 @@ typedef struct s_redirections
 	int		index;
 }			t_redirections;
 
+typedef struct s_tokens
+{
+	t_redirections redirections;
+}	t_tokens;
 /*								   functions
 	==========================================================================
 */
 
-void	print(char **arr);
 void	execute_command(char **arr, char **env);
 char	*make_path(char *cmd);
 char	*path_from_env(char **env);
@@ -73,6 +78,7 @@ void	setup_pipes_for_next_child(int i, int *pipe1, int *pipe2);
 int		check_pipe_error(char **arr, char *line);
 int		count_pipes(char **arr);
 int		check_pipes(char *str);
+void	create_pipes(int *pipe1, int *pipe2);
 
 /*							redirections functions
 	==========================================================================
@@ -87,6 +93,7 @@ int		valid_redirection(char **str);
 int		setup_infile_redirection(char *str, t_redirections *red, char *word);
 int		setup_heredoc(char *str, t_redirections *red, char *word);
 void	setup_redirections(t_redirections *red, t_shell *shell, char **env);
+char	**copy_from_list(t_list *cmd);
 
 /*							error functions
 	==========================================================================
@@ -94,5 +101,9 @@ void	setup_redirections(t_redirections *red, t_shell *shell, char **env);
 void	parse_error();
 void	free_lst(t_list *lst);
 void	print_error_msg(char *str, char *msg, int exit_status, char **arr);
+void	free_tokens(t_redirections **red);
 
+/****************** just for testing ***************/
+void	print_list(t_list *lst);
+void	print(char **arr);
 #endif

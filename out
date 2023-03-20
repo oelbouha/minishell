@@ -1,19 +1,20 @@
-total 152
-drwxr-xr-x  18 oelbouha  candidates    612 Mar 18 15:17 .
-drwxr-xr-x   9 oelbouha  candidates    306 Mar 17 10:46 ..
-drwxr-xr-x  12 oelbouha  candidates    408 Mar 17 13:06 .git
--rw-r--r--   1 oelbouha  candidates   1711 Mar 18 12:55 Makefile
+total 168
+drwxr-xr-x  19 oelbouha  candidates    646 Mar 20 22:46 .
+drwxr-xr-x  12 oelbouha  candidates    408 Mar 20 22:11 ..
+drwxr-xr-x  12 oelbouha  candidates    408 Mar 18 15:18 .git
+-rw-r--r--   1 oelbouha  candidates   1736 Mar 18 15:20 Makefile
 -rw-r--r--   1 oelbouha  candidates    916 Mar 16 12:59 error_functions.c
--rw-r--r--   1 oelbouha  candidates   1451 Mar 18 13:05 execute_commands.c
+-rw-r--r--   1 oelbouha  candidates   1368 Mar 19 12:44 execute_commands.c
 -rw-r--r--   1 oelbouha  candidates   1367 Mar 15 22:07 handle_pipes.c
--rw-r--r--   1 oelbouha  candidates   5765 Mar 18 15:17 handle_redirections.c
-drwxr-xr-x  49 oelbouha  candidates   1666 Mar 18 15:17 libft
+-rw-r--r--   1 oelbouha  candidates   5395 Mar 20 22:46 handle_redirections.c
+drwxr-xr-x  49 oelbouha  candidates   1666 Mar 20 22:46 libft
 -rw-r--r--   1 oelbouha  candidates   1009 Mar 12 15:22 main.c
--rwxr-xr-x   1 oelbouha  candidates  28204 Mar 18 15:17 minishell
--rw-r--r--   1 oelbouha  candidates   3230 Mar 18 14:42 minishell.h
--rw-r--r--   1 oelbouha  candidates      0 Mar 18 15:17 out
-drwxr-xr-x   3 oelbouha  candidates    102 Mar 18 15:17 parser
--rw-r--r--   1 oelbouha  candidates   1623 Mar 18 14:42 print_error_msg.c
--rw-r--r--   1 oelbouha  candidates   3547 Mar 18 13:20 run_command.c
--rw-r--r--   1 oelbouha  candidates   1884 Mar 15 12:05 setup_pipes.c
+-rwxr-xr-x   1 oelbouha  candidates  32564 Mar 20 22:46 minishell
+-rw-r--r--   1 oelbouha  candidates   3528 Mar 20 22:38 minishell.h
+-rw-r--r--   1 oelbouha  candidates      0 Mar 20 22:47 out
+drwxr-xr-x   3 oelbouha  candidates    102 Mar 20 22:46 parser
+-rw-r--r--   1 oelbouha  candidates   1705 Mar 20 12:47 print_error_msg.c
+-rw-r--r--   1 oelbouha  candidates   3455 Mar 20 22:35 run_command.c
+-rw-r--r--   1 oelbouha  candidates   2229 Mar 20 22:35 setup_pipes.c
+-rw-r--r--   1 oelbouha  candidates   2191 Mar 20 21:22 setup_redirections.c
 -rw-r--r--   1 oelbouha  candidates      7 Mar 13 12:59 test.sh

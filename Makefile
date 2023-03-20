@@ -37,6 +37,7 @@ SRC := 	libft/ft_split.c \
 		parser/parser.c \
 		setup_pipes.c \
 		handle_redirections.c \
+		setup_redirections.c \
 		run_command.c \
 		handle_pipes.c \
 		execute_commands.c \

@@ -12,23 +12,6 @@
 
 #include "minishell.h"
 
-// int	setup_infile_and_heredoc(char *str, t_redirections *red, char *word)
-// {
-// 	if (setup_infile_redirection(str, red, word))
-// 		return (1);
-// 	if (setup_heredoc(str, red, word))
-// 		return (1);
-// 	return (0);
-// }
-
-// int	setup_trunc_and_append_file(char *str, t_redirections *red, char *word)
-// {
-// 	if (setup_append_file(str, red, word))
-// 		return (1);
-// 	if (setup_trunc_file(str, red, word))
-// 		return (1);
-// 	return (0);
-// }
 
 char	*ft_strcpy(char *str, t_redirections *red)
 {
@@ -197,20 +180,19 @@ int	valid_redirection(char **str)
 	return (0);
 }
 
-void	setup_redirections(t_redirections *red, t_shell *shell, char **env)
+char	**copy_from_list(t_list *cmd)
 {
-	int		pid;
-	int		i;
 	char	**arr;
 	t_list *temp;
+	int		i;
 
-	temp = red->cmds;
+	temp = cmd;
 	arr = NULL;
 	if (ft_lstsize(temp))
 	{
 		arr = malloc(ft_lstsize(temp) + 1);
 		if (!arr)
-			return ;
+			return (NULL);
 		i = 0;
 		while(temp)
 		{
@@ -219,7 +201,16 @@ void	setup_redirections(t_redirections *red, t_shell *shell, char **env)
 		}
 		arr[i] = NULL;
 	}
-	print(arr);
+	return (arr);
+}
+
+void	setup_redirections(t_redirections *red, t_shell *shell, char **env)
+{
+	int		pid;
+	char	**arr;
+
+	(void)shell;
+	arr = copy_from_list(red->cmds);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -229,16 +220,12 @@ void	setup_redirections(t_redirections *red, t_shell *shell, char **env)
 		if (arr[0])
 			execute_command(arr, env);
 	}
-	if (pid > 0)
-	{
-		wait(NULL);
-		free_lst(red->append);
-		free_lst(red->outfile);
-		free_lst(red->infile);
-		free_lst(red->here_doc_delimiter);
-		if (arr)
-			free(arr);
-		free_lst(red->cmds);
-		ft_free(shell->cmds);
-	}
+	wait(NULL);
+	free_lst(red->append);
+	free_lst(red->outfile);
+	free_lst(red->infile);
+	// free_lst(red->here_doc_delimiter);
+	// if (arr[0])
+	// 	ft_free(arr);
+	free_lst(red->cmds);
 }

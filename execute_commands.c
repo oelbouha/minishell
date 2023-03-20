@@ -15,9 +15,7 @@
 void	execute_command(char **arr, char **env)
 {
 	char *path;
-	// int i = -1;
-	// while (arr[++i])
-	// 	printf("arr ==== ::::::: %s\n", arr[i]); 
+
 	path = make_path(arr[0]);
 	if (!arr[0])
 		print_error_msg(arr[0], ": command not found", 127, arr);

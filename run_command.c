@@ -93,7 +93,6 @@ void	simple_command(t_shell *shell, char **env)
 	if (pid > 0)
 	{
 		wait(NULL);
-		printf("parent ==> %d\n", pid);
 		ft_free(shell->simple_cmd);
 	}
 }
@@ -134,12 +133,8 @@ void	multiple_commands(t_shell *shell, char **env)
 
 void	run_command(t_shell *shell, char **env)
 {
-	if (pipe(shell->pipe1) < 0 || pipe(shell->pipe2) < 0)
-	{
-		perror("minishell: pipe");
-		exit(1);
-	}
-	if (shell->number_of_pipes == 0)
+	create_pipes(shell->pipe1, shell->pipe2);
+	if (shell->number_of_pipes <= 0)
 		simple_command(shell, env);
 	else
 		multiple_commands(shell, env);
