@@ -1,4 +1,7 @@
+#-I/Users/ysalmi/.brew/opt/readline/include -L/Users/ysalmi/.brew/opt/readline/lib
 
 test: main.c
-	gcc -lreadline -I/Users/ysalmi/.brew/opt/readline/include -L/Users/ysalmi/.brew/opt/readline/lib   main.c -o test
+	gcc -lreadline -ltermcap  main.c -o test
 
+clean:
+	rm -rf test
