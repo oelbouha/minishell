@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   core.h                                             :+:      :+:    :+:   */
+/*   bootstrap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/02 12:19:09 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/02 12:33:02 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CORE_H
-# define CORE_H
+#include "core_internal.h"
 
-# include "minishell.h"
-
-int			bootstrap(char *env[]);
-t_list		get_env_list(void);
-int			set_env_var(char *key, char *value);
-t_keyvalue	get_env_var(char *key);
-t_list		get_builtins_list(void);
-char		*get_current_wd(void);
-
-
-#endif
+int	bootstrap(char *env[])
+{
+	shell.env = new_dictionary(env, '=');
+	if (shell.env == NULL)
+		return (1);
+	shell.builtins = construct_builtins_list();
+	if (shell.builtins == NULL)
+		return (ft_lstclear(&shell.env, (t_lstdel)destroy_keyvalue), 1);
+	shell.last_stts = 0;
+}
