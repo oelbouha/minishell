@@ -6,13 +6,13 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 10:51:57 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/03/24 22:04:12 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/04 15:36:12 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "datastructures.h"
 
-t_keyvalue	*new_keyvalue(char *key, char *value)
+t_keyvalue	*new_keyvalue(char *key, void *value)
 {
 	t_keyvalue	*kv;
 
@@ -52,7 +52,7 @@ t_list	*new_dictionary(char **arr, char sep)
 			return (ft_lstclear(&dict, (t_lstdel)destroy_keyvalue),
 				free(kv), NULL);
 		kv->value = ft_strchr(kv->key, sep) + 1;
-		kv->key[kv->value - kv->key - 1] = 0;
+		kv->key[(char *)kv->value - kv->key - 1] = 0;
 		node = ft_lstnew(kv);
 		if (node == NULL)
 			return (ft_lstclear(&dict, (t_lstdel)destroy_keyvalue),
