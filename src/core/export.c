@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/04 15:15:27 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/05 23:28:09 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	shell_export(int c, char **v)
 {
-	(void)c;
-	(void)v;
-	printf("builtin: export\n");
+	
 	return (0);
 }

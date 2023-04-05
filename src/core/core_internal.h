@@ -6,13 +6,15 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/04 17:49:41 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/05 17:59:00 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CORE_INTERNAL_H
 # define CORE_INTERNAL_H
 
+# include <sys/errno.h>
+# include <string.h>
 # include "libft.h"
 # include "datastructures.h"
 # include "core.h"

@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   get_current_wd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/05 23:23:16 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/05 17:11:29 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/05 17:55:49 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
-int	env(int c, char **v)
+char	*get_current_wd(void)
 {
-	t_list		*cur;
-	t_keyvalue	*kv;
+	char	*ret;
 
-	(void)c;
-	(void)v;
-	if (c > 1)
-		ft_putstr_fd("Minishell: env: command args are not supported\n", 2);
-	cur = g_shell.env;
-	while (cur)
-	{
-		kv = (t_keyvalue *) cur->content;
-		if (kv->value && *kv->value)
-		{
-			ft_putstr_fd(kv->key, 1);
-			ft_putchar_fd('=', 1);
-			ft_putstr_fd(kv->value, 1);
-			ft_putchar_fd('\n', 1);
-		}
-		cur = cur->next;
-	}
-	return (0);
+	if (g_shell.wd)
+		return (g_shell.wd);
+	ret = getcwd(NULL, 1024);
+	return (ret);
 }
