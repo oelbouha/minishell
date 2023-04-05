@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/03/23 14:04:25 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/05 14:39:49 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,12 @@ READLINE := -lreadline
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
 
-SRC := get_input.c
+SRC := getline.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
+
+
 
 
 N :=\x1b[0m
