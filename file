@@ -86,13 +86,67 @@ lsfd || echof hello | echo hello > file | skldjfkls  && echo hi
 
 [lsfd]->(or)[echof hello, echo hello > file, skldjfkls]->(and)[echo hi]
 
-
+>file > file
 
 sp: " ' ( && || > >> < <<
 
 (sdfsdf) => "(" "sdsfdf" ")"
-"word word0" => """, "word word0", """
-'word word0' => "'", "word word0", "'"
+"word word0" => """, "word word0"
+'word word0' => "'", "word word0"
+
+<>file
+< >file
 
 []
+line[i] == '|' && line[i + 1] 
+
+loop <c>{
+	if (c == '(' && parenthesis_handler)//SHOULD_HANDLE_PARENTHESIS
+		i+=parenthesis_handler(lst, &c, &err); // should be recursive.  int	func(t_list **head, char *str, int *err)
+	else if (c == '||' && and_or_handler)
+	{
+		lst->["||/&&"]
+		i += 2;
+	}
+	else if (c == '"')
+		i += double_quote_handler()
+	else if (c == '>' || c == '<')
+	{
+		if (str[i] == '<' && str[i+1] == '>')//<<
+		{
+			lst->["<<"]
+			i+=2;
+		}
+		else if (str[i-1] == '>' && str[i] == '>')//>>
+		{
+			lst->[">>"]
+			i+=2;
+		}
+		else
+			lst->[str[i++]]
+	}
+	else if (c == ' ' || c == '\t')
+		i++;
+	else
+		i+=handle_normal_word(lst, c, &err)
+	if (err)
+		//clean and return (NULL);
+
+}
+
+token = dup_len(&str[i],len)
+node = ft_lstnew(token)
+lstadd_back
+
+(ls && (lksdjfklsdflkjsdf ) | echhks)
+
+lst->["("]
+lst->["ls"]
+lst->["&&"]
+	i+=call
+	lst->["("]
+	lst->["lskdfjlksfjklsfj"]
+	lst->[")"]
+	return i + 1;
+lst->["|"]
 
