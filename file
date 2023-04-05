@@ -1,0 +1,99 @@
+export n=5 | echo $n
+cmd1:
+	"export" "n=5"
+cmd2:
+	"echo" ""
+
+
+(cd /)
+(export n=5 && echo $n) && ()
+box:
+	cmd1:
+		"export" "n=5"
+	cmd2:
+		"echo" "$n"
+
+{
+	reader => line;
+	lexer
+	parser
+	{
+		(expansion);
+		if (excutor)
+			return (get_last_status());
+	}
+
+}
+
+
+
+(ls && (echo hello && cat < file) >out) >> out2 | (cd / && ls || echo err) | echo last
+[
+	prev: "("
+	[
+		prev: NULL
+		ls
+	],
+	[
+		prev: "&&"
+		prev: "("
+		[
+			echo hello
+		]
+		[
+			prev: "&&"
+			cat
+			< file
+		]
+		>> out
+	]
+	>> out2
+]
+[
+	prev: "|"
+	prev: "("
+	[
+		cd /
+	]
+	[
+		prev: "&&"
+		ls
+	]
+	[
+		prev: '||'
+		echo err
+	]
+]
+[
+	prev: "|"
+	echo last
+]
+
+
+
+
+[   >> out2 ]
+
+[cmd1, cmd2, cmd3] 	pipes
+cmd1->cmd2->cmd3	&& and ||
+
+
+lsfd && echof hello | echo hello
+
+[ls]->&&[echof hello, echo hello]
+
+lsfd || echof hello | echo hello > file | skldjfkls  && echo hi
+
+[lsfd]->(or)[echof hello, echo hello > file, skldjfkls]->(and)[echo hi]
+
+
+
+sp: " ' ( && || > >> < <<
+
+(sdfsdf) => "(" "sdsfdf" ")"
+"word word0" => """, "word word0", """
+'word word0' => "'", "word word0", "'"
+
+[]
+
+n * 8
