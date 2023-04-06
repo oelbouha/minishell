@@ -1,29 +1,34 @@
 #include "core_internal.h"
 
-void	test_env(void);
-void	test_builtins(void);
-void	test_cd(void);
+void	test_env(int c, char **v);
+void	test_builtins(int c, char **v);
+void	test_cd(int c, char **v);
 void	test_echo(int c, char **v);
 void	test_export(int c, char **v);
 void	test_unset(int c, char **v);
 
 int	main(int c, char **v, char **e)
 {
-	(void)c;
-	(void)v;
 	printf("bootstraping... [%d]\n", setup(e));
 	test_export(c, v);
 	return (0);
 }
 
-void	test_env(void)
+void	test_env(int c, char **v)
 {
+	(void)c;
+	(void)v;
 	set_env_var("USER", "youssef");
-	env(2, NULL);
+	set_env_var("t", "");
+	t_keyvalue	*kv = get_env_var("USER");
+	printf("%s=>%s\n", kv->key, (char *)kv->value);
+	env(c, v);
 }
 
-void	test_builtins(void)
+void	test_builtins(int c, char **v)
 {
+	(void)c;
+	(void)v;
 	t_list *cur = g_shell.builtins;
 	printf("builtins:\n");
 	while (cur)
@@ -35,8 +40,10 @@ void	test_builtins(void)
 		cur = cur->next;
 	}
 }
-void	test_cd(void)
+void	test_cd(int c, char **v)
 {
+	(void)c;
+	(void)v;
 	printf("wd: %s\n", g_shell.wd);
 	cd(1, NULL);
 	char *p[2];

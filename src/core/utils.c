@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:03:28 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/06 19:30:51 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/06 23:28:26 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ void	msh_log(char *cmd, char *msg, char *arg)
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(arg, 2);
+	if (arg)
+		ft_putstr_fd(": ", 2);
 	ft_putstr_fd(msg, 2);
 }

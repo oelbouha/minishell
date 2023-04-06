@@ -6,13 +6,13 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/06 18:11:27 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/06 23:24:54 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
-int	print_exports(void)
+static void	print_exports(void)
 {
 	t_list		*cur;
 	t_keyvalue	*kv;
@@ -29,7 +29,6 @@ int	print_exports(void)
 		printf("\n");
 		cur = cur->next;
 	}
-	return (0);
 }
 
 int	shell_export(int c, char **v)
@@ -40,7 +39,7 @@ int	shell_export(int c, char **v)
 	int		ret;
 
 	if (c == 1)
-		return (print_exports());
+		return (print_exports(), 0);
 	ret = 0;
 	i = 0;
 	while (++i < c)
@@ -53,6 +52,7 @@ int	shell_export(int c, char **v)
 			key[value++ - key] = 0;
 		if (check_identifier(key))
 		{
+			msh_log("export", "not a valid identifier", key);
 			printf("invalid identifier\n");
 			ret = 1;
 		}
