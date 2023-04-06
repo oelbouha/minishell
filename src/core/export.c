@@ -6,14 +6,59 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/05 23:28:09 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/06 18:11:27 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
+int	print_exports(void)
+{
+	t_list		*cur;
+	t_keyvalue	*kv;
+	char		*value;
+
+	cur = g_shell.env;
+	while (cur)
+	{
+		kv = (t_keyvalue *)cur->content;
+		value = (char *)kv->value;
+		printf("declare -x %s", kv->key);
+		if (value)
+			printf("=\"%s\"", value);
+		printf("\n");
+		cur = cur->next;
+	}
+	return (0);
+}
+
 int	shell_export(int c, char **v)
 {
-	
-	return (0);
+	char	*key;
+	char	*value;
+	int		i;
+	int		ret;
+
+	if (c == 1)
+		return (print_exports());
+	ret = 0;
+	i = 0;
+	while (++i < c)
+	{
+		key = ft_strdup(v[i]);
+		if (key == NULL)
+			return (1);
+		value = ft_strchr(key, '=');
+		if (value)
+			key[value++ - key] = 0;
+		if (check_identifier(key))
+		{
+			printf("invalid identifier\n");
+			ret = 1;
+		}
+		else if (set_env_var(key, value))
+			return (free(key), 1);
+		free(key);
+	}
+	return (ret);
 }

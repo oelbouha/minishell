@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/05 17:59:00 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/06 19:35:42 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,21 @@ struct s_shell
 	t_uchar	last_stts;
 };
 
-
 /* ***  Global variable  **** */
 
-t_shell	g_shell;
+t_shell						g_shell;
 
 t_list	*construct_builtins_list(void);
 
 /* ***  Builtins  **** */
-int	cd(int c, char **v);
-int	echo(int c, char **v);
-int	shell_export(int c, char **v);
-int	pwd(int c, char **v);
-int	env(int c, char **v);
-int	unset(int c, char **v);
+int		cd(int c, char **v);
+int		echo(int c, char **v);
+int		shell_export(int c, char **v);
+int		pwd(int c, char **v);
+int		env(int c, char **v);
+int		unset(int c, char **v);
+
+/* ***  Utils  **** */
+int		check_identifier(char *id);
+void	msh_log(char *cmd, char *msg, char *arg);
 #endif

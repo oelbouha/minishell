@@ -6,13 +6,13 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/05 22:38:02 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/06 15:56:43 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := core
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -fsanitize=address -g
 I := -I../../inc -I../../libft/inc -I../datastructures
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
@@ -29,6 +29,7 @@ SRC := builtins.c \
 		unset.c \
 		get_current_wd.c \
 		env_setter_and_getter.c \
+		utils.c \
 		test.c \
 
 OBJ := $(SRC:%.c=%.o)
@@ -46,7 +47,7 @@ O :=\x1b[33;01m
 all: libft dslib $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT) $(DS_LIB)
-	$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB)
+	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB)
 
 libft: 
 	@make -s -C $(LIBFT_DIR)
