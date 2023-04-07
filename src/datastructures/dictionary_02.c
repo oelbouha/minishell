@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   dictionary_02.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/06 12:34:22 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/07 11:05:54 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/07 11:29:56 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "core_internal.h"
+#include "datastructures.h"
 
-int	pwd(int c, char **v)
+void	update_keyvalue(t_keyvalue *kv, char *key, void *value)
 {
-	char	*wd;
+	if (kv)
+	{
+		free(kv->key);
+		kv->key = key;
+		kv->value = value;
+	}
+}
 
-	(void)c;
-	(void)v;
-	wd = get_current_wd();
-	if (wd == NULL)
+int	add_word_to_dictionary(t_list **dict, char *key, void *value)
+{
+	t_keyvalue	*kv;
+	t_list		*entry;
+
+	kv = new_keyvalue(key, value);
+	if (kv == NULL)
 		return (1);
-	printf("%s\n", wd);
+	entry = ft_lstnew(kv);
+	if (entry == NULL)
+		return (destroy_keyvalue(kv), 1);
+	ft_lstadd_back(dict, entry);
 	return (0);
 }

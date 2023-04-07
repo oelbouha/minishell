@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   get_current_wd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/01 16:28:59 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/07 11:24:06 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/05 17:11:29 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/05 17:55:49 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "core_internal.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+char	*get_current_wd(void)
 {
-	t_list	*last;
+	char	*ret;
 
-	if (lst && *lst)
-	{
-		last = ft_lstlast(*lst);
-		if (last)
-			last->next = new;
-	}
-	else
-		*lst = new;
+	if (g_shell.wd)
+		return (g_shell.wd);
+	ret = getcwd(NULL, 1024);
+	return (ret);
 }

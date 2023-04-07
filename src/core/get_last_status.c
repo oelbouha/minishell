@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   get_last_status.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/01 16:28:59 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/07 11:24:06 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/07 15:46:03 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/07 15:46:48 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "core_internal.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	get_last_status(void)
 {
-	t_list	*last;
-
-	if (lst && *lst)
-	{
-		last = ft_lstlast(*lst);
-		if (last)
-			last->next = new;
-	}
-	else
-		*lst = new;
+	return (g_shell.last_stts);
 }
