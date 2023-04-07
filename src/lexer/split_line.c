@@ -20,7 +20,7 @@ int	word_len(char *str)
 	while (str[++i])
 	{
 		if (str[i] == ' ' || str[i] == '>' || str[i] == '<'
-			|| str[i] == '|' || str[i] == 34 || str[i] == 39)
+			|| str[i] == '|' /*|| str[i] == 34 || str[i] == 39*/)
 			return (i);
 	}
 	return (i);
@@ -38,6 +38,7 @@ int	handle_quotes(t_list **lst, char *str, int *err)
 	while (str[i] && str[i] != next_quote)
 		i++;
 	i++;
+	i += word_len(&str[i]);
 	token = ft_substr(str, 0, i);
 	if (!token)
 		*err = 1;
