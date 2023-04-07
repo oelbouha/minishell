@@ -122,11 +122,12 @@ t_list	*split_line(char *line)
 			i += handle_redir(&lst, &line[i], &err);
 		else if (line[i] == '|')
 			i += handle_pipe(&lst, &line[i], &err);
+		// else if ((line[i] == '|' && line[i + 1] == '|') || )
+		// 	i += or_and_handler(&lst, &line[i], &err);
 		else
 			i += simple_word(&lst, &line[i], &err);
 		if (err == 1)
 		{
-
 			// free and return 
 		}
 	}
