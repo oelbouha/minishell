@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:03:28 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/06 23:28:26 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/07 14:39:33 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	check_identifier(char *key)
 {
-
 	if (key == NULL)
 		return (1);
 	else if (!(ft_isalpha(*key) || *key == '_'))
@@ -25,13 +24,18 @@ int	check_identifier(char *key)
 	return (0);
 }
 
-void	msh_log(char *cmd, char *msg, char *arg)
+void	msh_log(char *cmd, char *msg, char *arg, t_bool quotes)
 {
 	ft_putstr_fd("-minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
+	if (arg && *arg && quotes == TRUE)
+		ft_putchar_fd('`', 2);
 	ft_putstr_fd(arg, 2);
+	if (arg && *arg && quotes == TRUE)
+		ft_putchar_fd('\'', 2);
 	if (arg)
 		ft_putstr_fd(": ", 2);
 	ft_putstr_fd(msg, 2);
+	ft_putchar_fd('\n', 2);
 }

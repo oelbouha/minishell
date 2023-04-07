@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/06 23:12:33 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/07 14:23:12 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	env(int c, char **v)
 	(void)c;
 	(void)v;
 	if (c > 1)
-		return (msh_log("env", "Command arguments are NOT supported\n", ""), 1);
+		return (msh_log("env", "command args are NOT supported", "", FALSE),
+			1);
 	cur = g_shell.env;
 	while (cur)
 	{

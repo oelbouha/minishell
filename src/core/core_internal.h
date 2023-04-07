@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/06 19:35:42 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/07 11:37:56 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ int		unset(int c, char **v);
 
 /* ***  Utils  **** */
 int		check_identifier(char *id);
-void	msh_log(char *cmd, char *msg, char *arg);
+void	msh_log(char *cmd, char *msg, char *arg, t_bool quotes);
 #endif

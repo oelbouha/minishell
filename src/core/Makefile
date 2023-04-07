@@ -6,11 +6,11 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/06 15:56:43 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/07 16:30:14 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := core
+NAME := core.a
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -fsanitize=address -g
 I := -I../../inc -I../../libft/inc -I../datastructures
@@ -28,15 +28,13 @@ SRC := builtins.c \
 		setup.c \
 		unset.c \
 		get_current_wd.c \
-		env_setter_and_getter.c \
+		get_env_var.c \
+		set_env_var.c \
 		utils.c \
-		test.c \
+	#	test.c \
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
-
-
-
 
 N :=\x1b[0m
 G :=\x1b[32;01m
@@ -44,9 +42,12 @@ R :=\x1b[31;01m
 B :=\x1b[43;01m
 O :=\x1b[33;01m
 
-all: libft dslib $(NAME)
+all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) $(DS_LIB)
+$(NAME): $(OBJ)
+	@ar -rcs $@ $^
+
+$(NAME)o: $(OBJ) $(LIBFT) $(DS_LIB)
 	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB)
 
 libft: 
@@ -61,13 +62,15 @@ obj/%.o: %.c
 
 clean:
 	@rm -rf obj/
-	@make -C $(LIBFT_DIR) clean
-	@make -C $(DS_DIR) clean
+
+#@make -C $(LIBFT_DIR) clean
+#@make -C $(DS_DIR) clean
 
 fclean: clean
 	@rm -rf $(NAME)
-	@make -C $(LIBFT_DIR) fclean
-	@make -C $(DS_DIR) fclean
+
+#@make -C $(LIBFT_DIR) fclean
+#@make -C $(DS_DIR) fclean
 
 re: fclean all
 

@@ -60,8 +60,9 @@ void	test_echo(int c, char **v)
 }
 void	test_export(int c, char **v)
 {
-	shell_export(c, v);
-	if (c > 1)
+	int ret = shell_export(c, v);
+	ft_printf("ret: %d\n", ret);
+	if (ret == 0 && c > 1)
 		shell_export(1, NULL);
 }
 void	test_unset(int c, char **v)
