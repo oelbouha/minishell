@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 12:44:13 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/03/24 17:49:14 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/07 11:38:15 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-enum e_bool
+typedef enum e_bool
 {
 	FALSE,
 	TRUE
-};
-typedef void 				(*t_lstdel)(void *);
+}	t_bool;
 typedef struct s_list
 {
 	void			*content;
@@ -39,6 +38,7 @@ typedef struct s_syntax
 	int		length;
 }	t_syntax;
 
+typedef void 				(*t_lstdel)(void *);
 /*****************************************************************************/
 /*	libft																	 */
 /*****************************************************************************/
