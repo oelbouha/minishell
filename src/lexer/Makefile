@@ -18,7 +18,9 @@ READLINE := -lreadline
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
 
-SRC := getline.c split_line.c
+SRC :=	getline.c split_line.c \
+		handle_quotes.c \
+		handle_redir_and_pipe.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
@@ -35,7 +37,7 @@ O :=\x1b[33;01m
 all: lib $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT)
 
 lib: 
 	@make -C $(LIBFT_DIR)

@@ -29,10 +29,11 @@
 
 typedef unsigned long long	t_ull;
 
-
-
 char		*get_input(t_ull state);
 void		configure_readline(void);
+int			word_len(char *str);
+int			handle_quotes(t_list **lst, char *str, int *err);
+int			handle_redir_and_pipe(t_list **lst, char *str, int *err);
 t_list		*split_line(char *line);
 
 #endif
