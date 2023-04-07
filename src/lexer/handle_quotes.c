@@ -20,7 +20,8 @@ int	word_len(char *str)
 	while (str[++i])
 	{
 		if (str[i] == SPACE || str[i] == '>' || str[i] == '<'
-			|| str[i] == '|' || str[i] == TAB)
+			|| str[i] == '|' || str[i] == TAB
+			|| str[i] == ')')
 			return (i);
 	}
 	return (i);

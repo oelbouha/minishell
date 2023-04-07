@@ -12,6 +12,18 @@
 
 #include "lexer.h"
 
+void	print(t_list *lst)
+{
+	t_list *temp;
+
+	temp = lst;
+	while (temp)
+	{
+		printf("token ===> %s\n",temp->content);
+		temp =temp->next;
+	}
+}
+
 int	simple_word(t_list **lst, char *str, int *err)
 {
 	char	*token;
@@ -25,17 +37,39 @@ int	simple_word(t_list **lst, char *str, int *err)
 	return (i);
 }
 
-void	print(t_list *lst)
+int	handle_parenthesis(t_list **lst, char *str, int *err)
 {
-	t_list *temp;
+	char	*token;
+	int		i;
 
-	temp = lst;
-	while (temp)
-	{
-		printf("token ===> %s\n",temp->content);
-		temp =temp->next;
-	}
+	i = 0;
+	i++;
+	if (str[0] == ')')
+		i += word_len(&str[i]);
+	token = ft_substr(str, 0, i);
+	if (!token)
+		*err = 1;
+	ft_lstadd_back(lst, ft_lstnew(token));
+	return (i);
 }
+
+int	and_or_handler(t_list **lst, char *str, int *err)
+{
+	char	*token;
+	char	next_char;
+	int		i;
+
+	i = 0;
+	next_char = str[i];
+	while (str[i] && str[i] == next_char)
+		i++;
+	token = ft_substr(str, 0, i);
+	if (!token)
+		*err = 1;
+	ft_lstadd_back(lst, ft_lstnew(token));
+	return (i);
+}
+
 
 t_list	*split_line(char *line)
 {
@@ -49,6 +83,10 @@ t_list	*split_line(char *line)
 	{
 		if (line[i] == SPACE || line[i] == TAB)
 			i++;
+		else if ((line[i] == '|' && line[i + 1] == '|') || line[i] == '&')
+			i += and_or_handler(&lst, &line[i], &error);
+		else if (line[i] == '(' || line[i] == ')')
+			i += handle_parenthesis(&lst, &line[i], &error);
 		else if (line[i] == SINGLE_QUOTE || line[i] == DOUBLE_QUOTE)
 			i += handle_quotes(&lst, &line[i], &error);
 		else if (line[i] == '>' || line[i] == '<' || line[i] == '|')
