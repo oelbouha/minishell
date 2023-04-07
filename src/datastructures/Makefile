@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/05 22:23:34 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/07 16:32:14 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ I := -I../../inc -I../../libft/inc -I../datastructures
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
 
-SRC := dictionary.c 
+SRC := dictionary_01.c \
+		dictionary_02.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
