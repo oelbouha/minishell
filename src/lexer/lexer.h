@@ -20,15 +20,17 @@
 # include <dirent.h>
 # include <stdio.h>
 # include <sys/errno.h>
-# include "libft.h"
+# include "../../libft/inc/libft.h"
 
 
 typedef unsigned long long	t_ull;
 
 
 
-char	*get_input(t_ull state);
-void	configure_readline(void);
-
+char		*get_input(t_ull state);
+void		configure_readline(void);
+t_list		*split_line(char *line);
 
 #endif
+
+

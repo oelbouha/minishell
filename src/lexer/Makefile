@@ -18,7 +18,7 @@ READLINE := -lreadline
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
 
-SRC := getline.c
+SRC := getline.c split_line.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))

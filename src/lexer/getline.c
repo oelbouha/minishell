@@ -49,7 +49,11 @@ char	*get_input(t_ull state)
 
 int	main(void)
 {
-	char *line = get_input(0);
-	printf("%s\n", line);
+	while (1)
+	{
+		char *line = get_input(0);
+		add_history(line);
+		split_line(line);
+	}
 	return (0);
 }
