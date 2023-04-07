@@ -22,6 +22,10 @@
 # include <sys/errno.h>
 # include "../../libft/inc/libft.h"
 
+# define SINGLE_QUOTE 39
+# define DOUBLE_QUOTE 34
+# define SPACE 32
+# define TAB 9
 
 typedef unsigned long long	t_ull;
 
