@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/07 14:36:57 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/08 15:33:40 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	shell_export(int c, char **v)
 		if (value)
 			key[value++ - key] = 0;
 		if (check_identifier(key) && ++ret)
-			msh_log("export", "not a valid identifier", key, TRUE);
+			msh_log("export", "not a valid identifier", v[i], TRUE);
 		else if (set_env_var(key, value))
 			return (free(key), 1);
 		free(key);

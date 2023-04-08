@@ -1,0 +1,32 @@
+|:
+	first token: syntax error near unexpected token `|'
+	after '|'  : syntax error near unexpected token `|'
+	after '('  : syntax error near unexpected token `|'
+	after '&&' : syntax error near unexpected token `|'
+	after '||' : syntax error near unexpected token `|'
+	after >/<  : syntax error near unexpected token `|'
+	last token : syntax error: unexpected end of file
+(:
+	after ')'  : syntax error near unexpected token `('
+	after word : syntax error near unexpected token `(' # bash would expect a fucntion
+	after >/<  : syntax error near unexpected token `|'
+	last token : syntax error: unexpected end of file
+):
+	first token: syntax error near unexpected token `)'
+	after '|'  : syntax error near unexpected token `)'
+	after '('  : syntax error near unexpected token `)'
+	after '&&' : syntax error near unexpected token `)'
+	after '||' : syntax error near unexpected token `)'
+	after >/<  : syntax error near unexpected token `|'
+&&/||:
+	first token: syntax error near unexpected token `|'
+	after '|'  : syntax error near unexpected token `|'
+	after '('  : syntax error near unexpected token `|'
+	after '&&' : syntax error near unexpected token `|'
+	after '||' : syntax error near unexpected token `|'
+	after >/<  : syntax error near unexpected token `|'
+	last token : syntax error: unexpected end of file
+word:
+	after ')'  : syntax error near unexpected token `word'
+>/<:	
+	last token : syntax error: unexpected end of file
