@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_redir_and_pipe.c                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 21:36:58 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/04/07 21:37:18 by oelbouha         ###   ########.fr       */
+/*   Created: 2023/04/08 14:25:47 by oelbouha          #+#    #+#             */
+/*   Updated: 2023/04/08 14:25:58 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-int	handle_redir_and_pipe(t_list **lst, char *str, int *err)
+int	main(void)
 {
-	char	*token;
-	char	next_char;
-	int		i;
-
-	i = 0;
-	next_char = str[i];
-	while (str[i] && str[i] == next_char)
-		i++;
-	token = ft_substr(str, 0, i);
-	if (!token)
+	t_list *l;
+	while (1)
 	{
-		*err = 1;
-		return (1);
+		char *line = readline("Lexer:$ ");
+		add_history(line);
+		l = split_line(line);
+		print(l);
 	}
-	ft_lstadd_back(lst, ft_lstnew(token));
-	return (i);
+	return (0);
 }

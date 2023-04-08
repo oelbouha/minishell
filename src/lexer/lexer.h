@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef READER_H
-# define READER_H
+# ifndef READER_H
+#  define READER_H
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -22,6 +22,12 @@
 # include <sys/errno.h>
 # include "core.h"
 
+typedef struct s_lexer
+{
+	t_list *lst;
+	int		error;
+}	t_lexer;
+
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
 # define SPACE 32
@@ -30,11 +36,16 @@
 
 typedef unsigned long long	t_ull;
 
-char		*get_input(t_ull state);
+void		print(t_list *lst);
 void		configure_readline(void);
+void		free_lst_content(void *content);
+char		*get_input(t_ull state);
 int			word_len(char *str);
 int			handle_quotes(t_list **lst, char *str, int *err);
 int			handle_redir_and_pipe(t_list **lst, char *str, int *err);
+int			simple_word(t_list **lst, char *str, int *err);
+int			word_len(char *str);
+int			is_operator(char c, char s);
 t_list		*split_line(char *line);
 
 #endif

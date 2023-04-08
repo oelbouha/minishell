@@ -113,7 +113,6 @@ int	main(int c, char **v, char **e)
 	{
 		char *line = get_line(0);
 		ft_printf("line: <%s>\n", line);
-		split_line(line);
 	}
 	return (0);
 }

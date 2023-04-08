@@ -22,9 +22,12 @@ DS_LIB := ../datastructures/datastructures.a
 CORE_DIR := ../core
 CORE_LIB := ../core/core.a
 
-SRC :=	get_line.c split_line.c \
+SRC :=	split_line.c \
 		handle_quotes.c \
-		handle_redir_and_pipe.c
+		handle_redir_and_pipe.c \
+		main.c	\
+		utils.c	\
+		simple_word.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
@@ -41,7 +44,7 @@ O :=\x1b[33;01m
 all: libft dslib corelib $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB)
+	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB)
 
 libft: 
 	@make -s -C $(LIBFT_DIR)
