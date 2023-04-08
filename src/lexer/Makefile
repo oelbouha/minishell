@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/08 14:08:47 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/08 14:12:47 by oelbouha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,11 +59,13 @@ obj/%.o: %.c
 clean:
 	@rm -rf obj/
 	@make -C $(LIBFT_DIR) clean
+	@make -C $(CORE_DIR) clean
 	@make -C $(DS_DIR) clean
 
 fclean: clean
 	@rm -rf $(NAME)
 	@make -C $(LIBFT_DIR) fclean
+	@make -C $(CORE_DIR) fclean
 	@make -C $(DS_DIR) fclean
 
 re: fclean all
