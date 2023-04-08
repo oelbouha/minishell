@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/08 13:00:42 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/08 19:55:03 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void	*get_prompt(void)
 	len = ft_strlen(ft_strrchr(wd, '/') + 1);
 	ft_memcpy(&prompt[i], ft_strrchr(wd, '/') + 1, len);
 	i += len;
-	len = ft_strlen(" ] \x1b[31;01m-〉\x1b[0m");
+	len = ft_strlen(" ] ▌→\x1b[31;01m→ \x1b[0m");
 	if (get_last_status())
-		ft_memcpy(&prompt[i], " ] \x1b[31;01m-〉\x1b[0m", len);
+		ft_memcpy(&prompt[i], " ] ▌\x1b[31;01m→ \x1b[0m", len);
 	else
-		ft_memcpy(&prompt[i], " ] \x1b[32;01m-〉\x1b[0m", len);
+		ft_memcpy(&prompt[i], " ] ▌\x1b[32;01m→ \x1b[0m", len);
 	return (prompt);
 	/*
 
