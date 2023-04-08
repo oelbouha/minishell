@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:16:08 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/04/07 17:16:18 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/04/08 14:07:02 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,13 @@ int	simple_word(t_list **lst, char *str, int *err)
 	int		i;
 
 	i = word_len(str);
+	ft_printf("%d\n", i);
 	token = ft_substr(str, 0, i);
 	if (!token)
+	{
 		*err = 1;
+		return (i);
+	}
 	ft_lstadd_back(lst, ft_lstnew(token));
 	return (i);
 }
@@ -70,6 +74,10 @@ int	and_or_handler(t_list **lst, char *str, int *err)
 	return (i);
 }
 
+void	z(char *s)
+{
+	ft_printf("%s\n", s);
+}
 
 t_list	*split_line(char *line)
 {
@@ -79,13 +87,15 @@ t_list	*split_line(char *line)
 
 	i = 0;
 	error = 0;
+	lst = NULL;
 	while (line[i])
 	{
 		if (line[i] == SPACE || line[i] == TAB)
 			i++;
-		else if ((line[i] == '|' && line[i + 1] == '|') || line[i] == '&')
+		else if (BONUS 
+			&& (!ft_strncmp(&line[i], "||", 2) || !ft_strncmp(&line[i], "&&", 2)))
 			i += and_or_handler(&lst, &line[i], &error);
-		else if (line[i] == '(' || line[i] == ')')
+		else if (BONUS && (line[i] == '(' || line[i] == ')'))
 			i += handle_parenthesis(&lst, &line[i], &error);
 		else if (line[i] == SINGLE_QUOTE || line[i] == DOUBLE_QUOTE)
 			i += handle_quotes(&lst, &line[i], &error);

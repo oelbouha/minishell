@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/07 22:24:29 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/08 14:08:47 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,9 @@ DS_LIB := ../datastructures/datastructures.a
 CORE_DIR := ../core
 CORE_LIB := ../core/core.a
 
-<<<<<<< HEAD
-SRC := get_line.c
-=======
-SRC :=	getline.c split_line.c \
+SRC :=	get_line.c split_line.c \
 		handle_quotes.c \
 		handle_redir_and_pipe.c
->>>>>>> 693c9d84674bb270523cb622de99ebbbbd0dd511
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
@@ -45,11 +41,7 @@ O :=\x1b[33;01m
 all: libft dslib corelib $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-<<<<<<< HEAD
 	$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB)
-=======
-	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT)
->>>>>>> 693c9d84674bb270523cb622de99ebbbbd0dd511
 
 libft: 
 	@make -s -C $(LIBFT_DIR)
@@ -71,8 +63,8 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-	@make -C $(LIBFT_DIR) clean
-	@make -C $(DS_DIR) clean
+	@make -C $(LIBFT_DIR) fclean
+	@make -C $(DS_DIR) fclean
 
 re: fclean all
 

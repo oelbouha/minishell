@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/08 12:10:45 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/08 13:00:42 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	my_redisplay(void)
 }
 int	startup_hook(const char *str, int n)
 {
-//	ft_printf("startup hook [%s] [%d]\n", str, n);
 	(void)str;
 	(void)n;
 	return (0);
@@ -45,7 +44,6 @@ void	*get_prompt(void)
 		len = ft_strlen(user) + 13;
 	if (wd)
 		len += ft_strlen(ft_strrchr(wd, '/') + 1) + 14 + 16;
-	printf("len: %d\n", len);
 	prompt = ft_calloc(1, len + 1);
 	i = ft_strlen("\x1b[34;01m[ ");
 	ft_memcpy(prompt, "\x1b[34;01m[ ", i);
@@ -63,11 +61,6 @@ void	*get_prompt(void)
 		ft_memcpy(&prompt[i], " ] \x1b[31;01m-〉\x1b[0m", len);
 	else
 		ft_memcpy(&prompt[i], " ] \x1b[32;01m-〉\x1b[0m", len);
-	printf("i: %d\n", i + len);
-	len = ft_strlen(user) + ft_strlen(ft_strrchr(wd, '/') + 1) + 14;
-	rl_display_prompt = ft_calloc(1, len + 1);
-	for (i = 0; i < len; i++)
-		rl_display_prompt[i] = '_';
 	return (prompt);
 	/*
 
@@ -115,9 +108,12 @@ int	main(int c, char **v, char **e)
 {
 	(void)c;
 	(void)v;
-	//temperary
 	setup(e);
-	char *line = get_line(0);
-	printf("%s\n", line);
+	while (1)
+	{
+		char *line = get_line(0);
+		ft_printf("line: <%s>\n", line);
+		split_line(line);
+	}
 	return (0);
 }
