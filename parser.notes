@@ -1,0 +1,71 @@
+
+
+
+[
+	compound:
+	[
+		simple:      -(&&)->	compound:
+		ls						[
+									simple:		-(&&)->	simple:
+									echo hello			cat < file > out
+								]
+	] >>out2
+	compound:
+	[
+		simple:		-(&&)->	simple:		-(||)->	simple:
+		cd /				ls					echo err
+	]
+	simple
+	echo last
+]
+
+
+enum e_command_type
+{
+	simple_cmd,
+	compound_cmd,
+}	t_cmd_type;
+
+enum e_cmd_exec_cond
+{
+	pipe,//0
+	and, //1
+	or
+}	t_cmd_exec_cond;
+
+
+union u_command
+{
+	simple_command;
+	compound_command;
+}	t_command_u;
+
+command
+{
+	command_union;
+	int		flag;
+}	t_command;
+
+simple_command
+{
+	char	*cmd_path;
+	char	**cmd_args;
+	int		args_count;
+	int		condition; //and | or | pipe
+	t_list	*redirs;
+}	t_simple_command;
+
+compound_command
+{
+	t_list	commands[];
+	int		count; // only count commands piped
+	t_list	redirs;
+}	t_compound_command;
+
+
+t_list	*entry;
+entry->content = (t_command *)cmd;
+
+void	*ptr;
+ptr = entry->content;
+if (((t_command *)ptr)->flag == simple_cmd)
