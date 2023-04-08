@@ -31,15 +31,16 @@ int	word_len(char *str)
 {
 	int	i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (str[i])
 	{
 		if (str[i] == ' ' || str[i] == '>' || str[i] == '<'
-			|| str[i] == '|' || str[i] == '\t' /*|| str[i] == 39 || str[i] == 34*/)
+			|| str[i] == '|' || str[i] == '\t' || str[i] == 39 || str[i] == 34)
 			return (i);
 		else if (BONUS && (str[i] == ')' || str[i] == '('
 			|| !ft_strncmp(&str[i], "&&", 2)))
 			return (i);
+		i++;
 	}
 	return (i);
 }
