@@ -20,8 +20,6 @@ void	test_env(int c, char **v)
 	(void)v;
 	set_env_var("USER", "youssef");
 	set_env_var("t", "");
-	t_keyvalue	*kv = get_env_var("USER");
-	printf("%s=>%s\n", kv->key, (char *)kv->value);
 	env(c, v);
 }
 

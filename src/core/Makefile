@@ -6,13 +6,13 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/07 16:30:14 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/07 17:44:05 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := core.a
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS := -Wall -Wextra -Werror 
 I := -I../../inc -I../../libft/inc -I../datastructures
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
@@ -30,8 +30,9 @@ SRC := builtins.c \
 		get_current_wd.c \
 		get_env_var.c \
 		set_env_var.c \
+		get_last_status.c \
 		utils.c \
-	#	test.c \
+#		test.c \
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))

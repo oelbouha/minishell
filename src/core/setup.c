@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/07 15:44:29 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/07 18:02:20 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	setup(char *env[])
 	g_shell.builtins = construct_builtins_list();
 	if (g_shell.builtins == NULL)
 		return (ft_lstclear(&g_shell.env, (t_lstdel)destroy_keyvalue), 1);
-	g_shell.wd = get_current_wd();
+	g_shell.wd = getcwd(NULL, 0);
 	if (g_shell.wd == NULL)
 		return (1);
-	g_shell.last_stts = 0;
+	g_shell.last_stts = 1;
 	return (0);
 }

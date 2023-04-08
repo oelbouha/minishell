@@ -6,13 +6,18 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/07 15:48:05 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/07 17:28:22 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
-t_keyvalue	*get_env_var(char *key)
+char	*get_env_var(char *key)
 {
-	return (find_in_dictionary(g_shell.env, key));
+	t_keyvalue	*kv;
+
+	kv = find_in_dictionary(g_shell.env, key);
+	if (kv == NULL)
+		return (NULL);
+	return (ft_strdup((char *)kv->value));
 }

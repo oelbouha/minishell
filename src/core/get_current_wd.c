@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:11:29 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/05 17:55:49 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/07 17:35:41 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 char	*get_current_wd(void)
 {
-	char	*ret;
-
 	if (g_shell.wd)
-		return (g_shell.wd);
-	ret = getcwd(NULL, 1024);
-	return (ret);
+		return (ft_strdup(g_shell.wd));
+	g_shell.wd = getcwd(NULL, 1024);
+	return (ft_strdup(g_shell.wd));
 }
