@@ -12,11 +12,6 @@
 
 #include "lexer.h"
 
-void	z(char *s)
-{
-	ft_printf("%s\n", s);
-}
-
 void	print(t_list *lst)
 {
 	t_list *temp;
@@ -59,41 +54,37 @@ int	and_or_handler(t_list **lst, char *str, int *err)
 	return (2);
 }
 
-t_list	*split_line_to_tokens(t_lexer *lexer, char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == SPACE || s[i] == TAB)
-			i++;
-		else if (BONUS
-			&& (!ft_strncmp(&s[i], "||", 2) || !ft_strncmp(&s[i], "&&", 2)))
-			i += and_or_handler(&lexer->lst, &s[i], &lexer->error);
-		else if (BONUS && (s[i] == '(' || s[i] == ')'))
-			i += handle_parenthesis(&lexer->lst, &s[i], &lexer->error);
-		else if (s[i] == SINGLE_QUOTE || s[i] == DOUBLE_QUOTE)
-			i += handle_quotes(&lexer->lst, &s[i], &lexer->error);
-		else if (s[i] == '>' || s[i] == '<' || s[i] == '|')
-			i += handle_redir_and_pipe(&lexer->lst, &s[i], &lexer->error);
-		else
-			i += simple_word(&lexer->lst, &s[i], &lexer->error);
-		if (lexer->error == 1)
-		{
-			ft_lstclear(&lexer->lst, free_lst_content);
-			return (NULL);
-		}
-	}
-	return (lexer->lst);
-}
 
 t_list	*split_line(char *line)
 {
-	t_lexer lexer;
+	t_list	*lst;
+	int		error;
+	int		i;
 
-	lexer.lst = NULL;
-	lexer.error = 0;
-	return (split_line_to_tokens(&lexer, line));
+	lst = NULL;
+	error = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == SPACE || line[i] == TAB)
+			i++;
+		else if (BONUS
+			&& (!ft_strncmp(&line[i], "||", 2) || !ft_strncmp(&line[i], "&&", 2)))
+			i += and_or_handler(&lst, &line[i], &error);
+		else if (BONUS && (line[i] == '(' || line[i] == ')'))
+			i += handle_parenthesis(&lst, &line[i], &error);
+		else if (line[i] == SINGLE_QUOTE || line[i] == DOUBLE_QUOTE)
+			i += handle_quotes(&lst, &line[i], &error);
+		else if (line[i] == '>' || line[i] == '<' || line[i] == '|')
+			i += handle_redir_and_pipe(&lst, &line[i], &error);
+		else
+			i += simple_word(&lst, &line[i], &error);
+		if (error == 1)
+		{
+			ft_lstclear(&lst, free);
+			return (NULL);
+		}
+	}
+	return (lst);
 }
 

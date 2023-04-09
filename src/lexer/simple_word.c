@@ -12,9 +12,8 @@
 
 #include "lexer.h"
 
-int	simple_word(t_list **lst, char *str, int *err)
+int	word_lenght(char *str)
 {
-	char	*token;
 	char	next_quote;
 	int		i;
 
@@ -32,6 +31,15 @@ int	simple_word(t_list **lst, char *str, int *err)
 		if (is_operator(str[i], str[i + 1]))
 			break ;
 	}
+	return (i);
+}
+
+int	simple_word(t_list **lst, char *str, int *err)
+{
+	char	*token;
+	int		i;
+
+	i = word_lenght(str);
 	token = ft_substr(str, 0, i);
 	if (!token)
 	{

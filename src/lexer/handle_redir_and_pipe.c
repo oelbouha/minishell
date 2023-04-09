@@ -20,8 +20,10 @@ int	handle_redir_and_pipe(t_list **lst, char *str, int *err)
 
 	i = 0;
 	next_char = str[i];
-	while (str[i] && str[i] == next_char)
-		i++;
+	if (str[i + 1] == next_char)
+		i = 2;
+	else
+		i = 1;
 	token = ft_substr(str, 0, i);
 	if (!token)
 	{
