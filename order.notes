@@ -1,0 +1,23 @@
+
+
+
+
+read
+@
+split
+analyse
+@
+parse
+@
+execute
+free allocated mem
+
+
+while (1)
+{
+	tokens = lexer(&err)
+	tree   = parser(tokens)
+	if (!err)
+		execute(tree)
+	free_tree(tree);
+}

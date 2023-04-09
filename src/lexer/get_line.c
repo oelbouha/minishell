@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/08 19:55:03 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/09 14:57:03 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	startup_hook(const char *str, int n)
 }
 void	configure_readline(void)
 {
-	rl_redisplay_function = my_redisplay;
-	rl_startup_hook = startup_hook;
+	//rl_redisplay_function = my_redisplay;
 	return ;
 }
 

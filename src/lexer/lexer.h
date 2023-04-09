@@ -6,19 +6,19 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:14:18 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/08 13:53:32 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/09 22:08:32 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef READER_H
 #  define READER_H
 
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <dirent.h>
-# include <stdio.h>
 # include <sys/errno.h>
 # include "core.h"
 
@@ -30,9 +30,13 @@ typedef struct s_lexer
 
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
-# define SPACE 32
-# define TAB 9
-# define BONUS 1
+# define BONUS 0
+# ifndef SPACE
+#  define SPACE ' '
+# endif
+# ifndef TAB
+#  define TAB '\t'
+# endif
 
 typedef unsigned long long	t_ull;
 

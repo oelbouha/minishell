@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/08 14:12:47 by oelbouha         ###   ########.fr        #
+#    Updated: 2023/04/09 22:06:47 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME := lexer
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 I := -I../../inc -I../../libft/inc -I../core
-READLINE := -lreadline
+READLINE := -lreadline -I/goinfre/ysalmi/brew/opt/readline/include \
+	-L/goinfre/ysalmi/brew/opt/readline/lib
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
 DS_DIR := ../datastructures
@@ -43,7 +44,7 @@ O :=\x1b[33;01m
 
 all: libft dslib corelib $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) lexer.h
 	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB)
 
 libft: 
@@ -59,6 +60,9 @@ obj/%.o: %.c
 	@mkdir -p $(shell dirname $@)
 	@$(CC) $(CFLAGS) $I -c $< -o $@
 
+test: libft dslib corelib
+	@$(CC) $(CFLAGS) $(READLINE) $I  get_line.c $(LIBFT) $(DS_LIB) $(CORE_LIB) -o $@
+	
 clean:
 	@rm -rf obj/
 	@make -C $(LIBFT_DIR) clean
@@ -67,6 +71,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
+	@rm -rf test
 	@make -C $(LIBFT_DIR) fclean
 	@make -C $(CORE_DIR) fclean
 	@make -C $(DS_DIR) fclean
