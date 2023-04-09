@@ -22,11 +22,6 @@ int		is_operator(char c, char s)
 	return (0);
 }
 
-void	free_lst_content(void *content)
-{
-	free (content);
-}
-
 int	word_len(char *str)
 {
 	int	i;

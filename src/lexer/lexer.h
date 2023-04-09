@@ -22,12 +22,6 @@
 # include <sys/errno.h>
 # include "core.h"
 
-typedef struct s_lexer
-{
-	t_list *lst;
-	int		error;
-}	t_lexer;
-
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
 # define BONUS 0
