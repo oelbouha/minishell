@@ -256,7 +256,7 @@ cat file >> dupfile && ls dupfile
 	}
 }
 
-czt << end
+czt << end << end2 << end3
 {
 	content:
 	{
@@ -267,7 +267,7 @@ czt << end
 		simple,
 		1,
 		NONE,
-		{heredoc: fd[5]}
+		{heredoc: fd:-1}->{heredoc: fd:-1}->{heredoc: fd:5}
 	}
 }
 
