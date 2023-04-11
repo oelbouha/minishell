@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/10 14:17:17 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/10 15:44:11 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ struct s_simple_cmd
 
 struct s_compound_cmd
 {
-	t_list	*cmds[];
+	t_list	*cmds;
 	int		parentheses;
 };
 
