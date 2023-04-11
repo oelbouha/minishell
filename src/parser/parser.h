@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/10 15:44:11 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/11 14:21:52 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_compound_cmd	t_compound_cmd;
 typedef union u_redir			t_redir_u;
 typedef struct s_redir			t_redir;
 typedef struct s_file_redir		t_file_redir;
+typedef struct s_heredoc		t_heredoc;
 
 union u_cmd
 {
@@ -75,7 +76,7 @@ struct s_compound_cmd
 union u_redir
 {
 	t_file_redir	*redir;
-	int				fd;
+	t_heredoc		*doc;
 };
 
 struct s_redir
@@ -89,6 +90,12 @@ struct s_file_redir
 	char	*file;
 	int		to;
 	int		append;
+};
+
+struct s_heredoc
+{
+	int	fd;
+	int	expand;
 };
 
 #endif

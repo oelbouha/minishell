@@ -1,0 +1,4 @@
+heredoc:
+	if there is quotation of any sort in the limiter
+	DO NOT EXPAND: meaning set no expansion in struct
+	DO NOT EXPAND HEREDOC LIMMITER
