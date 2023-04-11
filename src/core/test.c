@@ -10,7 +10,7 @@ void	test_unset(int c, char **v);
 int	main(int c, char **v, char **e)
 {
 	printf("bootstraping... [%d]\n", setup(e));
-	test_export(c, v);
+	test_cd(c, v);
 	return (0);
 }
 
@@ -40,10 +40,8 @@ void	test_builtins(int c, char **v)
 }
 void	test_cd(int c, char **v)
 {
-	(void)c;
-	(void)v;
 	printf("wd: %s\n", g_shell.wd);
-	cd(1, NULL);
+	cd(c, v);
 	char *p[2];
 	p[0] = "ls";
 	p[1] = NULL;

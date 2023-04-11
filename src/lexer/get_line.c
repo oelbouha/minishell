@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/11 18:21:02 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/11 19:42:40 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,15 @@ char	*read_line(t_ull state)
 	if (state == 0)
 		configure_readline();
 	prompt = get_prompt();
-	if (prompt)
-		line = readline(prompt);
-	else
-		line = readline("→ ");
+	line = NULL;
+	while (line == NULL || *line == 0)
+	{
+		if (prompt)
+			line = readline(prompt);
+		else
+			line = readline("→ ");
+	}
+	add_history(line);
 	return (line);
 }
 
@@ -95,9 +100,10 @@ int	main(int c, char **v, char **e)
 	setup(e);
 	while (1)
 	{
-		char *line = get_line(0);
-		split_line(line);
+		char *line = read_line(0);
+		ft_printf("line: [%s]\n", line);
 		set_last_status(get_last_status()?0:1);
+		free(line);
 	}
 	return (0);
 }

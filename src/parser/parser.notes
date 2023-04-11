@@ -292,3 +292,14 @@ loop{
 	}
 	next
 }
+
+
+// heredoc
+fd = read_heredoc(limiter);
+heredoc_redir = new_heredoc_redirection(fd, expand: is_subset(limiter, "\"'"));
+ft_lstadd_back(cmd->redirs, heredoc_redir);
+
+
+
+
+
