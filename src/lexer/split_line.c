@@ -131,31 +131,3 @@ t_list	*split_line(char *line)
 	return (lst);
 }
 
-/*
-
-// line full of spaces  [node->content = NULL]
-// failed allocation	[NULL]
-
-t_list *token;
-loop(*line)
-{
-	token = get_token(...); // if null error
-	if (token == NULL)
-		return (ft_lstclear(&list), NULL);
-	else if ()
-	
-}
-
-
-
-loop
-{
-	list = lexer(&err);
-	tree = parse(list);
-	if (err == 0)
-		execute(tree);
-	free(tree)
-}
-
-
-*/

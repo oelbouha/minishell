@@ -281,14 +281,14 @@ loop{
 		else
 		{
 			close heredoc_node->fd
-			heredoc_node->fd = -1;
+			heredoc_node->fd = -1;// delete heredoc_node from redir list;
 			set heredoc_node
 		}
 		construct pipe
 		read from 0
 		write to pipe[1]
 		close pipe[1]
-		heredoc_node->fd = pipe[0];
+		heredoc_node->fd = ppe[i0];
 	}
 	next
 }
@@ -296,7 +296,7 @@ loop{
 
 // heredoc
 fd = read_heredoc(limiter);
-heredoc_redir = new_heredoc_redirection(fd, expand: is_subset(limiter, "\"'"));
+heredoc_redir = new_heredoc_redirection(fd, expand: ft_issubset(limiter, "\"'"));
 ft_lstadd_back(cmd->redirs, heredoc_redir);
 
 

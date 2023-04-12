@@ -20,7 +20,6 @@
 
 int	setup(char *env[])
 {
-	ft_bzero(&g_shell, sizeof(t_shell));
 	g_shell.env = new_dictionary(env, '=');
 	if (g_shell.env == NULL)
 		return (1);
