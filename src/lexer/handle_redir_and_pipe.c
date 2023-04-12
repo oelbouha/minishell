@@ -12,24 +12,19 @@
 
 #include "lexer.h"
 
-int	handle_redir_and_pipe(t_list **lst, char *str, int *err)
+int	handle_redir_and_pipe(char *str)
 {
-	char	*token;
 	char	next_char;
 	int		i;
 
 	i = 0;
 	next_char = str[i];
+	if (next_char == '|')
+		return (1);
 	if (str[i + 1] == next_char)
 		i = 2;
 	else
 		i = 1;
-	token = ft_substr(str, 0, i);
-	if (!token)
-	{
-		*err = 1;
-		return (1);
-	}
-	ft_lstadd_back(lst, ft_lstnew(token));
 	return (i);
 }
+

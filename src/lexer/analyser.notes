@@ -29,4 +29,7 @@
 word:
 	after ')'  : syntax error near unexpected token `word'
 >/<:	
+	after >/<  : syntax error near unexpected token `|'
 	last token : syntax error: unexpected end of file
+
+

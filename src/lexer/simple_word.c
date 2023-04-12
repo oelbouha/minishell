@@ -34,19 +34,11 @@ int	word_lenght(char *str)
 	return (i);
 }
 
-int	simple_word(t_list **lst, char *str, int *err)
+int	simple_word(char *str)
 {
-	char	*token;
 	int		i;
 
 	i = word_lenght(str);
-	token = ft_substr(str, 0, i);
-	if (!token)
-	{
-		*err = 1;
-		return (i);
-	}
-	ft_lstadd_back(lst, ft_lstnew(token));
 	return (i);
 }
 

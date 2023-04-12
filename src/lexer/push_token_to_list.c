@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_quotes.c                                    :+:      :+:    :+:   */
+/*   push_token_to_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 21:35:15 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/04/08 13:57:16 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/10 13:33:56 by oelbouha          #+#    #+#             */
+/*   Updated: 2023/04/10 13:33:57 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-int	handle_quotes(char *str)
+int	push_token_to_list(t_list **lst, char *token, int *err)
 {
-	char	next_quote;
-	int		i;
+	t_list	*node;
 
-	i = 0;
-	while (str[i])
+	node = ft_lstnew(token);
+	if (node == NULL)
 	{
-		if (str[i] == SINGLE_QUOTE || str[i] == DOUBLE_QUOTE)
-		{
-			next_quote = str[i];
-			while (str[++i] && str[i] != next_quote)
-				;
-			i++;
-		}
-		if (is_operator(str[i], str[i + 1]))
-			break ;
-		i += word_len(&str[i]);
+		free(token);
+		*err = 1;
+		return (1);
 	}
-	return (i);
+	ft_lstadd_back(lst, node);
+	return (0);
 }

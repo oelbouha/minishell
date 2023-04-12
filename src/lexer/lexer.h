@@ -24,7 +24,7 @@
 
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
-# define BONUS 0
+# define BONUS 1
 # ifndef SPACE
 #  define SPACE ' '
 # endif
@@ -39,10 +39,15 @@ void		configure_readline(void);
 void		free_lst_content(void *content);
 char		*get_input(t_ull state);
 int			word_len(char *str);
-int			handle_quotes(t_list **lst, char *str, int *err);
-int			handle_redir_and_pipe(t_list **lst, char *str, int *err);
-int			simple_word(t_list **lst, char *str, int *err);
+int			is_and_or(char *str);
+void		print_error_msg(char *token);
+int			handle_quotes(char *str);
+int			handle_redir_and_pipe(char *str);
+int			simple_word(char *str);
+int			push_token_to_list(t_list **lst, char *token, int *err);
+int			check_syntax_error(t_list *lst, char *token);
 int			word_len(char *str);
+int			is_redir(char *token);
 int			is_operator(char c, char s);
 t_list		*split_line(char *line);
 

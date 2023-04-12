@@ -28,7 +28,9 @@ SRC :=	split_line.c \
 		handle_redir_and_pipe.c \
 		main.c	\
 		utils.c	\
-		simple_word.c
+		simple_word.c \
+		check_syntax_error.c \
+		push_token_to_list.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
@@ -44,7 +46,7 @@ O :=\x1b[33;01m
 
 all: libft dslib corelib $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) lexer.h
+$(NAME): $(OBJ) lexer.h
 	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB)
 
 libft: 
