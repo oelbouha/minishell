@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/07 17:44:05 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/11 19:49:54 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC := builtins.c \
 		get_env_var.c \
 		set_env_var.c \
 		get_last_status.c \
+		set_last_status.c \
 		utils.c \
 #		test.c \
 
@@ -48,8 +49,10 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@ar -rcs $@ $^
 
-$(NAME)o: $(OBJ) $(LIBFT) $(DS_LIB)
-	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB)
+test: libft dslib core_test
+
+core_test: obj/test.o $(OBJ) $(LIBFT) $(DS_LIB)
+	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(OBJ) $(LIBFT) $(DS_LIB)
 
 libft: 
 	@make -s -C $(LIBFT_DIR)
@@ -75,4 +78,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all lib clean fclean re
+.PHONY: all lib clean fclean re test

@@ -69,3 +69,237 @@ entry->content = (t_command *)cmd;
 void	*ptr;
 ptr = entry->content;
 if (((t_command *)ptr)->flag == simple_cmd)
+
+
+export a="lksjdklfj'lksdfs"
+
+
+lsfd || echof hello | echo hello > file | skldjfkls  && echo hi
+
+[lsfd]->(or)[echof hello, echo hello > file, skldjfkls]->(and)[echo hi]
+
+{//t_list
+	content:
+	{//t_cmd
+		{//simple_cmd
+			lsfd
+			[lsfd]
+		},
+		1,
+		simple_cmd,
+		NONE,
+		NULL
+	}
+	next:
+	{//t_list
+		content:
+		{//t_cmd
+			{//compound_cmd
+				[
+					{//t_list
+						content:
+						{//t_cmd
+							{//simple
+								echof,
+								[echof, hello],
+							}
+							2,
+							simple_cmd,
+							NONE,
+							NULL
+						}
+						next: NULL
+					},
+					{//t_list
+						content:
+						{//t_cmd
+							{//simple
+								echo,
+								[echo, hello]
+							}
+							2,
+							simple_cmd,
+							NONE,
+							{file-out: file}->NULL,
+						}
+						next: NULL
+					},
+					{//t_list
+						content:
+						{//cmd
+							{//simple
+								skldjfkls,
+								[skldjfkls]
+							},
+							1,
+							simple_cmd,
+							NONE,
+							NULL
+						}
+
+					}
+					next: NULL
+				],
+				0
+			},
+			3,
+			compound_cmd,
+			OR,
+			NULL
+		},
+		next:
+		{//t_list
+			content:
+			{//t_cmd
+				{//simple
+					echo,
+					[echo, hi]
+				},
+				2,
+				simple_cmd,
+				AND,
+				NULL
+			}
+			next: NULL
+		}
+	}
+}
+
+
+ls | cat | tr a-z A-Z
+{//t_list
+	content:
+	{
+		{//compound
+			[
+				{
+					content:
+					{
+						{
+							/bin/ls,
+							[ls]
+						},
+						simple,
+						1,
+						NONE,
+						NULL,
+					}
+					next: NULL
+				},
+				{
+					content:
+					{
+						{
+							/bin/cat,
+							[cat]
+						}
+						simple,
+						1,
+						NONE,
+						NULL
+					},
+					next: NULL
+				},
+				{//
+					content:
+					{
+						{
+							/bin/tr,
+							[tr, a-z, A-Z]
+						},
+						simple,
+						3,
+						NONE,
+						NULL
+					},
+					next: NULL
+				}
+			],
+			0
+		},
+		compound,
+		3,
+		NONE,
+		NULL,
+	}
+	next: NULL
+}
+
+cat file >> dupfile && ls dupfile
+
+{//t_list
+	content:
+	{
+		{
+			/bin/cat,
+			[cat, file]
+		},
+		simple,
+		2,
+		NONE,
+		{file-out-append: dupfile}->null
+	}
+	next:
+	{
+		content:
+		{
+			{
+				/bin/ls,
+				[ls, dupfile]
+			},
+			simple,
+			2,
+			AND,
+			NULL,
+		}
+		next: NULL
+	}
+}
+
+czt << end << end2 << end3
+{
+	content:
+	{
+		{
+			NULL,
+			[czt]
+		}
+		simple,
+		1,
+		NONE,
+		{heredoc: fd:-1}->{heredoc: fd:-1}->{heredoc: fd:5}
+	}
+}
+
+
+// heredoc handler
+loop{
+	if (redir is a heredoc)
+	{
+		if (heredoc_node is not set (NULL))
+			set heredoc_node
+		else
+		{
+			close heredoc_node->fd
+			heredoc_node->fd = -1;
+			set heredoc_node
+		}
+		construct pipe
+		read from 0
+		write to pipe[1]
+		close pipe[1]
+		heredoc_node->fd = pipe[0];
+	}
+	next
+}
+
+
+// heredoc
+fd = read_heredoc(limiter);
+heredoc_redir = new_heredoc_redirection(fd, expand: is_subset(limiter, "\"'"));
+ft_lstadd_back(cmd->redirs, heredoc_redir);
+
+
+
+
+

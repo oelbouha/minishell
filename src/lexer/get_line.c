@@ -6,91 +6,74 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/09 14:57:03 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/11 19:42:40 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-void	my_redisplay(void)
-{
-	ft_printf("                         ");
-}
-int	startup_hook(const char *str, int n)
-{
-	(void)str;
-	(void)n;
-	return (0);
-}
 void	configure_readline(void)
 {
-	//rl_redisplay_function = my_redisplay;
 	return ;
+}
+
+char	*get_styled_user(int wd)
+{
+	static char		*styled_user;
+	static size_t	len;
+	char			*user;
+
+	if (styled_user == NULL)
+	{
+		user = get_env_var("USER");
+		if (user == NULL)
+			return (NULL);
+		len = ft_strlen(user) + ft_strlen("\x1b[34;01m[  ] \x1b[36;01m@[ ");
+		styled_user = malloc(256);
+		if (styled_user == NULL)
+			return (free(user), NULL);
+		ft_strlcat(styled_user, "\x1b[34;01m[ ", 256);
+		ft_strlcat(styled_user, user, 256);
+		ft_strlcat(styled_user, " ]", 256);
+		free(user);
+	}
+	if (wd && len > ft_strlen(styled_user))
+		ft_strlcat(styled_user, " \x1b[36;01m@[ ", 256);
+	else if (wd == 0 && len == ft_strlen(styled_user))
+		styled_user[ ft_strrchr(styled_user, ']') - styled_user + 1 ] = 0;
+	return (styled_user);
 }
 
 void	*get_prompt(void)
 {
 	char	*prompt;
-	char	*user;
 	char	*wd;
-	int		len;;
-	int		i;
 
-	user = get_env_var("USER");
 	wd = get_current_wd();
-	len = 0;
-	if (user)
-		len = ft_strlen(user) + 13;
-	if (wd)
-		len += ft_strlen(ft_strrchr(wd, '/') + 1) + 14 + 16;
-	prompt = ft_calloc(1, len + 1);
-	i = ft_strlen("\x1b[34;01m[ ");
-	ft_memcpy(prompt, "\x1b[34;01m[ ", i);
-	len = ft_strlen(user);
-	ft_memcpy(&prompt[i], user, len);
-	i += len;
-	len = ft_strlen(" ] \x1b[36;01m@[ ");
-	ft_memcpy(&prompt[i], " ] \x1b[36;01m@[ ", len);
-	i += len;
-	len = ft_strlen(ft_strrchr(wd, '/') + 1);
-	ft_memcpy(&prompt[i], ft_strrchr(wd, '/') + 1, len);
-	i += len;
-	len = ft_strlen(" ] ▌→\x1b[31;01m→ \x1b[0m");
-	if (get_last_status())
-		ft_memcpy(&prompt[i], " ] ▌\x1b[31;01m→ \x1b[0m", len);
-	else
-		ft_memcpy(&prompt[i], " ] ▌\x1b[32;01m→ \x1b[0m", len);
-	return (prompt);
-	/*
-
-
-	if (v)
-		ft_printf("\x1b[34;01m[ %s ] ", v);
-	free(v);
-	v = get_current_wd();
-	if (v)
+	if (ft_strlen(ft_strrchr(wd, '/')) > 70)
 	{
-		ft_printf("\x1b[36;01m@[ %s ] ", &v[i + 1]);
+		free(wd);
+		wd = NULL;
 	}
-	free(v);
-	if (get_last_status())
-		ft_printf("\x1b[31;01m");
+	prompt = get_styled_user(wd != NULL);
+	if (prompt == NULL)
+		return (free(wd), NULL);
+	if (wd && ft_strchr(prompt, '@'))
+	{
+		prompt[ft_strchr(prompt, '@') - prompt + 3] = 0;
+		ft_strlcat(prompt, ft_strrchr(wd, '/') + 1, 256);
+		ft_strlcat(prompt, " ]", 256);
+	}
 	else
-		ft_printf("\x1b[32;01m");
-		*/
+		prompt[ft_strchr(prompt, ']') - prompt + 1] = 0;
+	if (get_last_status())
+		ft_strlcat(prompt, " ▌\x1b[31;01m→ \x1b[0m", 256);
+	else
+		ft_strlcat(prompt, " ▌\x1b[32;01m→ \x1b[0m", 256);
+	return (free(wd), prompt);
 }
-//[ ysalmi ] @[ lexer ] -〉fdkjfd                      
-/*
- *		Description
- *
- *	@params:
- *		@state: indicate if it's the first call to the function (state = 0)
- *	
- *	@return:
- *		returns the line read
- */
 
-char	*get_line(t_ull state)
+char	*read_line(t_ull state)
 {
 	char	*line;
 	char	*prompt;
@@ -98,8 +81,15 @@ char	*get_line(t_ull state)
 	if (state == 0)
 		configure_readline();
 	prompt = get_prompt();
-	line = readline(prompt);
-	free(prompt);
+	line = NULL;
+	while (line == NULL || *line == 0)
+	{
+		if (prompt)
+			line = readline(prompt);
+		else
+			line = readline("→ ");
+	}
+	add_history(line);
 	return (line);
 }
 
@@ -110,8 +100,10 @@ int	main(int c, char **v, char **e)
 	setup(e);
 	while (1)
 	{
-		char *line = get_line(0);
-		ft_printf("line: <%s>\n", line);
+		char *line = read_line(0);
+		ft_printf("line: [%s]\n", line);
+		set_last_status(get_last_status()?0:1);
+		free(line);
 	}
 	return (0);
 }
