@@ -6,35 +6,11 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/11 23:19:50 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/12 15:26:02 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
-
-/*
- *	check if str is a subset of set
- */
-
-int	is_subset(char *set, char *str)
-{
-	int	i;
-	int	j;
-	int	present;
-
-	i = -1;
-	while (str[++i])
-	{
-		present = 0;
-		j = -1;
-		while (set[++j])
-			if (set[j] == str[i])
-				present = 1;
-		if (present == 0)
-			return (0);
-	}
-	return (1);
-}
 
 int	cd_home(void)
 {
@@ -64,20 +40,35 @@ int	cd_home(void)
 	return (0);
 }
 
+void	cd_substitute(char *wd, char *sub)
+{
+	char	**names;
+	char	*str;
+	int		i;
+
+	names = ft_split(sub, '/');
+	i = -1;
+	while (names[++i])
+	{
+		str = ft_stristr(wd, names[i]);
+		if (str)
+			ft_memcpy(str, names[i], ft_strlen(names[i]));
+		free(names[i]);
+	}
+	free(names);
+}
+
 int	cd_path(char *path)
 {
 	char	*to;
 	int		err;
 
 	to = path;
-	if (is_subset("/", to))
+	if (ft_issubset("/", to))
 		to = "/";
 	err = chdir(to);
 	if (err)
-	{
-		msh_log("cd", strerror(errno), "", FALSE);
-		return (1);
-	}
+		return (msh_log("cd", strerror(errno), "", FALSE), 1);
 	free(g_shell.wd);
 	if (ft_strcmp(path, "//") == 0)
 		g_shell.wd = ft_strdup("//");
@@ -85,10 +76,8 @@ int	cd_path(char *path)
 	{
 		g_shell.wd = getcwd(NULL, 0);
 		if (g_shell.wd == NULL)
-		{
-			msh_log("cd", strerror(errno), "", FALSE);
-			return (1);
-		}
+			return (msh_log("cd", strerror(errno), "", FALSE), 1);
+		cd_substitute(g_shell.wd, to);
 	}
 	return (0);
 }

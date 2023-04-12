@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 12:44:13 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/07 11:38:15 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/12 15:22:38 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ size_t	ft_strlcpy(char *dst, char const *src, size_t size);
 size_t	ft_strlcat(char *dst, char const *src, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_issubset(char *set, char *str);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strrchr(const char *str, int c);
 char	*ft_strnstr(const char *big, const char *little, size_t n);
+char	*ft_stristr(const char *big, const char *little);
 char	*ft_strdup(const char *str);
 void	*ft_bzero(void *dst, size_t len);
 void	*ft_memset(void *dst, int c, size_t len);
