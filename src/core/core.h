@@ -23,5 +23,6 @@ t_list		get_builtins_list(void);
 char		*get_current_wd(void);
 int			get_last_status(void);
 int			set_last_status(unsigned char status);
+void		msh_err(char *msg, char *token);
 
 #endif

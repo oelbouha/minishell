@@ -34,6 +34,7 @@ void	print(t_list *lst)
 	if (!lst)
 		return ;
 	temp = lst;
+	printf("\n");
 	while (temp)
 	{
 		printf("token ===> %s\n",temp->content);
@@ -41,7 +42,7 @@ void	print(t_list *lst)
 	}
 }
 
-char	*create_token(char *str, int *err, int len)
+char	*get_token(char *str, int *err, int len)
 {
 	char	*token;
 
@@ -74,18 +75,17 @@ int	token_lenght(char *line)
 	return (len);
 }
 
-int check_last_node(t_list *lst)
+int analyse_last_node(t_list *lst)
 {
 	t_list	*node;
 
 	if (!lst)
 		return (0);
 	node = ft_lstlast(lst);
-	if (!ft_strcmp(node->content, "|") || is_redir(node->content)
-		|| (BONUS && (is_and_or(node->content)
+	if (cmp(node->content, "|:<<:<:>>:>") || (BONUS && (is_and_or(node->content)
 		|| !ft_strcmp(node->content, "("))))
 	{
-		print_error_msg(node->content);
+		msh_err("syntax error near unexpected token", node->content);
 		return (1);
 	}
 	return (0);
@@ -108,12 +108,11 @@ t_list	*split_line(char *line)
 		while (line[i] && (line[i] == SPACE || line[i] == TAB))
 			i++;
 		len = token_lenght(&line[i]);
-		token = create_token(&line[i], &error, len);
-		if (check_syntax_error(lst, token))
+		token = get_token(&line[i], &error, len);
+		if (analyze_syntax(lst, token))
 		{
 			free(token);
-			ft_lstclear(&lst, free);
-			return (NULL);
+			return (lst);
 		}
 		push_token_to_list(&lst, token, &error);
 		if (error == 1)
@@ -123,11 +122,8 @@ t_list	*split_line(char *line)
 		}
 		i += len;
 	}
-	if (check_last_node(lst))
-	{
-		ft_lstclear(&lst, free);
-		return (NULL);
-	}
+	if (analyse_last_node(lst))
+		return (lst);
 	return (lst);
 }
 
