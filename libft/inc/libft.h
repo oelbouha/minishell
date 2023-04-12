@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 12:44:13 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/03/24 17:49:14 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/12 15:22:38 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-enum e_bool
+typedef enum e_bool
 {
 	FALSE,
 	TRUE
-};
-typedef void 				(*t_lstdel)(void *);
+}	t_bool;
 typedef struct s_list
 {
 	void			*content;
@@ -39,6 +38,7 @@ typedef struct s_syntax
 	int		length;
 }	t_syntax;
 
+typedef void 				(*t_lstdel)(void *);
 /*****************************************************************************/
 /*	libft																	 */
 /*****************************************************************************/
@@ -54,9 +54,11 @@ size_t	ft_strlcpy(char *dst, char const *src, size_t size);
 size_t	ft_strlcat(char *dst, char const *src, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_issubset(char *set, char *str);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strrchr(const char *str, int c);
 char	*ft_strnstr(const char *big, const char *little, size_t n);
+char	*ft_stristr(const char *big, const char *little);
 char	*ft_strdup(const char *str);
 void	*ft_bzero(void *dst, size_t len);
 void	*ft_memset(void *dst, int c, size_t len);
