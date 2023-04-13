@@ -32,6 +32,8 @@ int	redir_errors(t_list *lst)
 {
 	t_list *node;
 
+	if (!lst)
+		return (1);
 	node = ft_lstlast(lst);
 	if (node)
 		return (ft_templatecmp(node->content, ">>:>:<<:<", ':'));
@@ -42,9 +44,9 @@ int	pipe_errors(t_list *lst)
 {
 	t_list *node;
 
-	node = ft_lstlast(lst);
 	if (!lst)
 		return (1);
+	node = ft_lstlast(lst);
 	if (node)
 		return (ft_templatecmp(node->content, ">>:>:<<:<:(:):||:&&", ':'));
 	return (0);

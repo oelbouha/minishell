@@ -45,14 +45,33 @@ int	closed_parentheses_errors(t_list *lst)
 	if (!lst)
 		return (1);
 	if (node)
+	{
 		return (ft_templatecmp(node->content, ">>:>:<<:<:(:||:&&:|", ':'));
+	}
 	return (0);
 }
 
-/*
-cant_be_last();
-if last is word: check for quotes
-*/
+int check_unclosed_parentheses(t_list *lst)
+{
+	t_list	*curr;
+	int		count;
+
+	count = 0;
+	curr = lst;
+	while (curr != NULL)
+	{
+		if(ft_strcmp(curr->content, "(") == 0)
+			count++;
+		else if(ft_strcmp(curr->content, ")") == 0)
+			count--;
+		if (count < 0)
+			return (1);
+		curr = curr->next;
+	}
+	if (count != 0)
+		return (1);
+	return (0);
+}
 
 int analyse_last_node(t_list *lst, int err)
 {
@@ -61,6 +80,11 @@ int analyse_last_node(t_list *lst, int err)
 	if (!lst)
 		return (0);
 	last = ft_lstlast(lst);
+	if(check_unclosed_parentheses(lst) || check_unclosed_quotes(last->content))
+	{
+		msh_err("syntax error near unexpected token", last->content);
+		return (1);
+	}
 	if (cant_be_last(last->content))
 	{
 		if (err != 2)
@@ -93,9 +117,6 @@ int	analyze_syntax(t_list *lst, char *token)
 	else
 		err = simple_word_errors(lst);
 	if (err == 1)
-	{
-		msh_err("syntax error near unexpected token", token);
-		return (1);
-	}
+		return (msh_err("syntax error near unexpected token", token), 1);
 	return (0);
 }
