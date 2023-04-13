@@ -14,8 +14,11 @@
 
 int	cmp(char *str, char *template)
 {
-	int	i = 0;
-	int	len = ft_strlen(str);
+	int	i;
+	int	len;
+	
+	i = 0;
+	len = ft_strlen(str);
 	while (template[i])
 	{
 		if (ft_strncmp(str, &template[i], len) == 0)
@@ -58,7 +61,10 @@ int	opened_parentheses_errors(t_list *lst)
 
 	node = ft_lstlast(lst);
 	if (node)
-		return (cmp(node->content, ">>:>:<<:<:)"));
+	{
+		if (cmp(node->content, ">>:>:<<:<:)"))
+			return (1);
+	}
 	return (0);
 }
 
@@ -90,7 +96,8 @@ int	simple_word_errors(t_list *lst)
 
 	node = ft_lstlast(lst);
 	if (node)
-		return (cmp(node->content, ")"));
+		if (ft_strcmp(node->content, ")") == 0)
+			return (1);
 	return (0);
 }
 
@@ -103,9 +110,9 @@ int	analyze_syntax(t_list *lst, char *token)
 	err = 0;
 	if (ft_strcmp(token, "|") == 0)
 		err = pipe_errors(lst);
-	else if (is_redir(token))
+	else if (cmp(token, "<<:<:>>:>"))
 		err = redir_errors(lst);
-	else if (BONUS && is_and_or(token))
+	else if (BONUS && (!ft_strcmp(token, "||") || !ft_strcmp(token, "&&")))
 		err = and_or_errors(lst);
 	else if (BONUS && ft_strcmp(token, "(") == 0)
 		err = opened_parentheses_errors(lst);

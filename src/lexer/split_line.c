@@ -62,7 +62,7 @@ int	token_lenght(char *line)
 	int	len;
 
 	len = 0;
-	if (BONUS && is_and_or(line))
+	if (BONUS && (!ft_strncmp(line, "||", 2) || !ft_strncmp(line, "&&", 2)))
 		len = 2;
 	else if (BONUS && (line[0] == '(' || line[0] == ')'))
 		len = 1;
@@ -82,8 +82,8 @@ int analyse_last_node(t_list *lst)
 	if (!lst)
 		return (0);
 	node = ft_lstlast(lst);
-	if (cmp(node->content, "|:<<:<:>>:>") || (BONUS && (is_and_or(node->content)
-		|| !ft_strcmp(node->content, "("))))
+	if (cmp(node->content, "<<:>>:>:|:<:")
+		|| (BONUS && cmp(node->content, "||:&&:(:")))
 	{
 		msh_err("syntax error near unexpected token", node->content);
 		return (1);

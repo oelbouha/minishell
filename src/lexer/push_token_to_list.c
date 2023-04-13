@@ -24,5 +24,10 @@ int	push_token_to_list(t_list **lst, char *token, int *err)
 		return (1);
 	}
 	ft_lstadd_back(lst, node);
+	if (check_quotes(token))
+	{
+		node = ft_lstnew(ft_strdup("NULL"));
+		ft_lstadd_back(lst, node);
+	}
 	return (0);
 }

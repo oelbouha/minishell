@@ -51,6 +51,7 @@ int			is_redir(char *token);
 int			is_operator(char c, char s);
 int			cmp(char *str, char *template);
 t_list		*split_line(char *line);
+int			check_quotes(char *line);
 
 #endif
 

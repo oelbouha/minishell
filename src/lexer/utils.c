@@ -29,8 +29,7 @@ int	word_len(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == ' ' || str[i] == '>' || str[i] == '<'
-			|| str[i] == '|' || str[i] == '\t' || str[i] == '"' || str[i] == '\'')
+		if (ft_strchr(" ><|\t\"'", str[i]))
 			return (i);
 		else if (BONUS && (str[i] == ')' || str[i] == '('
 			|| !ft_strncmp(&str[i], "&&", 2)))
