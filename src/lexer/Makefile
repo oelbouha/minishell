@@ -6,27 +6,42 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/11 15:34:13 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/13 12:21:32 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := lexer
+# **************************************************************************** #
+N :=\x1b[0m
+G :=\x1b[32;01m
+R :=\x1b[31;01m
+B :=\x1b[43;01m
+O :=\x1b[33;01m
+# **************************************************************************** #
+
+NAME := lexer.a
+
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-I := -I../../inc -I../../libft/inc -I../core
-READLINE := -lreadline -I/goinfre/$(USER)/brew/opt/readline/include \
-	-L/goinfre/$(USER)/brew/opt/readline/lib
+I := -I../../inc \
+		-I../../libft/inc \
+		-I../core
+READLINE := -lreadline \
+		-I/goinfre/$(USER)/brew/opt/readline/include \
+		-L/goinfre/$(USER)/brew/opt/readline/lib
+
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
+
 DS_DIR := ../datastructures
 DS_LIB := ../datastructures/datastructures.a
+
 CORE_DIR := ../core
 CORE_LIB := ../core/core.a
 
-SRC :=	split_line.c \
+SRC :=	get_line.c \
+		split_line.c \
 		handle_quotes.c \
 		handle_redir_and_pipe.c \
-		main.c	\
 		utils.c	\
 		simple_word.c \
 		analyzer.c \
@@ -34,21 +49,18 @@ SRC :=	split_line.c \
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
-echo:
-	@echo $(USER)
 
 
+lexer: main.c libft dslib corelib $(NAME)
+	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(NAME) $(LIBFT) $(DS_LIB) $(CORE_LIB)
+	
+test: $(MAIN).c libft dslib corelib $(NAME)
+	$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(NAME) $(LIBFT) $(DS_LIB) $(CORE_LIB)
 
-N :=\x1b[0m
-G :=\x1b[32;01m
-R :=\x1b[31;01m
-B :=\x1b[43;01m
-O :=\x1b[33;01m
+all: $(NAME)
 
-all: libft dslib corelib $(NAME)
-
-$(NAME): $(OBJ) lexer.h
-	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB)
+$(NAME): $(OBJ)
+	@ar rcs $@ $(OBJ)
 
 libft: 
 	@make -s -C $(LIBFT_DIR)
@@ -63,9 +75,6 @@ obj/%.o: %.c lexer.h
 	@mkdir -p $(shell dirname $@)
 	@$(CC) $(CFLAGS) $I -c $< -o $@
 
-test: libft dslib corelib
-	@$(CC) $(CFLAGS) $(READLINE) $I  get_line.c $(LIBFT) $(DS_LIB) $(CORE_LIB) -o $@
-	
 clean:
 	@rm -rf obj/
 	@make -C $(LIBFT_DIR) clean
@@ -73,7 +82,7 @@ clean:
 	@make -C $(DS_DIR) clean
 
 fclean: clean
-	@rm -rf $(NAME)
+	@rm -rf $(NAME) test
 	@rm -rf test
 	@make -C $(LIBFT_DIR) fclean
 	@make -C $(CORE_DIR) fclean

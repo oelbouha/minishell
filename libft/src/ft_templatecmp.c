@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_redirection.c                                  :+:      :+:    :+:   */
+/*   ft_templatecmp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 21:57:52 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/13 12:59:39 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/13 13:16:17 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/13 13:55:51 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_types.h"
+#include "libft.h"
 
-t_redir	*new_redirection(t_redir_type type, char *arg)
+int	ft_templatecmp(char *str, char *template, char delimiter)
 {
-	t_redir	*r;
+	int	i;
+	int	len;
 
-	r = ft_calloc(1, sizeof(t_redir));
-	if (r == NULL)
-		return (NULL);
-	r->type = type;
-	if (type == FILE_IN || type == FILE_OUT || type == FILE_APPEND)
-		r->to.file = arg;
-	return (r);
+	i = 0;
+	len = ft_strlen(str);
+	while (template[i])
+	{
+		if (ft_strncmp(str, &template[i], len) == 0)
+			if (template[i + len] == delimiter || template[i + len] == 0)
+				return (1);
+		while (template[i] && template[i] != delimiter)
+			i++;
+		i++;
+	}
+	return (0);
 }

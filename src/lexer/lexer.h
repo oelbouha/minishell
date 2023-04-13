@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:14:18 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/11 15:54:09 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/13 12:20:45 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef unsigned long long	t_ull;
 void		print(t_list *lst);
 void		configure_readline(void);
 void		free_lst_content(void *content);
-char		*get_input(t_ull state);
+char		*read_line(t_ull state);
 int			word_len(char *str);
 int			is_and_or(char *str);
 void		print_error_msg(char *token);

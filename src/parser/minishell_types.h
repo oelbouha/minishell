@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_types.c                                  :+:      :+:    :+:   */
+/*   minishell_types.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/12 22:40:49 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/13 14:19:26 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ typedef struct s_simple_cmd		t_simple_cmd;
 typedef struct s_compound_cmd	t_compound_cmd;
 typedef union u_redir			t_redir_u;
 typedef struct s_redir			t_redir;
-typedef struct s_file_redir		t_file_redir;
 typedef struct s_heredoc		t_heredoc;
+typedef char *					t_file_redir;
 
 union u_cmd
 {
-	t_simple_cmd	*s_cmd;
-	t_compound_cmd	*c_cmd;
+	t_simple_cmd	s_cmd;
+	t_compound_cmd	c_cmd;
 };
 
 struct s_cmd
 {
-	t_cmd_u			*cmd;
-	t_cmd_type		cmd_type;
+	t_cmd_u			cmd;
+	t_cmd_type		type;
 	int				count;
 	t_cmd_exec_cond	cond;
 	t_list			redirs;
@@ -69,31 +69,25 @@ struct s_simple_cmd
 struct s_compound_cmd
 {
 	t_list	*cmds;
-	int		parentheses;
+	t_bool	parentheses;
 };
 
 union u_redir
 {
-	t_file_redir	*redir;
-	t_heredoc		*doc;
+	t_file_redir	file;
+	t_heredoc		heredoc;
 };
 
 struct s_redir
 {
-	void			*to;
+	t_redir_u		to;
 	t_redir_type	type;
-};
-
-struct s_file_redir
-{
-	char	*file;
-	int		append;
 };
 
 struct s_heredoc
 {
-	int	fd;
-	int	expand;
+	int		fd;
+	t_bool	expand;
 };
 
 #endif

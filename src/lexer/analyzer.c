@@ -1,35 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_syntax_error.c                               :+:      :+:    :+:   */
+/*   analyzer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 13:24:14 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/04/10 13:24:16 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:55:08 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "lexer.h"
-
-int	cmp(char *str, char *template)
-{
-	int	i;
-	int	len;
-	
-	i = 0;
-	len = ft_strlen(str);
-	while (template[i])
-	{
-		if (ft_strncmp(str, &template[i], len) == 0)
-			if (template[i + len] == ':')
-				return (1);
-		while (template[i] && template[i] != ':')
-			i++;
-		i++;
-	}
-	return (0);
-}
+#include "lexer.h"
 
 int	pipe_errors(t_list *lst)
 {
@@ -39,7 +20,7 @@ int	pipe_errors(t_list *lst)
 	if (!lst)
 		return (1);
 	if (node)
-		return (cmp(node->content, ">>:>:<<:<:(:):||:&&"));
+		return (ft_templatecmp(node->content, ">>:>:<<:<:(:):||:&&", ':'));
 	return (0);
 }
 
@@ -51,7 +32,7 @@ int	and_or_errors(t_list *lst)
 	if (!lst)
 		return (1);
 	if (node)
-		return (cmp(node->content, ">>:>:<<:<:(:||:&&:|"));
+		return (ft_templatecmp(node->content, ">>:>:<<:<:(:||:&&:|", ':'));
 	return (0);
 }
 
@@ -62,7 +43,7 @@ int	opened_parentheses_errors(t_list *lst)
 	node = ft_lstlast(lst);
 	if (node)
 	{
-		if (cmp(node->content, ">>:>:<<:<:)"))
+		if (ft_templatecmp(node->content, ">>:>:<<:<:)", ':'))
 			return (1);
 	}
 	return (0);
@@ -76,7 +57,7 @@ int	closed_parentheses_errors(t_list *lst)
 	if (!lst)
 		return (1);
 	if (node)
-		return (cmp(node->content, ">>:>:<<:<:(:||:&&:|"));
+		return (ft_templatecmp(node->content, ">>:>:<<:<:(:||:&&:|", ':'));
 	return (0);
 }
 
@@ -86,7 +67,7 @@ int	redir_errors(t_list *lst)
 
 	node = ft_lstlast(lst);
 	if (node)
-		return (cmp(node->content, ">>:>:<<:<"));
+		return (ft_templatecmp(node->content, ">>:>:<<:<", ':'));
 	return (0);
 }
 
@@ -110,7 +91,7 @@ int	analyze_syntax(t_list *lst, char *token)
 	err = 0;
 	if (ft_strcmp(token, "|") == 0)
 		err = pipe_errors(lst);
-	else if (cmp(token, "<<:<:>>:>"))
+	else if (ft_templatecmp(token, "<<:<:>>:>", ':'))
 		err = redir_errors(lst);
 	else if (BONUS && (!ft_strcmp(token, "||") || !ft_strcmp(token, "&&")))
 		err = and_or_errors(lst);

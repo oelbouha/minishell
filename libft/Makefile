@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/29 11:17:13 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/12 15:23:09 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/13 13:22:28 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC := ft_atoi.c \
 		ft_strmapi.c \
 		ft_strncmp.c \
 		ft_strcmp.c \
+		ft_templatecmp.c \
 		ft_issubset.c \
 		ft_strnstr.c \
 		ft_stristr.c \
