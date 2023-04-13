@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:16:17 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/13 13:55:51 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/13 22:52:26 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	ft_templatecmp(char *str, char *template, char delimiter)
 				return (1);
 		while (template[i] && template[i] != delimiter)
 			i++;
+		if (template[i] == 0)
+			return (0);
 		i++;
 	}
 	return (0);
