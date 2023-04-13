@@ -12,18 +12,6 @@
 
 #include "lexer.h"
 
-int	pipe_errors(t_list *lst)
-{
-	t_list *node;
-
-	node = ft_lstlast(lst);
-	if (!lst)
-		return (1);
-	if (node)
-		return (ft_templatecmp(node->content, ">>:>:<<:<:(:):||:&&", ':'));
-	return (0);
-}
-
 int	and_or_errors(t_list *lst)
 {
 	t_list *node;
@@ -43,7 +31,7 @@ int	opened_parentheses_errors(t_list *lst)
 	node = ft_lstlast(lst);
 	if (node)
 	{
-		if (ft_templatecmp(node->content, ">>:>:<<:<:)", ':'))
+		if (!ft_templatecmp(node->content, ">>:>:<<:<:(:||:&&:|", ':'))
 			return (1);
 	}
 	return (0);
@@ -61,25 +49,28 @@ int	closed_parentheses_errors(t_list *lst)
 	return (0);
 }
 
-int	redir_errors(t_list *lst)
+/*
+cant_be_last();
+if last is word: check for quotes
+*/
+
+int analyse_last_node(t_list *lst, int err)
 {
-	t_list *node;
+	t_list	*last;
 
-	node = ft_lstlast(lst);
-	if (node)
-		return (ft_templatecmp(node->content, ">>:>:<<:<", ':'));
-	return (0);
-}
-
-int	simple_word_errors(t_list *lst)
-{
-	t_list *node;
-
-	node = ft_lstlast(lst);
-	if (node)
-		if (ft_strcmp(node->content, ")") == 0)
-			return (1);
-	return (0);
+	if (!lst)
+		return (0);
+	last = ft_lstlast(lst);
+	if (cant_be_last(last->content))
+	{
+		if (err != 2)
+			msh_err("syntax error near unexpected token", last->content);
+	}
+	else
+		return (0);
+	while (last && cant_be_last(last->content))
+		last = remove_last_node(&lst);
+	return (1);
 }
 
 int	analyze_syntax(t_list *lst, char *token)

@@ -12,7 +12,7 @@
 
 #include "lexer.h"
 
-int	check_quotes(char *line)
+int	check_unclosed_quotes(char *line)
 {
 	int		i;
 	char	*ptr;
@@ -23,7 +23,7 @@ int	check_quotes(char *line)
 	while (line[i])
 	{
 		start = &line[i];
-		if (line[i] == 34 || line[i] == 39)
+		if (line[i] == SINGLE_QUOTE || line[i] == DOUBLE_QUOTE)
 		{
 			next_quote = line[i];
 			i++;

@@ -41,6 +41,7 @@ CORE_LIB := ../core/core.a
 SRC :=	get_line.c \
 		split_line.c \
 		handle_quotes.c \
+		handle_token.c \
 		handle_redir_and_pipe.c \
 		utils.c	\
 		simple_word.c \

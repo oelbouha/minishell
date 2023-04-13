@@ -12,6 +12,11 @@
 
 #include "lexer.h"
 
+int	cant_be_last(char *token)
+{
+	return (ft_templatecmp(token, "<<:>>:>:|:<", ':')
+		|| (BONUS && ft_templatecmp(token, "||:&&:(", ':')));
+}
 
 int		is_operator(char c, char s)
 {
@@ -37,4 +42,26 @@ int	word_len(char *str)
 		i++;
 	}
 	return (i);
+}
+
+t_list	*remove_last_node(t_list **lst)
+{
+	t_list	*cur;
+
+	if (lst == NULL)
+		return (NULL);
+	cur = *lst;
+	if (cur->next == NULL)
+	{
+		free(cur->content);
+		free(cur);
+		*lst = NULL;
+		return (NULL);
+	}
+	while (cur->next->next)
+		cur = cur->next;
+	free(cur->next->content);
+	free(cur->next);
+	cur->next = NULL;
+	return (cur);
 }

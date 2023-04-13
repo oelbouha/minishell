@@ -44,14 +44,26 @@ void		print_error_msg(char *token);
 int			handle_quotes(char *str);
 int			handle_redir_and_pipe(char *str);
 int			simple_word(char *str);
-int			push_token_to_list(t_list **lst, char *token, int *err);
+int			push_token_to_list(t_list **lst, char *token);
 int			analyze_syntax(t_list *lst, char *token);
 int			word_len(char *str);
 int			is_redir(char *token);
 int			is_operator(char c, char s);
 int			cmp(char *str, char *template);
+int			check_unclosed_quotes(char *line);
+int			cant_be_last(char *token);
+int			get_token_len(char *line);
+char		*get_token(char *str, int *err);
+int			analyse_last_node(t_list *lst, int err);
 t_list		*split_line(char *line);
-int			check_quotes(char *line);
+t_list		*remove_last_node(t_list **lst);
+
+/*							error functions
+=============================================================================
+*/
+int			redir_errors(t_list *lst);
+int			simple_word_errors(t_list *lst);
+int			pipe_errors(t_list *lst);
 
 #endif
 

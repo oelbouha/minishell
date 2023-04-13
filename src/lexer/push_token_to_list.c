@@ -12,7 +12,24 @@
 
 #include "lexer.h"
 
-int	push_token_to_list(t_list **lst, char *token, int *err)
+int	push_null_to_list(t_list **lst, char *token)
+{
+	t_list	*node;
+
+	token = ft_strdup("NULL");
+	if (token == NULL)
+		return (1);
+	node = ft_lstnew(token);
+	if (node == NULL)
+	{
+		free(token);
+		return (1);
+	}
+	ft_lstadd_back(lst, node);
+	return (0);
+}
+
+int	push_token_to_list(t_list **lst, char *token)
 {
 	t_list	*node;
 
@@ -20,14 +37,13 @@ int	push_token_to_list(t_list **lst, char *token, int *err)
 	if (node == NULL)
 	{
 		free(token);
-		*err = 1;
 		return (1);
 	}
 	ft_lstadd_back(lst, node);
-	if (check_quotes(token))
+	if (check_unclosed_quotes(token))
 	{
-		node = ft_lstnew(ft_strdup("NULL"));
-		ft_lstadd_back(lst, node);
+		if (push_null_to_list(lst, token))
+			return (1);
 	}
 	return (0);
 }

@@ -10,23 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/libft.h"
+
+void	ft_free(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	free(arr);
+}
 
 int	ft_templatecmp(char *str, char *template, char delimiter)
 {
-	int	i;
-	int	len;
+	int		i;
+	char 	**arr;
 
-	i = 0;
-	len = ft_strlen(str);
-	while (template[i])
+	arr = ft_split(template, delimiter);
+	i = -1;
+	while (arr[++i])
 	{
-		if (ft_strncmp(str, &template[i], len) == 0)
-			if (template[i + len] == delimiter || template[i + len] == 0)
-				return (1);
-		while (template[i] && template[i] != delimiter)
-			i++;
-		i++;
+		if (ft_strcmp(str, arr[i]) == 0)
+		{
+			ft_free(arr);
+			return (1);
+		}
 	}
+	ft_free(arr);
 	return (0);
 }
