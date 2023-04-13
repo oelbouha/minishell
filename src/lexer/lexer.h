@@ -45,11 +45,13 @@ int			handle_quotes(char *str);
 int			handle_redir_and_pipe(char *str);
 int			simple_word(char *str);
 int			push_token_to_list(t_list **lst, char *token, int *err);
-int			check_syntax_error(t_list *lst, char *token);
+int			analyze_syntax(t_list *lst, char *token);
 int			word_len(char *str);
 int			is_redir(char *token);
 int			is_operator(char c, char s);
+int			cmp(char *str, char *template);
 t_list		*split_line(char *line);
+int			check_quotes(char *line);
 
 #endif
 

@@ -12,17 +12,6 @@
 
 #include "lexer.h"
 
-void	print_error_msg(char *token)
-{
-	printf("%s\n", ft_strjoin("minishell: syntax error near unexpected token ", token));
-}
-
-int		is_and_or(char *str)
-{
-	if (ft_strncmp(str, "||", 2) == 0 || ft_strncmp(str, "&&", 2) == 0)
-		return (1);
-	return (0);
-}
 
 int		is_operator(char c, char s)
 {
@@ -40,8 +29,7 @@ int	word_len(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == ' ' || str[i] == '>' || str[i] == '<'
-			|| str[i] == '|' || str[i] == '\t' || str[i] == 39 || str[i] == 34)
+		if (ft_strchr(" ><|\t\"'", str[i]))
 			return (i);
 		else if (BONUS && (str[i] == ')' || str[i] == '('
 			|| !ft_strncmp(&str[i], "&&", 2)))

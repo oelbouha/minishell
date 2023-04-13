@@ -39,3 +39,15 @@ void	msh_log(char *cmd, char *msg, char *arg, t_bool quotes)
 	ft_putstr_fd(msg, 2);
 	ft_putchar_fd('\n', 2);
 }
+
+void	msh_err(char *msg, char *token)
+{
+	ft_putstr_fd("-minishell: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd(" ", 2);
+	ft_putchar_fd('`', 2);
+	ft_putstr_fd(token, 2);
+	ft_putchar_fd('\'', 2);
+	ft_putstr_fd("\n", 2);
+}
+

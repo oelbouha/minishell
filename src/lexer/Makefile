@@ -14,8 +14,8 @@ NAME := lexer
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 I := -I../../inc -I../../libft/inc -I../core
-READLINE := -lreadline -I/goinfre/ysalmi/brew/opt/readline/include \
-	-L/goinfre/ysalmi/brew/opt/readline/lib
+READLINE := -lreadline -I/goinfre/$(USER)/brew/opt/readline/include \
+	-L/goinfre/$(USER)/brew/opt/readline/lib
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
 DS_DIR := ../datastructures
@@ -29,12 +29,13 @@ SRC :=	split_line.c \
 		main.c	\
 		utils.c	\
 		simple_word.c \
-		check_syntax_error.c \
+		analyzer.c \
 		push_token_to_list.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
-
+echo:
+	@echo $(USER)
 
 
 
