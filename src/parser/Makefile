@@ -6,14 +6,14 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/09 22:06:47 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/12 23:36:01 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := lexer
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-I := -I../../inc -I../../libft/inc -I../core
+I := -I../../inc -I../../libft/inc -I../core -I.
 READLINE := -lreadline -I/goinfre/ysalmi/brew/opt/readline/include \
 	-L/goinfre/ysalmi/brew/opt/readline/lib
 LIBFT_DIR := ../../libft
@@ -33,7 +33,10 @@ SRC :=	split_line.c \
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
 
+test: libft heredoc
 
+heredoc: main.c new_heredoc_redirection.c expand.c
+	@cc $(CFLAGS) $I $^ $(LIBFT) -o $@ 
 
 
 N :=\x1b[0m
@@ -60,9 +63,6 @@ obj/%.o: %.c
 	@mkdir -p $(shell dirname $@)
 	@$(CC) $(CFLAGS) $I -c $< -o $@
 
-test: libft dslib corelib
-	@$(CC) $(CFLAGS) $(READLINE) $I  get_line.c $(LIBFT) $(DS_LIB) $(CORE_LIB) -o $@
-	
 clean:
 	@rm -rf obj/
 	@make -C $(LIBFT_DIR) clean

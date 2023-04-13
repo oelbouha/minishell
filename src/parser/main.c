@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 23:27:11 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/12 23:33:59 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/12 23:23:22 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/12 23:37:12 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "parser.h"
+#include <signal.h>
 
-# include <unistd.h>
-# include "minishell_types.h"
+void	handle_sigint(int sig)
+{
+	(void)sig;
+	
+	signal(SIGINT, handle_sigint);
+	return ;
+}
 
-t_heredoc	*new_heredoc_redirection(char *arg);
-char		*remove_quotes(char *arg);
+int main(int c, char **v)
+{
+	t_heredoc *heredoc;
 
-#endif
+	(void)c;
+	signal(SIGINT, handle_sigint);
+	heredoc = new_heredoc_redirection(v[1]);
+	return (0);
+}

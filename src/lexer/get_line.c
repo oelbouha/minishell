@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/12 18:18:32 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/12 23:20:03 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*read_line(t_ull state)
 	}
 	add_history(line);
 	trimmed = ft_strtrim(line, " \t");
-	return (free(line), trimed);
+	return (free(line), trimmed);
 }
 
 int	main(int c, char **v, char **e)
