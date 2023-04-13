@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_compound_command.c                             :+:      :+:    :+:   */
+/*   simple_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/13 17:58:27 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/13 17:59:17 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/13 23:03:51 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "lexer.h"
+#include "debug.h"
 
-t_cmd	*new_compound_cmd(t_list *start)
+int main()
 {
-	(void)start;
-	return (NULL);
+	while (1)
+	{
+		char *line = read_line(0);
+		t_list	*list = split_line(line);
+		t_cmd	*cmd = new_simple_command(list, NONE);
+		print_simple_cmd(cmd);
+	}
 }

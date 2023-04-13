@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/13 12:21:32 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/13 23:18:39 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ clean:
 	@make -C $(DS_DIR) clean
 
 fclean: clean
-	@rm -rf $(NAME) test
+	@rm -rf $(NAME) lexer test
 	@rm -rf test
 	@make -C $(LIBFT_DIR) fclean
 	@make -C $(CORE_DIR) fclean
