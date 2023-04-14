@@ -16,9 +16,9 @@ int	and_or_errors(t_list *lst)
 {
 	t_list *node;
 
-	node = ft_lstlast(lst);
 	if (!lst)
 		return (1);
+	node = ft_lstlast(lst);
 	if (node)
 		return (ft_templatecmp(node->content, ">>:>:<<:<:(:||:&&:|", ':'));
 	return (0);
@@ -31,8 +31,8 @@ int	opened_parentheses_errors(t_list *lst)
 	node = ft_lstlast(lst);
 	if (node)
 	{
-		if (!ft_templatecmp(node->content, ">>:>:<<:<:(:||:&&:|", ':'))
-			return (1);
+		if (ft_templatecmp(node->content, ">>:>:<<:<:||:&&:|", ':') == 0)
+			return(1);
 	}
 	return (0);
 }
@@ -45,13 +45,11 @@ int	closed_parentheses_errors(t_list *lst)
 	if (!lst)
 		return (1);
 	if (node)
-	{
 		return (ft_templatecmp(node->content, ">>:>:<<:<:(:||:&&:|", ':'));
-	}
 	return (0);
 }
 
-int check_unclosed_parentheses(t_list *lst)
+int unclosed_parentheses(t_list *lst)
 {
 	t_list	*curr;
 	int		count;
@@ -80,9 +78,10 @@ int analyse_last_node(t_list *lst, int err)
 	if (!lst)
 		return (0);
 	last = ft_lstlast(lst);
-	if(check_unclosed_parentheses(lst) || check_unclosed_quotes(last->content))
+	if(unclosed_parentheses(lst) || unclosed_quotes(last->content))
 	{
-		msh_err("syntax error near unexpected token", last->content);
+		if (err != 2)
+			msh_err("syntax error near unexpected token", last->content);
 		return (1);
 	}
 	if (cant_be_last(last->content))
@@ -117,6 +116,9 @@ int	analyze_syntax(t_list *lst, char *token)
 	else
 		err = simple_word_errors(lst);
 	if (err == 1)
-		return (msh_err("syntax error near unexpected token", token), 1);
+	{
+		msh_err("syntax error near unexpected token", token);
+		return (1);
+	}
 	return (0);
 }

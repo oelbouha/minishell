@@ -52,3 +52,13 @@ int	print_num_in_hex(unsigned long n, int uppercase)
 	ft_putchar_fd(base[n % 16], 1);
 	return (r);
 }
+
+void	ft_free(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	free(arr);
+}

@@ -18,8 +18,10 @@ int	simple_word_errors(t_list *lst)
 
 	node = ft_lstlast(lst);
 	if (node)
+	{
 		if (ft_strcmp(node->content, ")") == 0)
 			return (1);
+	}
 	return (0);
 }
 
@@ -39,7 +41,7 @@ int	simple_word(char *str)
 				;
 			i++;
 		}
-		if (is_operator(str[i], str[i + 1]))
+		if (is_operator(&str[i]))
 			break ;
 	}
 	return (i);

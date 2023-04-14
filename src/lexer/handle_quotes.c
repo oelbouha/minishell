@@ -12,7 +12,7 @@
 
 #include "lexer.h"
 
-int	check_unclosed_quotes(char *line)
+int	unclosed_quotes(char *line)
 {
 	int		i;
 	char	*ptr;
@@ -53,7 +53,7 @@ int	handle_quotes(char *str)
 				;
 			i++;
 		}
-		if (is_operator(str[i], str[i + 1]))
+		if (is_operator(&str[i]))
 			break ;
 		i += word_len(&str[i]);
 	}
