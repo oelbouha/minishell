@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 int	ft_templatecmp(char *str, char *template, char delimiter)
 {
@@ -26,3 +26,4 @@ int	ft_templatecmp(char *str, char *template, char delimiter)
 	}
 	return (ft_free(arr), 0);
 }
+
