@@ -12,7 +12,18 @@
 
 #include "lexer.h"
 
-int	word_lenght(char *str)
+int	simple_word_errors(t_list *lst)
+{
+	t_list *node;
+
+	node = ft_lstlast(lst);
+	if (node)
+		if (ft_strcmp(node->content, ")") == 0)
+			return (1);
+	return (0);
+}
+
+int	simple_word(char *str)
 {
 	char	next_quote;
 	int		i;
@@ -34,11 +45,4 @@ int	word_lenght(char *str)
 	return (i);
 }
 
-int	simple_word(char *str)
-{
-	int		i;
-
-	i = word_lenght(str);
-	return (i);
-}
 

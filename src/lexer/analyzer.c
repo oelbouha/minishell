@@ -12,18 +12,6 @@
 
 #include "lexer.h"
 
-int	pipe_errors(t_list *lst)
-{
-	t_list *node;
-
-	node = ft_lstlast(lst);
-	if (!lst)
-		return (1);
-	if (node)
-		return (ft_templatecmp(node->content, ">>:>:<<:<:(:):||:&&", ':'));
-	return (0);
-}
-
 int	and_or_errors(t_list *lst)
 {
 	t_list *node;
@@ -43,7 +31,7 @@ int	opened_parentheses_errors(t_list *lst)
 	node = ft_lstlast(lst);
 	if (node)
 	{
-		if (ft_templatecmp(node->content, ">>:>:<<:<:)", ':'))
+		if (!ft_templatecmp(node->content, ">>:>:<<:<:(:||:&&:|", ':'))
 			return (1);
 	}
 	return (0);
@@ -57,29 +45,56 @@ int	closed_parentheses_errors(t_list *lst)
 	if (!lst)
 		return (1);
 	if (node)
+	{
 		return (ft_templatecmp(node->content, ">>:>:<<:<:(:||:&&:|", ':'));
+	}
 	return (0);
 }
 
-int	redir_errors(t_list *lst)
+int check_unclosed_parentheses(t_list *lst)
 {
-	t_list *node;
+	t_list	*curr;
+	int		count;
 
-	node = ft_lstlast(lst);
-	if (node)
-		return (ft_templatecmp(node->content, ">>:>:<<:<", ':'));
-	return (0);
-}
-
-int	simple_word_errors(t_list *lst)
-{
-	t_list *node;
-
-	node = ft_lstlast(lst);
-	if (node)
-		if (ft_strcmp(node->content, ")") == 0)
+	count = 0;
+	curr = lst;
+	while (curr != NULL)
+	{
+		if(ft_strcmp(curr->content, "(") == 0)
+			count++;
+		else if(ft_strcmp(curr->content, ")") == 0)
+			count--;
+		if (count < 0)
 			return (1);
+		curr = curr->next;
+	}
+	if (count != 0)
+		return (1);
 	return (0);
+}
+
+int analyse_last_node(t_list *lst, int err)
+{
+	t_list	*last;
+
+	if (!lst)
+		return (0);
+	last = ft_lstlast(lst);
+	if(check_unclosed_parentheses(lst) || check_unclosed_quotes(last->content))
+	{
+		msh_err("syntax error near unexpected token", last->content);
+		return (1);
+	}
+	if (cant_be_last(last->content))
+	{
+		if (err != 2)
+			msh_err("syntax error near unexpected token", last->content);
+	}
+	else
+		return (0);
+	while (last && cant_be_last(last->content))
+		last = remove_last_node(&lst);
+	return (1);
 }
 
 int	analyze_syntax(t_list *lst, char *token)
@@ -102,9 +117,6 @@ int	analyze_syntax(t_list *lst, char *token)
 	else
 		err = simple_word_errors(lst);
 	if (err == 1)
-	{
-		msh_err("syntax error near unexpected token", token);
-		return (1);
-	}
+		return (msh_err("syntax error near unexpected token", token), 1);
 	return (0);
 }

@@ -28,3 +28,26 @@ int	handle_redir_and_pipe(char *str)
 	return (i);
 }
 
+int	redir_errors(t_list *lst)
+{
+	t_list *node;
+
+	if (!lst)
+		return (1);
+	node = ft_lstlast(lst);
+	if (node)
+		return (ft_templatecmp(node->content, ">>:>:<<:<", ':'));
+	return (0);
+}
+
+int	pipe_errors(t_list *lst)
+{
+	t_list *node;
+
+	if (!lst)
+		return (1);
+	node = ft_lstlast(lst);
+	if (node)
+		return (ft_templatecmp(node->content, ">>:>:<<:<:(:):||:&&", ':'));
+	return (0);
+}

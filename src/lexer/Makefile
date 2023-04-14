@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/13 23:18:39 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/13 23:27:04 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ CORE_LIB := ../core/core.a
 SRC :=	get_line.c \
 		split_line.c \
 		handle_quotes.c \
+		handle_token.c \
 		handle_redir_and_pipe.c \
 		utils.c	\
 		simple_word.c \
@@ -54,7 +55,7 @@ OBJ := $(addprefix obj/, $(OBJ))
 lexer: main.c libft dslib corelib $(NAME)
 	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(NAME) $(LIBFT) $(DS_LIB) $(CORE_LIB)
 	
-test: $(MAIN).c libft dslib corelib $(NAME)
+test: $(testfile) libft dslib corelib $(NAME)
 	$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(NAME) $(LIBFT) $(DS_LIB) $(CORE_LIB)
 
 all: $(NAME)

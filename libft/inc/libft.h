@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 12:44:13 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/12 15:22:38 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/14 15:27:58 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum e_bool
 	FALSE,
 	TRUE
 }	t_bool;
+
 typedef struct s_list
 {
 	void			*content;
@@ -54,6 +55,7 @@ size_t	ft_strlcpy(char *dst, char const *src, size_t size);
 size_t	ft_strlcat(char *dst, char const *src, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_templatecmp(char *str, char *templatestr, char delimiter);
 int		ft_issubset(char *set, char *str);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strrchr(const char *str, int c);
