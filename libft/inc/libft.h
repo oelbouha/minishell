@@ -70,6 +70,7 @@ void	*ft_memchr(const void *b, int c, size_t len);
 int		ft_memcmp(void *b1, void *b2, size_t len);
 int		ft_atoi(const char *nbr);
 void	*ft_calloc(size_t n, size_t size);
+void	ft_free(char **arr);
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);

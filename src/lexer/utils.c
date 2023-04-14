@@ -18,11 +18,11 @@ int	cant_be_last(char *token)
 		|| (BONUS && ft_templatecmp(token, "||:&&:(", ':')));
 }
 
-int		is_operator(char c, char s)
+
+int		is_operator(char *str)
 {
-	if (ft_strchr(" ><|\t", c))
-		return (1);
-	else if (BONUS && ((c == ')' || c == '(') || (c == '&' && s == '&')))
+	if (ft_strchr(" ><|\t", str[0]) || (BONUS && (ft_strchr("()", str[0])
+		|| (str[0] == '&' && str[1] == '&'))))
 		return (1);
 	return (0);
 }
@@ -34,10 +34,7 @@ int	word_len(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (ft_strchr(" ><|\t\"'", str[i]))
-			return (i);
-		else if (BONUS && (str[i] == ')' || str[i] == '('
-			|| !ft_strncmp(&str[i], "&&", 2)))
+		if (ft_strchr("\"'", str[i]) || is_operator(&str[i]))
 			return (i);
 		i++;
 	}
@@ -64,4 +61,18 @@ t_list	*remove_last_node(t_list **lst)
 	free(cur->next);
 	cur->next = NULL;
 	return (cur);
+}
+
+void	print(t_list *lst)
+{
+	int		i;
+
+	if (!lst)
+		return ;
+	i = 1;
+	while (lst)
+	{
+		printf("[%2d]: %s\n",i++, lst->content);
+		lst = lst->next;
+	}
 }

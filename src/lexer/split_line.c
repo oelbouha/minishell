@@ -12,21 +12,6 @@
 
 #include "lexer.h"
 
-void	print(t_list *lst)
-{
-	int		i;
-
-	if (!lst)
-		return ;
-	i = 1;
-	printf("\n");
-	while (lst)
-	{
-		printf("[%2d]: %s\n",i++, lst->content);
-		lst = lst->next;
-	}
-}
-
 t_list	*split_line(char *line)
 {
 	t_list	*lst;

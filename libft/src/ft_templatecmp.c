@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:16:17 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/14 15:26:52 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/14 15:29:29 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_templatecmp(char *str, char *template, char delimiter)
 {
-	int	i;
 	int	len;
+	int	i;
 
 	i = 0;
 	len = ft_strlen(str);
@@ -47,10 +47,12 @@ void	ft_free(char **arr)
 	free(arr);
 }
 
+=======
+>>>>>>> 4379e4eb3902b6a84e233f6475be00e83033f707
 int	ft_templatecmp(char *str, char *template, char delimiter)
 {
 	int		i;
-	char 	**arr;
+	char	**arr;
 
 	i = -1;
 	while (arr[++i])
@@ -66,6 +68,7 @@ int	ft_templatecmp(char *str, char *template, char delimiter)
 		i++;
 =======
 		if (ft_strcmp(str, arr[i]) == 0)
+<<<<<<< HEAD
 		{
 			ft_free(arr);
 			return (1);
