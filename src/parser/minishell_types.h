@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/13 14:19:26 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/13 19:59:40 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,10 @@ typedef struct s_redir			t_redir;
 typedef struct s_heredoc		t_heredoc;
 typedef char *					t_file_redir;
 
-union u_cmd
-{
-	t_simple_cmd	s_cmd;
-	t_compound_cmd	c_cmd;
-};
-
-struct s_cmd
-{
-	t_cmd_u			cmd;
-	t_cmd_type		type;
-	int				count;
-	t_cmd_exec_cond	cond;
-	t_list			redirs;
-};
-
 struct s_simple_cmd
 {
-	char	*cmd_path;
-	char	**cmd_args;
+	char	*path;
+	char	**args;
 };
 
 struct s_compound_cmd
@@ -72,22 +57,37 @@ struct s_compound_cmd
 	t_bool	parentheses;
 };
 
-union u_redir
+union u_cmd
 {
-	t_file_redir	file;
-	t_heredoc		heredoc;
+	t_simple_cmd	simple;
+	t_compound_cmd	compound;
 };
 
-struct s_redir
+struct s_cmd
 {
-	t_redir_u		to;
-	t_redir_type	type;
+	t_cmd_u			data;
+	t_cmd_type		type;
+	int				count;
+	t_cmd_exec_cond	cond;
+	t_list			*redirs;
 };
 
 struct s_heredoc
 {
 	int		fd;
 	t_bool	expand;
+};
+
+union u_redir
+{
+	t_file_redir	filename;
+	struct s_heredoc	h;
+};
+
+struct s_redir
+{
+	t_redir_u		to;
+	t_redir_type	type;
 };
 
 #endif

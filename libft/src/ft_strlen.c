@@ -6,11 +6,11 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 13:16:34 by ysalmi            #+#    #+#             */
-/*   Updated: 2022/10/01 09:43:25 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/14 15:21:53 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 size_t	ft_strlen(char const *str)
 {

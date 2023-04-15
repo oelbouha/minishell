@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/13 12:22:23 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/13 23:04:19 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 I := -I../../inc \
 		-I../../libft/inc \
-		-I../core
+		-I../core \
+		-I../lexer \
+		-I./
 
 READLINE := -lreadline \
 		-I/goinfre/ysalmi/brew/opt/readline/include \
@@ -44,19 +46,20 @@ LEXER_LIB := ../lexer/lexer.a
 
 SRC := new_simple_command.c \
 		new_compound_command.c \
-		new_redirection.c 
+		new_redirection.c \
+		new_file_redirection.c \
+		new_heredoc_redirection.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
-
-test: $(testfile) libft dslib corelib $(NAME)
-	@$(CC) $(CFLAGS) $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@ar rcs $@ $(OBJ)
 
+test: $(testfile) libft dslib corelib lexerlib $(NAME)
+	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< debug_utils.c $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB) $(LEXER_LIB)
 
 libft: 
 	@make -s -C $(LIBFT_DIR)

@@ -28,11 +28,14 @@ int	opened_parentheses_errors(t_list *lst)
 {
 	t_list *node;
 
+	printf("here\n");
 	node = ft_lstlast(lst);
 	if (node)
 	{
+		if (ft_templatecmp(node->content, ">>:>:<<:<:||:&&:|:):(", ':') == 0)
+			return (1);
 		if (ft_templatecmp(node->content, ">>:>:<<:<:||:&&:|:)", ':'))
-			return(1);
+			return (1);
 	}
 	return (0);
 }
@@ -78,7 +81,6 @@ int analyse_last_node(t_list *lst, int err)
 	if (!lst)
 		return (0);
 	last = ft_lstlast(lst);
-	
 	if(unclosed_parentheses(lst) || unclosed_quotes(last->content))
 	{
 		if (err != 2)
