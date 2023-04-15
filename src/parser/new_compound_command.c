@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/15 23:16:40 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/15 23:29:05 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_compound_count(t_list *start, t_bool parentheses)
 	count = 1;
 	while (start)
 	{
-		if (ft_strcmp(start->content, "|") == 0)
+		if (ft_strcmp(start->content, "|") == 0 && ((parentheses == FALSE && _parentheses == 0) || (parentheses == TRUE && _parentheses == 1)))
 			count++;
 		else if (ft_strcmp(start->content, ")") == 0)
 		{
@@ -36,7 +36,7 @@ int	get_compound_count(t_list *start, t_bool parentheses)
 		}
 		else if (ft_strcmp(start->content, "(") == 0)
 			_parentheses++;
-		else if (!_parentheses && BONUS && ft_templatecmp(start->content, "&&:||", ':'))
+		else if (_parentheses < 1  && BONUS && ft_templatecmp(start->content, "&&:||", ':'))
 			break ;
 		start = start->next;
 	}
