@@ -75,6 +75,11 @@ int	ft_templatecmp(char *str, char *template, char delimiter)
 		}
 >>>>>>> 594fb2c15507109cca103ab856ef9ed04c53d90a
 	}
+<<<<<<< HEAD
+	return (ft_free(arr), 0);
+}
+
+=======
 	ft_free(arr);
 	return (0);
 }*/
