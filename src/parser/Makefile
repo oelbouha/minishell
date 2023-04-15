@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/13 23:04:19 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/14 16:52:36 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,9 @@ SRC := new_simple_command.c \
 		new_compound_command.c \
 		new_redirection.c \
 		new_file_redirection.c \
-		new_heredoc_redirection.c
+		new_heredoc_redirection.c \
+		read_heredoc.c \
+		expand.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))

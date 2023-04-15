@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/13 19:59:40 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/14 16:06:59 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ struct s_heredoc
 union u_redir
 {
 	t_file_redir	filename;
-	struct s_heredoc	h;
+	t_heredoc		heredoc;
 };
 
 struct s_redir

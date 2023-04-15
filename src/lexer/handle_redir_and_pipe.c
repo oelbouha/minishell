@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 21:36:58 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/04/07 21:37:18 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/04/14 16:00:44 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	redir_errors(t_list *lst)
 	t_list *node;
 
 	if (!lst)
-		return (1);
+		return (0);
 	node = ft_lstlast(lst);
 	if (node)
 		return (ft_templatecmp(node->content, ">>:>:<<:<", ':'));
-	return (0);
+	return (1);
 }
 
 int	pipe_errors(t_list *lst)

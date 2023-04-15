@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_heredoc.c                                     :+:      :+:    :+:   */
+/*   ft_lstremove_if.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 16:34:55 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/15 14:13:33 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/15 00:02:43 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/15 13:04:14 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "libft.h"
 
-int	read_heredoc(char *limiter)
+void	ft_lstremove_if(t_list **lst, t_lstcmp need_rm, t_lstdel del)
 {
-	char	*line;
-	int		fds[2];
+	t_list	*cur;
+	t_list	*prev;
 
-	if (pipe(fds))
-		return (-1);
-	remove_quotes(limiter);
-	while (1)
+	if (lst == NULL || *lst == NULL || need_rm == NULL || del == NULL)
+		return ;
+	cur = *lst;
+	prev = NULL;
+	while (cur)
 	{
-		line = readline("> ");
-		if (line == NULL || ft_strcmp(line, limiter) == 0)
+		if (need_rm(cur->content))
 		{
-			free(line);
-			break ;
+			if (prev == NULL)
+				*lst = cur->next;
+			else
+				prev->next = cur->next;
+			ft_lstdelone(cur, del);
 		}
-		ft_putstr_fd(line, fds[1]);
-		ft_putstr_fd("\n", fds[1]);
-		free(line);
+		prev = cur;
+		cur = cur->next;
 	}
-	close(fds[1]);
-	return (fds[0]);
 }

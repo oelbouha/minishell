@@ -6,16 +6,21 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/11 19:49:54 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/04/15 12:56:49 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := core.a
+
 CC := cc
 CFLAGS := -Wall -Wextra -Werror 
-I := -I../../inc -I../../libft/inc -I../datastructures
+I := -I../../inc \
+		-I../../libft/inc \
+		-I../datastructures
+
 LIBFT_DIR := ../../libft
 LIBFT := ../../libft/libft.a
+
 DS_DIR := ../datastructures
 DS_LIB := ../datastructures/datastructures.a
 

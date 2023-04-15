@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:41:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/13 22:50:14 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/15 13:09:29 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	**get_cmd_args_arr(t_list *start, int count)
 	char	**arr;
 	int		i;
 
+	if (count < 1)
+		return (NULL);
 	arr = ft_calloc(count + 1, sizeof(char *));
 	if (arr == NULL)
 		return (NULL);
@@ -78,6 +80,19 @@ t_redir_type	get_redir_type(char *token)
 		return (FILE_APPEND);
 }
 
+int	is_heredoc(t_redir *redir)
+{
+	return (redir->type == HEREDOC);
+}
+
+void	del_heredoc(t_redir *redir)
+{
+	if (redir == NULL)
+		return ;
+	close(redir->to.heredoc.fd);
+	free(redir);
+}
+
 t_list	*get_cmd_redirs(t_list *token)
 {
 	t_list			*redirs;
@@ -92,7 +107,10 @@ t_list	*get_cmd_redirs(t_list *token)
 			type = get_redir_type(token->content);
 			token = token->next;
 			if (type == HEREDOC)
+			{
+				ft_lstremove_if(&redirs, (t_lstcmp)is_heredoc, (t_lstdel)del_heredoc);
 				redir = new_heredoc_redirection(token->content);
+			}
 			else
 				redir = new_file_redirection(token->content, type);
 			if (redir == NULL)
@@ -117,7 +135,7 @@ t_cmd	*new_simple_command(t_list *start, t_cmd_exec_cond cond)
 	cmd->cond = cond;
 	cmd->count = get_cmd_args_count(start);
 	cmd->data.simple.args = get_cmd_args_arr(start, cmd->count);
-	if (cmd->data.simple.args == NULL)
+	if (cmd->count && cmd->data.simple.args == NULL)
 		return (free(cmd), NULL);
 	cmd->redirs = get_cmd_redirs(start);
 	return (cmd);

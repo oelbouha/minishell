@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_heredoc.c                                     :+:      :+:    :+:   */
+/*   compound_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 16:34:55 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/15 14:13:33 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/04/13 17:59:17 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/04/15 23:14:25 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "lexer.h"
+#include "debug.h"
 
-int	read_heredoc(char *limiter)
+int main()
 {
-	char	*line;
-	int		fds[2];
-
-	if (pipe(fds))
-		return (-1);
-	remove_quotes(limiter);
 	while (1)
 	{
-		line = readline("> ");
-		if (line == NULL || ft_strcmp(line, limiter) == 0)
-		{
-			free(line);
-			break ;
-		}
-		ft_putstr_fd(line, fds[1]);
-		ft_putstr_fd("\n", fds[1]);
-		free(line);
+		char *line = read_line(0);
+		t_list	*list = split_line(line);
+		t_cmd	*cmd = new_compound_command(list, NONE);
+		(void)cmd;
+		//print_simple_cmd(cmd);
 	}
-	close(fds[1]);
-	return (fds[0]);
 }

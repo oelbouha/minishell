@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 12:44:13 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/14 15:27:58 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/15 13:04:49 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_syntax
 }	t_syntax;
 
 typedef void 				(*t_lstdel)(void *);
+typedef int					(*t_lstcmp)(void *);
 /*****************************************************************************/
 /*	libft																	 */
 /*****************************************************************************/
@@ -94,6 +95,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+void	ft_lstremove_if(t_list **lst, t_lstcmp need_rm, t_lstdel del);
 
 /*****************************************************************************/
 /*	ft_printf																 */
