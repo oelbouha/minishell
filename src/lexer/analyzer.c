@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 13:24:14 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/04/13 13:55:08 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/16 16:03:21 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ int	opened_parentheses_errors(t_list *lst)
 {
 	t_list *node;
 
-	printf("here\n");
 	node = ft_lstlast(lst);
 	if (node)
 	{
 		if (ft_templatecmp(node->content, ">>:>:<<:<:||:&&:|:):(", ':') == 0)
 			return (1);
-		if (ft_templatecmp(node->content, ">>:>:<<:<:||:&&:|:)", ':'))
+		if (ft_templatecmp(node->content, ">>:>:<<:<:)", ':'))
 			return (1);
 	}
 	return (0);
