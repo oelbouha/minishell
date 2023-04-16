@@ -22,6 +22,8 @@ void	print_redirections(t_list *redirs)
 {
 	t_list *cur = redirs;
 	ft_printf("\tredirections:\n");
+	if (cur == NO_REDIRS)
+		return ;
 	while (cur)
 	{
 		t_redir *r = cur->content;
@@ -47,11 +49,11 @@ void	print_simple_cmd(t_cmd *cmd)
 	ft_printf("Simple command:\n");
 	ft_printf("\tcond: %s\n", cond[cmd->cond]);
 	ft_printf("\targc: %d\n", cmd->count);
-	if (cmd->count && cmd->data.simple.args)
+	if (cmd->count && cmd->simple.args)
 	{
-		ft_printf("\targv: [ %s", cmd->data.simple.args[0]);
-		for (int i = 1; cmd->data.simple.args[i]; i++)
-			ft_printf(", %s", cmd->data.simple.args[i]);
+		ft_printf("\targv: [ %s", cmd->simple.args[0]);
+		for (int i = 1; cmd->simple.args[i]; i++)
+			ft_printf(", %s", cmd->simple.args[i]);
 		ft_printf(" ]\n");
 	}
 	print_redirections(cmd->redirs);

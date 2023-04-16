@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/16 14:39:57 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/16 23:02:26 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define MINISHELL_TYPES_H
 
 # include "libft.h"
+
+#define simple data._simple
+#define compound data._compound
 
 typedef enum e_cmd_type
 {
@@ -59,8 +62,8 @@ struct s_compound_cmd
 
 union u_cmd
 {
-	t_simple_cmd	simple;
-	t_compound_cmd	compound;
+	t_simple_cmd	_simple;
+	t_compound_cmd	_compound;
 };
 
 struct s_cmd

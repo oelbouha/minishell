@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:41:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/15 13:09:29 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/16 23:36:31 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,22 +121,31 @@ t_list	*get_cmd_redirs(t_list *token)
 			break ;
 		token = token->next;
 	}
+	if (redirs == NULL)
+		return ((t_list *)-1);
 	return (redirs);
 }
 
-t_cmd	*new_simple_command(t_list *start, t_cmd_exec_cond cond)
+t_list	*new_simple_command(t_list *start, t_cmd_exec_cond cond)
 {
+	t_list	*cmd_node;
 	t_cmd	*cmd;
 
+	cmd_node = ft_calloc(1, sizeof(t_list));
+	if (cmd_node == NULL)
+		return (NULL);
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
-		return (NULL);
+		return (free(cmd_node), NULL);
 	cmd->type = SIMPLE_CMD;
 	cmd->cond = cond;
 	cmd->count = get_cmd_args_count(start);
-	cmd->data.simple.args = get_cmd_args_arr(start, cmd->count);
-	if (cmd->count && cmd->data.simple.args == NULL)
-		return (free(cmd), NULL);
+	cmd->simple.args = get_cmd_args_arr(start, cmd->count);
+	if (cmd->count && cmd->simple.args == NULL)
+		return (free(cmd_node), free(cmd), NULL);
 	cmd->redirs = get_cmd_redirs(start);
-	return (cmd);
+	if (cmd->redirs == NULL)
+		return (NULL);
+	cmd_node->content = cmd;
+	return (cmd_node);
 }
