@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/07 11:37:56 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/16 17:51:28 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 
 /* ***  Definitions  **** */
 
-typedef int					t_builtin(int c, char *v[]);
 typedef struct s_shell		t_shell;
 typedef unsigned char		t_uchar;
 

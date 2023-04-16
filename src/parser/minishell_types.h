@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/14 16:06:59 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/16 14:39:57 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ struct s_simple_cmd
 struct s_compound_cmd
 {
 	t_list	*cmds;
-	t_bool	parentheses;
+	t_bool	subshell;
 };
 
 union u_cmd

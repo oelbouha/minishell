@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/08 15:33:40 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/16 17:46:50 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int	shell_export(int c, char **v)
 {
 	char	*key;
 	char	*value;
+	int		err;
 	int		i;
-	int		ret;
 
 	if (c == 1)
 		return (print_exports(), 0);
-	ret = 0;
+	err = 0;
 	i = 0;
 	while (++i < c)
 	{
@@ -50,11 +50,16 @@ int	shell_export(int c, char **v)
 		value = ft_strchr(key, '=');
 		if (value)
 			key[value++ - key] = 0;
-		if (check_identifier(key) && ++ret)
+		if (check_identifier(key) && ++err)
 			msh_log("export", "not a valid identifier", v[i], TRUE);
 		else if (set_env_var(key, value))
 			return (free(key), 1);
+		else if (ft_strcmp(key, "PATH") == 0)
+		{
+			//free_string_arr(g_shell.path);
+			g_shell.path = ft_split(value, ':');
+		}
 		free(key);
 	}
-	return (ret > 0);
+	return (err > 0);
 }

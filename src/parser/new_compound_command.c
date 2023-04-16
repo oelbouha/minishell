@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/15 23:29:05 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/16 15:23:37 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,27 @@
 // compound command end when:
 // 		")" : if we have an opened parenthese
 // 		"&&/||": if we do not have an opened parenthes
-int	get_compound_count(t_list *start, t_bool parentheses)
+int	get_compound_count(t_list *start, t_bool subshell)
 {
 	int	count;
-	int	_parentheses;
+	int	parentheses;
 
-	_parentheses = (parentheses == TRUE);
-	if (_parentheses)
+	parentheses = (subshell == TRUE);
+	if (parentheses)
 		start = start->next;
 	count = 1;
 	while (start)
 	{
-		if (ft_strcmp(start->content, "|") == 0 && ((parentheses == FALSE && _parentheses == 0) || (parentheses == TRUE && _parentheses == 1)))
+		if (ft_strcmp(start->content, "|") == 0 && (
+			(subshell == FALSE && parentheses == 0)
+			|| (subshell == TRUE && parentheses == 1)))
 			count++;
-		else if (ft_strcmp(start->content, ")") == 0)
-		{
-			_parentheses--;
-			if (_parentheses == 0)
-				break ;
-		}
 		else if (ft_strcmp(start->content, "(") == 0)
-			_parentheses++;
-		else if (_parentheses < 1  && BONUS && ft_templatecmp(start->content, "&&:||", ':'))
+			parentheses++;
+		else if (ft_strcmp(start->content, ")") == 0 && --parentheses == 0)
+				break ;
+		else if (parentheses < 1  && BONUS
+			&& ft_templatecmp(start->content, "&&:||", ':'))
 			break ;
 		start = start->next;
 	}
@@ -52,10 +51,10 @@ t_cmd	*new_compound_command(t_list *start, t_cmd_exec_cond cond)
 		return (NULL);
 	cmd->type = COMPOUND_CMD;
 	cmd->cond = cond;
-	cmd->data.compound.parentheses = FALSE;
+	cmd->data.compound.subshell = FALSE;
 	if (ft_strcmp(start->content, "(") == 0)
-		cmd->data.compound.parentheses = TRUE;
-	cmd->count = get_compound_count(start, cmd->data.compound.parentheses);
+		cmd->data.compound.subshell = TRUE;
+	cmd->count = get_compound_count(start, cmd->data.compound.subshell);
 	ft_printf("count: %d\n", cmd->count);
 	return (cmd);
 }
