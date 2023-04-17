@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 23:27:11 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/16 23:38:44 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/17 16:46:01 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 # include "minishell_types.h"
 # include "lexer.h"
 
-t_list		*new_simple_command(t_list *start, t_cmd_exec_cond cond);
+t_list		*new_simple_command(t_list **head, t_cmd_exec_cond cond);
+void		destroy_simple_command(t_list *command);
 t_list		*new_compound_command(t_list *start, t_cmd_exec_cond cond);
-t_list		*new_file_redirection(char *filename, t_redir_type type);
-t_list		*new_heredoc_redirection(char *raw_limiter);
+t_redir		*new_file_redirection(char *filename, t_redir_type type);
+t_redir		*new_heredoc_redirection(char *raw_limiter);
 int			read_heredoc(char *limiter);
 char		*remove_quotes(char *arg);
 

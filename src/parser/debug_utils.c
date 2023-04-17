@@ -51,9 +51,15 @@ void	print_simple_cmd(t_cmd *cmd)
 	ft_printf("\targc: %d\n", cmd->count);
 	if (cmd->count && cmd->simple.args)
 	{
-		ft_printf("\targv: [ %s", cmd->simple.args[0]);
-		for (int i = 1; cmd->simple.args[i]; i++)
-			ft_printf(", %s", cmd->simple.args[i]);
+		ft_printf("\targv: [ ");
+		t_list *cur = cmd->simple.args;
+		while (cur)
+		{
+			ft_printf("%s", cur->content);
+			cur = cur->next;
+			if (cur)
+				ft_printf(", ");
+		}
 		ft_printf(" ]\n");
 	}
 	print_redirections(cmd->redirs);

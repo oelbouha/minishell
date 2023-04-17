@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/16 23:40:04 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/17 13:48:13 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_list	*get_commands_arr(t_list *start, int count, t_bool subshell)
 	return (cmds);
 }
 
-t_cmd	*new_compound_command(t_list *start, t_cmd_exec_cond cond)
+t_list	*new_compound_command(t_list *start, t_cmd_exec_cond cond)
 {
 	t_cmd	*cmd;
 	t_bool	subshell;
@@ -79,5 +79,5 @@ t_cmd	*new_compound_command(t_list *start, t_cmd_exec_cond cond)
 	cmd->compound.subshell = subshell;
 	cmd->count = get_compound_count(start, cmd->compound.subshell);
 	cmd->compound.cmds = get_commands_arr(start, cmd->count, subshell);
-	return (cmd);
+	return (NULL);
 }

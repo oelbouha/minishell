@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/16 23:02:26 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/17 12:50:27 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef char *					t_file_redir;
 struct s_simple_cmd
 {
 	char	*path;
-	char	**args;
+	t_list	*args;
 };
 
 struct s_compound_cmd
