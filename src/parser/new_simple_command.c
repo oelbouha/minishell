@@ -138,5 +138,6 @@ t_cmd	*new_simple_command(t_list *start, t_cmd_exec_cond cond)
 	if (cmd->count && cmd->data.simple.args == NULL)
 		return (free(cmd), NULL);
 	cmd->redirs = get_cmd_redirs(start);
+	
 	return (cmd);
 }
