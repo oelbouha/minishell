@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:41:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/15 13:09:29 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/17 16:46:25 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,47 @@ int	get_cmd_args_count(t_list *start)
 	return (count);
 }
 
-char	**get_cmd_args_arr(t_list *start, int count)
+//move node moves a node from a linked list to another and
+//returns the node next to the node moved.
+t_list	*move_node(t_list *prev, t_list *node, t_list **to)
 {
-	char	**arr;
-	int		i;
+	t_list	*temp;
 
-	if (count < 1)
-		return (NULL);
-	arr = ft_calloc(count + 1, sizeof(char *));
-	if (arr == NULL)
-		return (NULL);
-	i = 0;
-	while (start)
+	if (prev)
+		prev->next = node->next;
+	else
+		temp = node->next;
+	node->next = NULL;
+	ft_lstadd_back(to, node);
+	if (prev)
+		return (prev->next);
+	return (temp);
+}
+
+t_list	*get_cmd_args_list(t_list **head, int count)
+{
+	t_list	*args;
+	t_list	*start;
+	t_list	*prev;
+
+	args = NULL;
+	prev = NULL;
+	start = *head;
+	while (start && count > 0)
 	{
 		if (is_redirection(start->content))
-			start = start->next;
+		{
+			if (prev == NULL)
+				*head = start;
+			prev = start->next;
+			start = start->next->next;
+		}
 		else if (is_minishell_operator(start->content))
 			break ;
 		else
-			arr[i++] = start->content;
-		start = start->next;
+			start = move_node(prev, start, &args);
 	}
-	return (arr);
+	return (args);
 }
 
 t_redir_type	get_redir_type(char *token)
@@ -93,51 +112,85 @@ void	del_heredoc(t_redir *redir)
 	free(redir);
 }
 
-t_list	*get_cmd_redirs(t_list *token)
+t_list	*get_cmd_redirs(t_list **head)
 {
 	t_list			*redirs;
-	t_list			*redir;
+	t_redir			*redir;
+	t_list			*token;
+	t_list			*prev;
 	t_redir_type	type;
 
+	token = *head;
 	redirs = NULL;
 	while (token)
 	{
 		if (is_redirection(token->content))
 		{
 			type = get_redir_type(token->content);
-			token = token->next;
 			if (type == HEREDOC)
 			{
 				ft_lstremove_if(&redirs, (t_lstcmp)is_heredoc, (t_lstdel)del_heredoc);
-				redir = new_heredoc_redirection(token->content);
+				redir = new_heredoc_redirection(token->next->content);
+				free(token->next->content);
 			}
 			else
-				redir = new_file_redirection(token->content, type);
+				redir = new_file_redirection(token->next->content, type);
 			if (redir == NULL)
 				return (ft_lstclear(&redirs, free), NULL);
-			ft_lstadd_back(&redirs, redir);
+			token->next->content = redir;
+			prev = token;
+			token = move_node(prev, token->next, &redirs);
+			free(prev->content);
+			free(prev);
+			continue ;
 		}
 		else if (is_minishell_operator(token->content))
 			break ;
 		token = token->next;
 	}
+	*head = token;
+	if (redirs == NULL)
+		return (NO_REDIRS);
 	return (redirs);
 }
 
-t_cmd	*new_simple_command(t_list *start, t_cmd_exec_cond cond)
+t_list	*new_simple_command(t_list **start, t_cmd_exec_cond cond)
+{
+	t_list	*cmd_node;
+	t_cmd	*cmd;
+
+	cmd_node = ft_calloc(1, sizeof(t_list));
+	if (cmd_node == NULL)
+		return (NULL);
+	cmd = ft_calloc(1, sizeof(t_cmd));
+	if (cmd == NULL)
+		return (free(cmd_node), NULL);
+	cmd->type = SIMPLE_CMD;
+	cmd->cond = cond;
+	cmd->count = get_cmd_args_count(*start);
+	cmd->simple.args = get_cmd_args_list(start, cmd->count);
+	if (cmd->count && cmd->simple.args == NULL)
+		return (free(cmd_node), free(cmd), NULL);
+	cmd->redirs = get_cmd_redirs(start);
+<<<<<<< HEAD
+	
+	return (cmd);
+=======
+	if (cmd->redirs == NULL)
+		return (NULL);
+	cmd_node->content = cmd;
+	return (cmd_node);
+}
+
+void	destroy_simple_command(t_list *command)
 {
 	t_cmd	*cmd;
 
-	cmd = ft_calloc(1, sizeof(t_cmd));
-	if (cmd == NULL)
-		return (NULL);
-	cmd->type = SIMPLE_CMD;
-	cmd->cond = cond;
-	cmd->count = get_cmd_args_count(start);
-	cmd->data.simple.args = get_cmd_args_arr(start, cmd->count);
-	if (cmd->count && cmd->data.simple.args == NULL)
-		return (free(cmd), NULL);
-	cmd->redirs = get_cmd_redirs(start);
-	
-	return (cmd);
+	cmd = command->content;
+	ft_lstclear(&cmd->simple.args, free);
+	if (cmd->redirs != NO_REDIRS)
+		ft_lstclear(&cmd->redirs, free);
+	free(cmd);
+	free(command);
+>>>>>>> b131bc72ae501f13ee6bb9de8f9c84b099b7dc8e
 }

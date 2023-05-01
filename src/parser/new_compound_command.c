@@ -6,15 +6,20 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/16 15:23:37 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/17 13:48:13 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-// compound command end when:
-// 		")" : if we have an opened parenthese
-// 		"&&/||": if we do not have an opened parenthes
+//		get the number of commands in a compound command
+//	compound command is a pipeline "|" of simple or compound commands either
+//	wraped in parentheses or not
+//		-the commands count is the number of pipes plus 1
+//		-only incerement if we are outside a compound command
+//		-stop counting if encountered the closing parenthese
+//		 or when there is no opening parenthese and find && or ||
+
 int	get_compound_count(t_list *start, t_bool subshell)
 {
 	int	count;
@@ -42,19 +47,37 @@ int	get_compound_count(t_list *start, t_bool subshell)
 	return (count);
 }
 
-t_cmd	*new_compound_command(t_list *start, t_cmd_exec_cond cond)
+t_list	*get_commands_arr(t_list *start, int count, t_bool subshell)
+{
+	t_list	*cmds;
+
+	cmds = ft_calloc(count, sizeof(t_list));
+	if (cmds == NULL)
+		return (NULL);
+	if (subshell)
+		start = start->next;
+	while (start)
+	{
+		
+	}
+	return (cmds);
+}
+
+t_list	*new_compound_command(t_list *start, t_cmd_exec_cond cond)
 {
 	t_cmd	*cmd;
+	t_bool	subshell;
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (NULL);
 	cmd->type = COMPOUND_CMD;
 	cmd->cond = cond;
-	cmd->data.compound.subshell = FALSE;
+	subshell = FALSE;
 	if (ft_strcmp(start->content, "(") == 0)
-		cmd->data.compound.subshell = TRUE;
-	cmd->count = get_compound_count(start, cmd->data.compound.subshell);
-	ft_printf("count: %d\n", cmd->count);
-	return (cmd);
+		subshell = TRUE;
+	cmd->compound.subshell = subshell;
+	cmd->count = get_compound_count(start, cmd->compound.subshell);
+	cmd->compound.cmds = get_commands_arr(start, cmd->count, subshell);
+	return (NULL);
 }
