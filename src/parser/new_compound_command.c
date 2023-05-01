@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/17 13:48:13 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/01 16:15:13 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,24 @@
 //		-stop counting if encountered the closing parenthese
 //		 or when there is no opening parenthese and find && or ||
 
-int	get_compound_count(t_list *start, t_bool subshell)
+int	get_commands_count(t_list *start)
 {
 	int	count;
 	int	parentheses;
 
-	parentheses = (subshell == TRUE);
-	if (parentheses)
-		start = start->next;
+	if (start == NULL)
+		return (0);
+	parentheses = 0;
 	count = 1;
 	while (start)
 	{
-		if (ft_strcmp(start->content, "|") == 0 && (
-			(subshell == FALSE && parentheses == 0)
-			|| (subshell == TRUE && parentheses == 1)))
+		if (ft_strcmp(start->content, "|") == 0 && parentheses == 0)
 			count++;
 		else if (ft_strcmp(start->content, "(") == 0)
 			parentheses++;
-		else if (ft_strcmp(start->content, ")") == 0 && --parentheses == 0)
+		else if (ft_strcmp(start->content, ")") == 0 && --parentheses < 0)
 				break ;
-		else if (parentheses < 1  && BONUS
+		else if (parentheses == 0  && BONUS
 			&& ft_templatecmp(start->content, "&&:||", ':'))
 			break ;
 		start = start->next;
@@ -47,37 +45,90 @@ int	get_compound_count(t_list *start, t_bool subshell)
 	return (count);
 }
 
-t_list	*get_commands_arr(t_list *start, int count, t_bool subshell)
+t_list	**get_commands_arr(t_list **head, int count)
 {
-	t_list	*cmds;
+	t_list	**cmds;
+	t_list	*start;
+	t_list	*prev;
+	//t_cmd	*cmd;
+	int		i;
 
-	cmds = ft_calloc(count, sizeof(t_list));
+	cmds = ft_calloc(count, sizeof(t_list *));
 	if (cmds == NULL)
 		return (NULL);
-	if (subshell)
-		start = start->next;
+	if (count == 1)
+	{
+		cmds[0] = new_command(head, NONE);
+		return (cmds);
+	}
+	i = 0;
+	start = *head;
 	while (start)
 	{
-		
+		if (BONUS && ft_templatecmp(start->content, "&&:||", ':'))
+			break ;
+		else if (ft_strcmp(start->content, "|") == 0)
+		{
+			prev = start;
+			start = start->next;
+			ft_lstdelone(prev, free);
+		}
+		else if (BONUS && ft_strcmp(start->content, ")") == 0)
+		{
+			ft_printf("get_commands_arr :: ) :: %s\n", start->next->content);
+			break ;
+			prev = start;
+			start = start->next;
+			ft_lstdelone(prev, free);
+			break ;
+		}
+		else if (BONUS && ft_strcmp(start->content, "(") == 0)
+		{
+			ft_printf("get_commands_arr :: ( :: %s\n", start->content);
+			prev = start;
+			start = start->next;
+			ft_lstdelone(prev, free);
+			cmds[i] = new_compound_command(&start, NONE);
+			((t_cmd *)cmds[i]->content)->compound.subshell = TRUE;
+			// delete )
+			ft_printf("get_commands_arr :: ( :: %s\n", start->content);
+			cmds[i++]->next = get_next_cmd(&start);
+			ft_printf("get_commands_arr :: ( :: %s\n", start->content);
+		}
+		else
+			cmds[i++] = new_simple_command(&start, NONE);
 	}
+	*head = start;
 	return (cmds);
 }
 
-t_list	*new_compound_command(t_list *start, t_cmd_exec_cond cond)
+t_list	*new_compound_command(t_list **start, t_cmd_exec_cond cond)
 {
+	t_list	*cmd_node;
 	t_cmd	*cmd;
-	t_bool	subshell;
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (NULL);
 	cmd->type = COMPOUND_CMD;
 	cmd->cond = cond;
-	subshell = FALSE;
-	if (ft_strcmp(start->content, "(") == 0)
-		subshell = TRUE;
-	cmd->compound.subshell = subshell;
-	cmd->count = get_compound_count(start, cmd->compound.subshell);
-	cmd->compound.cmds = get_commands_arr(start, cmd->count, subshell);
-	return (NULL);
+	cmd->compound.subshell = FALSE;
+	cmd->count = get_commands_count(*start);
+	cmd->compound.cmds = get_commands_arr(start, cmd->count);
+	cmd_node = ft_calloc(1, sizeof(t_list));
+	if (cmd_node == NULL)
+		return (destroy_compound_command(cmd), NULL);
+	cmd_node->content = cmd;
+	return (cmd_node);
+}
+
+void	destroy_compound_command(t_cmd *cmd)
+{
+	int		i;
+
+	i = -1;
+	while (++i < cmd->count)
+		ft_lstclear(&(cmd->compound.cmds[i]), (t_lstdel)destroy_command);
+	free(cmd->compound.cmds);
+	free(cmd);
 }

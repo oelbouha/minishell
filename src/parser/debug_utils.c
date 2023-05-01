@@ -1,37 +1,54 @@
 #include "parser.h"
+void	print_cmd(t_cmd *cmd, int n);
 
-void	print_heredoc(t_redir *r)
+void	print_tabs(int n)
 {
-	ft_printf("\t\theredoc: %d - ", r->to.heredoc.fd);
+	while (n-- > 0)
+		ft_printf("\t");
+}
+
+void	print_heredoc(t_redir *r, int n)
+{
+	int	newline = 0;
+	print_tabs(n);
+	ft_printf("|\theredoc: %d - ", r->to.heredoc.fd);
 	if (r->to.heredoc.expand == TRUE)
 		ft_printf("expand\n");
 	else
 		ft_printf("no-expand\n");
 	char s;
-	write(1, "\t\t\t", 3);
+	print_tabs(n);
+	ft_printf("|\t\t|");
 	while (read(r->to.heredoc.fd, &s, 1))
 	{
+		if (newline)
+		{
+			newline = 0;
+			print_tabs(n);
+			ft_printf("|\t\t|");
+		}
 		write(1, &s, 1);
 		if (s == '\n')
-			write(1, "\t\t\t", 3);
+			newline = 1;
 	}
-	write(1, "\n", 1);
 }
 
-void	print_redirections(t_list *redirs)
+void	print_redirections(t_list *redirs, int n)
 {
 	t_list *cur = redirs;
-	ft_printf("\tredirections:\n");
-	if (cur == NO_REDIRS)
+	if (cur == NO_REDIRS || cur == NULL)
 		return ;
+	print_tabs(n);
+	ft_printf("| redirections:\n");
 	while (cur)
 	{
 		t_redir *r = cur->content;
 		if (r->type == HEREDOC)
-			print_heredoc(r);
+			print_heredoc(r, n);
 		else
 		{
-			ft_printf("\t\t%s: ", r->to.filename);
+			print_tabs(n);
+			ft_printf("|\t%s: ", r->to.filename);
 			if (r->type == FILE_IN)
 				ft_printf("input\n");
 			else if (r->type == FILE_OUT)
@@ -43,15 +60,20 @@ void	print_redirections(t_list *redirs)
 	}
 }
 
-void	print_simple_cmd(t_cmd *cmd)
+void	print_simple_cmd(t_cmd *cmd, int n)
 {
 	char cond[3][5] = {"NONE", "AND", "OR"};
-	ft_printf("Simple command:\n");
-	ft_printf("\tcond: %s\n", cond[cmd->cond]);
-	ft_printf("\targc: %d\n", cmd->count);
+
+	print_tabs(n);
+	ft_printf("+------------\n");
+	print_tabs(n);
+	ft_printf("| cond: %s\n", cond[cmd->cond]);
+	print_tabs(n);
+	ft_printf("| argc: %d\n", cmd->count);
 	if (cmd->count && cmd->simple.args)
 	{
-		ft_printf("\targv: [ ");
+		print_tabs(n);
+		ft_printf("| argv: [ ");
 		t_list *cur = cmd->simple.args;
 		while (cur)
 		{
@@ -62,6 +84,42 @@ void	print_simple_cmd(t_cmd *cmd)
 		}
 		ft_printf(" ]\n");
 	}
-	print_redirections(cmd->redirs);
+	print_redirections(cmd->redirs, n);
+	print_tabs(n);
+	ft_printf("+------------\n");
 	return ;
+}
+
+void	print_compound_cmd(t_cmd *cmd, int n)
+{
+	char cond[3][5] = {"NONE", "AND", "OR"};
+	print_tabs(n);
+	ft_printf("+**********************************+\n");
+	print_tabs(n);
+	ft_printf("| cond: %s\n", cond[cmd->cond]);
+	print_tabs(n);
+	ft_printf("| subshell: ");
+	if (cmd->compound.subshell == TRUE)
+		ft_printf("Yes\n");
+	else
+		ft_printf("No\n");
+	for (int i = 0; i < cmd->count; i++)
+	{
+		int j = 1;
+		for (t_list *cur = cmd->compound.cmds[i]; cur;)
+		{
+			print_cmd(cur->content, n + j++);
+			cur = cur->next;
+		}
+	}
+	print_tabs(n);
+	ft_printf("+**********************************+\n");
+}
+
+void	print_cmd(t_cmd *cmd, int n)
+{
+	if (cmd->type == SIMPLE_CMD)
+		print_simple_cmd(cmd, n);
+	else if (cmd->type == COMPOUND_CMD)
+		print_compound_cmd(cmd, n);
 }

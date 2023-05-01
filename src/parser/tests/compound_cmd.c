@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:59:17 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/15 23:14:25 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/29 13:22:33 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main()
 	{
 		char *line = read_line(0);
 		t_list	*list = split_line(line);
-		t_cmd	*cmd = new_compound_command(list, NONE);
+		t_list	*cmd = new_compound_command(&list, NONE);
 		(void)cmd;
 		//print_simple_cmd(cmd);
 	}
