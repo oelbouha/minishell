@@ -10,7 +10,7 @@ int		main(int c, char **v, char **env)
 	setup(env);
 	// int fdin;
 	// int fd = open("file", O_RDONLY | O_CREAT, 0644);
-	// fdin = expand_fd_var(fd);
+	// fdin = expand_heredoc(fd);
 	// while (1)
 	// {
 	// 	char *line = get_next_line(fdin);

@@ -54,10 +54,10 @@ SRC := new_simple_command.c \
 
 #**************************************************************************************#
 
-SRC_T := ../../gnl/get_next_line.c \
-		../../gnl/get_next_line_utils.c \
+SRC_T := ../../gnline/get_next_line.c \
+		../../gnline/get_next_line_utils.c \
 		tests/main.c \
-		expand_fd_var.c \
+		expand_heredoc.c \
 		expand_var.c 
 
 ex:  libft dslib corelib lexerlib

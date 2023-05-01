@@ -27,7 +27,7 @@ char	*get_key(char *str)
 	return (ft_substr(str, 0, i));
 }
 
-int		get_len(char *str)
+int		get_length(char *str)
 {
 	char	*value;
 	char	*key;
@@ -37,8 +37,11 @@ int		get_len(char *str)
 	while (*str)
 	{
 		if (*str == '\'')
+		{
 			while (++str && *str != '\'')
 				len++;
+			len += 2;
+		}
 		if (*str == '$' && *(str + 1) != '$')
 		{
 			key = get_key(++str);
@@ -64,53 +67,82 @@ int	replace_var(char *new_str, char *str, int *i, int *j)
 	char	*value;
 	char	*key;
 
-	key = get_key(str);
-	if (!key)
-		return (-1);
-	value = get_env_var(key);
-	ft_memmove(new_str, value, ft_strlen(value));
-	*i += ft_strlen(key);
-	*j += ft_strlen(value);
-	free(key);
-	free(value);
+	if (*str == '$')
+		*i += 1;
+	else if (*str == 0)
+	{
+		new_str[0] = '$';
+		*j += 1;
+	}
+	else
+	{
+		key = get_key(str);
+		if (!key)
+			return (-1);
+		value = get_env_var(key);
+		ft_memmove(new_str, value, ft_strlen(value));
+		*i += ft_strlen(key);
+		*j += ft_strlen(value);
+		free(key);
+		free(value);
+	}
 	return (0);
 }
 
-int	handle_double_quote(char *new_str, char *str, int *x, int *y)
+int	handle_double_quote(char *expanded, char *str, int *x, int *y)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	new_str[i++] = str[j++];
-	while (str[j] && str[j] != '"')
+	expanded[j++] = str[i++];
+	while (str[i] && str[i] != '"')
 	{
-		if (str[j] == '$' && str[j + 1] != '$')
+		if (str[i] == '$')
 		{
-			if (replace_var(&new_str[i], &str[++j], &j, &i) == -1)
+			if (str[++i] == '"' || str[i] == '\'')
+				expanded[j++] = '$';
+			if (replace_var(&expanded[j], &str[i], &i, &j) == -1)
 				return (-1);
 		}
 		else
-			new_str[i++] = str[j++];
+			expanded[j++] = str[i++];
 	}
-	*x += j;
-	*y += i;
+	expanded[j++] = str[i++];
+	*x += i;
+	*y += j;
 	return (0);
+}
+
+void	handle_single_quote(char *expanded, char *str, int *x, int *y)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	expanded[j++] = str[i++];
+	while (str[i] && str[i] != '\'')
+		expanded[j++] = str[i++];
+	if (str[i])
+		expanded[j++] = str[i++];
+	*x += i;
+	*y += j;
 }
 
 char	*expand_var(char *str)
 {
-	char	*new_str;
+	char	*expanded;
 	int		len;
 	int		i;
 	int		j;
 	
-	len = get_len(str);
+	len = get_length(str);
 	if (len == -1)
 		return (NULL);
-	new_str = malloc(len + 1);
-	if (!new_str)
+	expanded = malloc(len + 1);
+	if (!expanded)
 		return (NULL);
 	j = 0;
 	i = 0;
@@ -118,23 +150,19 @@ char	*expand_var(char *str)
 	{
 		if (str[i] == '"')
 		{
-			if (handle_double_quote(&new_str[j], &str[i], &i, &j) == -1)
-				return (free(new_str), NULL);
+			if (handle_double_quote(&expanded[j], &str[i], &i, &j) == -1)
+				return (free(expanded), NULL);
 		}
 		else if (str[i] == '\'')
+			handle_single_quote(&expanded[j], &str[i], &i, &j);
+		else if (str[i] == '$')
 		{
-			new_str[j++] = str[i++];
-			while (str[i] && str[i] != '\'')
-				new_str[j++] = str[i++];
-		}
-		else if (str[i] == '$' && str[i + 1] != '$')
-		{
-			if (replace_var(&new_str[j], &str[++i], &i, &j) == -1)
-				return (free(new_str), NULL);
+			if (replace_var(&expanded[j], &str[++i], &i, &j) == -1)
+				return (free(expanded), NULL);
 		}
 		else
-			new_str[j++] = str[i++];
+			expanded[j++] = str[i++];
 	}
-	new_str[j] = '\0';
-	return (new_str);
+	expanded[j] = '\0';
+	return (expanded);
 }

@@ -20,7 +20,7 @@
 # include "minishell_types.h"
 # include "lexer.h"
 # include "core.h"
-# include "../../gnl/get_next_line.h"
+# include "../../gnline/get_next_line.h"
 
 t_list		*new_simple_command(t_list **head, t_cmd_exec_cond cond);
 void		destroy_simple_command(t_list *command);
@@ -30,7 +30,7 @@ t_redir		*new_heredoc_redirection(char *raw_limiter);
 int			read_heredoc(char *limiter);
 char		*remove_quotes(char *arg);
 char		*expand_var(char *str);
-int			expand_fd_var(int fd);
+int			expand_heredoc(int fd);
 char		*get_key(char *str);
 
 #endif

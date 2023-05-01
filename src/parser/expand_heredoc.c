@@ -21,16 +21,23 @@ int	replace_var_with_value(char *line, int fd)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$' && line[i + 1] != '$')
+		if (line[i] == '$')
 		{
-			key = get_key(&line[++i]);
-			if (!key)
-				return (-1);
-			value = get_env_var(key);
-			ft_putstr_fd(value, fd);
-			i += ft_strlen(key);
-			free(value);
-			free(key);
+			if (line[++i] == '$')
+				i++;
+			else if (line[i] == '\n')
+				ft_putchar_fd('$', fd);
+			else
+			{
+				key = get_key(&line[i]);
+				if (!key)
+					return (-1);
+				value = get_env_var(key);
+				ft_putstr_fd(value, fd);
+				i += ft_strlen(key);
+				free(value);
+				free(key);
+			}
 		}
 		else
 			ft_putchar_fd(line[i++], fd);
@@ -38,7 +45,7 @@ int	replace_var_with_value(char *line, int fd)
 	return (0);
 }
 
-int	expand_fd_var(int fd)
+int	expand_heredoc(int fd)
 {
 	int		pipe1[2];
 	char	*line;
