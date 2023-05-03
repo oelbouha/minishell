@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 18:26:44 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/04/08 18:26:47 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:41:46 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	simple_word_errors(t_list *lst)
 	node = ft_lstlast(lst);
 	if (node)
 	{
-		if (ft_strcmp(node->content, ")") == 0)
+		if (BONUS && ft_strcmp(node->content, ")") == 0)
 			return (1);
 	}
 	return (0);

@@ -33,13 +33,13 @@ void	print_heredoc(t_redir *r, int n)
 	}
 }
 
-void	print_redirections(t_list *redirs, int n)
+void	print_redirections(t_list *redirs, int n, char wall)
 {
 	t_list *cur = redirs;
 	if (cur == NO_REDIRS || cur == NULL)
 		return ;
 	print_tabs(n);
-	ft_printf("| redirections:\n");
+	ft_printf("%c redirections:\n", wall);
 	while (cur)
 	{
 		t_redir *r = cur->content;
@@ -48,7 +48,7 @@ void	print_redirections(t_list *redirs, int n)
 		else
 		{
 			print_tabs(n);
-			ft_printf("|\t%s: ", r->to.filename);
+			ft_printf("%c\t%s: ", wall, r->to.filename);
 			if (r->type == FILE_IN)
 				ft_printf("input\n");
 			else if (r->type == FILE_OUT)
@@ -84,7 +84,7 @@ void	print_simple_cmd(t_cmd *cmd, int n)
 		}
 		ft_printf(" ]\n");
 	}
-	print_redirections(cmd->redirs, n);
+	print_redirections(cmd->redirs, n, '|');
 	print_tabs(n);
 	ft_printf("+------------\n");
 	return ;
@@ -112,7 +112,7 @@ void	print_compound_cmd(t_cmd *cmd, int n)
 			cur = cur->next;
 		}
 	}
-	print_redirections(cmd->redirs, n);
+	print_redirections(cmd->redirs, n, '*');
 	print_tabs(n);
 	ft_printf("+**********************************+\n");
 }

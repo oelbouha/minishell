@@ -6,12 +6,22 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:41:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/02 16:59:47 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/03 21:33:27 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
+/*
+ *	@start: the start of the list of tokens
+ *
+ *	@return: the number of arguments without expansion
+ *
+ *	get_cmd_args_count: 
+ *	counts the number of args for the command being parsed
+ *	it skips redirections and stops when it encounters an operator (| in the 
+ *	case of only the mandatory part + ||, && and ) in the case of bonus)
+ */
 int	get_cmd_args_count(t_list *start)
 {
 	int	count;
@@ -30,35 +40,49 @@ int	get_cmd_args_count(t_list *start)
 	return (count);
 }
 
-t_list	*get_cmd_args_list(t_list **head, int count)
+/*
+ *	@head: the head of the list of tokens
+ *	@count: the number of args to be extracted
+ *
+ *	@return: the list of arguments
+ *
+ *	get_cmd_args_list: 
+ *	extracts the arguments in a separate list, moving each arg from 
+ *	the list passed to it to a new list.
+ *	it leaves redirections untouched and only removes the arguments.
+ *	it stops when it encounters | for the mandatory + ||, && and )
+ *	for the bonus.
+ *	the @head then changed to point to the remaining of the list
+ */
+t_list	*get_cmd_args_list(t_list **head)
 {
 	t_list	*args;
-	t_list	*start;
+	t_list	*cur;
 	t_list	*prev;
 
 	args = NULL;
 	prev = NULL;
-	start = *head;
-	while (start && count > 0)
+	cur = *head;
+	while (cur)
 	{
-		if (is_redirection(start->content))
+		if (is_redirection(cur->content))
 		{
 			if (prev == NULL)
-				*head = start;
-			prev = start->next;
-			start = start->next->next;
+				*head = cur;
+			prev = cur->next;
+			cur = cur->next->next;
 		}
-		else if (is_an_operator(start->content))
+		else if (is_an_operator(cur->content))
 			break ;
 		else
-			start = move_node(&args, start, prev);
+			cur = move_node(&args, cur, prev);
 	}
 	if (prev == NULL)
-		*head = start;
+		*head = cur;
 	return (args);
 }
 
-t_list	*new_simple_command(t_list **start, t_cmd_exec_cond cond)
+t_list	*new_simple_command(t_list **head, t_cmd_exec_cond cond)
 {
 	t_list	*cmd_node;
 	t_cmd	*cmd;
@@ -71,11 +95,9 @@ t_list	*new_simple_command(t_list **start, t_cmd_exec_cond cond)
 		return (free(cmd_node), NULL);
 	cmd->type = SIMPLE_CMD;
 	cmd->cond = cond;
-	cmd->count = get_cmd_args_count(*start);
-	cmd->simple.args = get_cmd_args_list(start, cmd->count);
-	if (cmd->count && cmd->simple.args == NULL)
-		return (free(cmd_node), free(cmd), NULL);
-	cmd->redirs = get_cmd_redirs(start);
+	cmd->simple.args = get_cmd_args_list(head);
+	cmd->count = ft_lstsize(cmd->simple.args);
+	cmd->redirs = get_cmd_redirs(head);
 	if (cmd->redirs == NULL)
 		return (free(cmd_node), destroy_simple_command(cmd), NULL);
 	cmd_node->content = cmd;

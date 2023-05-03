@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:14:18 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/13 12:20:45 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/03 21:29:25 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
-# define BONUS 1
+# define BONUS 0
 # ifndef SPACE
 #  define SPACE ' '
 # endif
