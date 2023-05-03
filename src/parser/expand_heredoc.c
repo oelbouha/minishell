@@ -19,7 +19,7 @@ int	change_var(char *line, int fd, int *i)
 
 	if (*line == '$')
 		*i += 1;
-	else if (*line == '\n' || *line == 0)
+	else if (*line == '\n' || *line == 0 || is_invalid_key(line))
 		ft_putchar_fd('$', fd);
 	else
 	{

@@ -172,10 +172,6 @@ t_list	*new_simple_command(t_list **start, t_cmd_exec_cond cond)
 	if (cmd->count && cmd->simple.args == NULL)
 		return (free(cmd_node), free(cmd), NULL);
 	cmd->redirs = get_cmd_redirs(start);
-<<<<<<< HEAD
-	
-	return (cmd);
-=======
 	if (cmd->redirs == NULL)
 		return (NULL);
 	cmd_node->content = cmd;
@@ -192,5 +188,4 @@ void	destroy_simple_command(t_list *command)
 		ft_lstclear(&cmd->redirs, free);
 	free(cmd);
 	free(command);
->>>>>>> b131bc72ae501f13ee6bb9de8f9c84b099b7dc8e
 }
