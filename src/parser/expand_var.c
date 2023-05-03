@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 13:26:18 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/04/30 13:26:20 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/01 18:06:21 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,33 +135,29 @@ char	*expand_var(char *str)
 {
 	char	*expanded;
 	int		len;
+	int		err;
 	int		i;
 	int		j;
 	
 	len = get_length(str);
-	if (len == -1)
-		return (NULL);
 	expanded = malloc(len + 1);
-	if (!expanded)
-		return (NULL);
-	j = 0;
+	if (expanded == NULL || len == -1)
+		return (free(expanded), NULL);
+	err = 0;
 	i = 0;
+	j = 0;
 	while (str[i])
 	{
 		if (str[i] == '"')
-		{
-			if (handle_double_quote(&expanded[j], &str[i], &i, &j) == -1)
-				return (free(expanded), NULL);
-		}
+			err = handle_double_quote(&expanded[j], &str[i], &i, &j);
 		else if (str[i] == '\'')
 			handle_single_quote(&expanded[j], &str[i], &i, &j);
 		else if (str[i] == '$')
-		{
-			if (replace_var(&expanded[j], &str[++i], &i, &j) == -1)
-				return (free(expanded), NULL);
-		}
+			err = replace_var(&expanded[j], &str[++i], &i, &j);
 		else
 			expanded[j++] = str[i++];
+		if (err)
+				return (free(expanded), NULL);
 	}
 	expanded[j] = '\0';
 	return (expanded);

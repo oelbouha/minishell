@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 09:05:57 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/01 09:51:09 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/03 17:41:36 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*get_next_cmd(t_list **head)
 
 	operator = *head;
 	cmd = NULL;
-	if (operator == NULL)
+	if (operator == NULL || !ft_templatecmp(operator->content, "&&:||", ':'))
 		return (NULL);
 	start = operator->next;
 	if (ft_strcmp(operator->content, "&&") == 0)
@@ -35,6 +35,7 @@ t_list	*get_next_cmd(t_list **head)
 t_list	*new_command(t_list **head, t_cmd_exec_cond cond)
 {
 	t_list	*cmd;
+	t_cmd	*command;
 	t_bool	subshell;
 	t_list	*first;
 	int		count;
@@ -54,7 +55,17 @@ t_list	*new_command(t_list **head, t_cmd_exec_cond cond)
 			subshell = TRUE;
 		}
 		cmd = new_compound_command(head, cond);
-		((t_cmd *)cmd->content)->compound.subshell = subshell;
+		command = cmd->content;
+		command->compound.subshell = subshell;
+		if (subshell == TRUE)
+		{
+			cmd->next = get_next_cmd(head);
+			first = *head;
+			*head = first->next;
+			ft_lstdelone(first, free);
+			command->redirs = get_cmd_redirs(head);
+		}
+
 	}
 	cmd->next = get_next_cmd(head);
 	return (cmd);

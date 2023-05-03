@@ -96,9 +96,9 @@ void	print_compound_cmd(t_cmd *cmd, int n)
 	print_tabs(n);
 	ft_printf("+**********************************+\n");
 	print_tabs(n);
-	ft_printf("| cond: %s\n", cond[cmd->cond]);
+	ft_printf("* cond: %s\n", cond[cmd->cond]);
 	print_tabs(n);
-	ft_printf("| subshell: ");
+	ft_printf("* subshell: ");
 	if (cmd->compound.subshell == TRUE)
 		ft_printf("Yes\n");
 	else
@@ -112,6 +112,7 @@ void	print_compound_cmd(t_cmd *cmd, int n)
 			cur = cur->next;
 		}
 	}
+	print_redirections(cmd->redirs, n);
 	print_tabs(n);
 	ft_printf("+**********************************+\n");
 }
