@@ -43,6 +43,7 @@ int			read_heredoc(char *limiter);
 char		*remove_quotes(char *arg);
 char		*expand_var(char *str);
 int			expand_heredoc(int fd);
+int			is_invalid_key(const char *key);
 char		*get_key(char *str);
 
 int			is_redirection(const char *token);
