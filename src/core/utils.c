@@ -17,7 +17,7 @@ int	check_identifier(char *key)
 	if (key == NULL)
 		return (1);
 	else if (!(ft_isalpha(*key) || *key == '_'))
-		return (printf("first\n"), 1);
+		return (1);
 	while (*(++key))
 		if (!(ft_isalnum(*key) || *key == '_'))
 			return (1);

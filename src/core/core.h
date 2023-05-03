@@ -19,6 +19,7 @@ typedef int					t_builtin(int c, char *v[]);
 int			setup(char *env[]);
 int			set_env_var(char *key, char *value);
 char		*get_env_var(char *key);
+int			get_env_var_len(char *key);
 t_builtin	*get_builtin(char *key);
 char		*get_current_wd(void);
 int			get_last_status(void);
