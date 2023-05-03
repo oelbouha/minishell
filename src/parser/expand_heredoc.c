@@ -12,33 +12,38 @@
 
 #include "parser.h"
 
+int	change_var(char *line, int fd, int *i)
+{
+	char 	*value;
+	char 	*key;
+
+	if (*line == '$')
+		*i += 1;
+	else if (*line == '\n' || *line == 0)
+		ft_putchar_fd('$', fd);
+	else
+	{
+		key = get_key(line);
+		if (!key)
+			return (-1);
+		value = get_env_var(key);
+		ft_putstr_fd(value, fd);
+		*i += ft_strlen(key);
+		free(value);
+		free(key);
+	}
+	return (0);
+}
+
 int	replace_var_with_value(char *line, int fd)
 {
-	char	*value;
-	char	*key;
 	int		i;
 
 	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '$')
-		{
-			if (line[++i] == '$')
-				i++;
-			else if (line[i] == '\n')
-				ft_putchar_fd('$', fd);
-			else
-			{
-				key = get_key(&line[i]);
-				if (!key)
-					return (-1);
-				value = get_env_var(key);
-				ft_putstr_fd(value, fd);
-				i += ft_strlen(key);
-				free(value);
-				free(key);
-			}
-		}
+			change_var(&line[++i], fd, &i);
 		else
 			ft_putchar_fd(line[i++], fd);
 	}
