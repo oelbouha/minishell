@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/29 11:17:13 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/15 12:59:19 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/03 15:07:47 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRC := ft_atoi.c \
 		ft_lstadd_front.c \
 		ft_lstclear.c \
 		ft_lstdelone.c \
+		ft_lstdel_first.c \
 		ft_lstiter.c \
 		ft_lstlast.c \
 		ft_lstmap.c \

@@ -54,6 +54,20 @@ SRC := new_command.c \
 		expand.c \
 		utils.c
 
+#**************************************************************************************#
+
+SRC_T := ../../gnline/get_next_line.c \
+		../../gnline/get_next_line_utils.c \
+		tests/main.c \
+		expand_heredoc.c \
+		expand_var.c 
+
+ex:  libft dslib corelib lexerlib
+	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT) $(CORE_LIB) $(DS_LIB) $(LEXER_LIB) $(SRC_T) -o ex
+
+#***************************************************************************************#
+
+
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
 
@@ -64,6 +78,7 @@ $(NAME): $(OBJ)
 
 test: $(testfile) libft dslib corelib lexerlib $(NAME)
 	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< debug_utils.c $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB) $(LEXER_LIB)
+
 
 libft: 
 	@make -s -C $(LIBFT_DIR)

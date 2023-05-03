@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include "minishell_types.h"
 # include "lexer.h"
+# include "core.h"
+# include "../../gnline/get_next_line.h"
 
 t_list		*new_command(t_list **head, t_cmd_exec_cond cond);
 int			get_commands_count(t_list *start);
@@ -38,6 +40,9 @@ void		destroy_redir(t_redir *redir);
 int			read_heredoc(char *limiter);
 
 char		*remove_quotes(char *arg);
+char		*expand_var(char *str);
+int			expand_heredoc(int fd);
+char		*get_key(char *str);
 
 int			is_redirection(const char *token);
 int			is_an_operator(const char *token);

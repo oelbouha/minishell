@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstdel_first.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/28 13:16:34 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/14 15:21:53 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/05/03 15:05:07 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/05/03 15:22:21 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(char const *str)
+void	ft_lstdel_first(t_list **head, t_lstdel del)
 {
-	int	len;
+	t_list	*first;
 
-	if (!str)
-		return (0);
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
+	first = *head;
+	*head = first->next;
+	ft_lstdelone(first, del);
 }
