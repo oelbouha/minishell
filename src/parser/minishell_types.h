@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/17 12:50:27 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/30 16:06:43 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 #define simple data._simple
 #define compound data._compound
+#define heredocfd to.heredoc.fd
+#define rfilename to.filename
 
 typedef enum e_cmd_type
 {
@@ -36,7 +38,8 @@ typedef enum e_redir_type
 	HEREDOC,
 	FILE_IN,
 	FILE_OUT,
-	FILE_APPEND
+	FILE_APPEND,
+	NOT_REDIR
 }	t_redir_type;
 
 typedef union u_cmd				t_cmd_u;
@@ -56,7 +59,7 @@ struct s_simple_cmd
 
 struct s_compound_cmd
 {
-	t_list	*cmds;
+	t_list	**cmds;
 	t_bool	subshell;
 };
 

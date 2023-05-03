@@ -6,13 +6,13 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:16:17 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/14 15:29:29 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/04/29 12:08:39 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_templatecmp(char *str, char *template, char delimiter)
+int	ft_templatecmp(const char *str, const char *template, char delimiter)
 {
 	int	len;
 	int	i;

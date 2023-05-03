@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/14 16:52:36 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/01 17:37:24 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,13 +44,15 @@ CORE_LIB := ../core/core.a
 LEXER_DIR := ../lexer
 LEXER_LIB := ../lexer/lexer.a
 
-SRC := new_simple_command.c \
+SRC := new_command.c \
+		new_simple_command.c \
 		new_compound_command.c \
 		new_redirection.c \
 		new_file_redirection.c \
 		new_heredoc_redirection.c \
 		read_heredoc.c \
-		expand.c
+		expand.c \
+		utils.c
 
 #**************************************************************************************#
 
@@ -62,6 +64,7 @@ SRC_T := ../../gnline/get_next_line.c \
 
 ex:  libft dslib corelib lexerlib
 	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT) $(CORE_LIB) $(DS_LIB) $(LEXER_LIB) $(SRC_T) -o ex
+	./ex
 
 #***************************************************************************************#
 

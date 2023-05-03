@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.h                                            :+:      :+:    :+:   */
+/*   ft_lstdel_first.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/30 15:57:37 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/30 15:57:38 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/05/03 15:05:07 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/05/03 15:22:21 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEBUG_H
-# define DEBUG_H
+#include "libft.h"
 
-# include "minishell_types.h"
+void	ft_lstdel_first(t_list **head, t_lstdel del)
+{
+	t_list	*first;
 
-void	print_cmd(t_cmd *cmd, int n);
-void	print_simple_cmd(t_cmd *cmd, int n);
-void	print_compound_cmd(t_cmd *cmd, int n);
-
-#endif
+	first = *head;
+	*head = first->next;
+	ft_lstdelone(first, del);
+}
