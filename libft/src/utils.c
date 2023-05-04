@@ -53,7 +53,7 @@ int	print_num_in_hex(unsigned long n, int uppercase)
 	return (r);
 }
 
-void	ft_free(char **arr)
+void	free_arr(char **arr)
 {
 	int	i;
 
