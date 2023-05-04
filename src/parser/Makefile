@@ -56,11 +56,14 @@ SRC := new_command.c \
 
 #**************************************************************************************#
 
-SRC_T := ../../gnline/get_next_line.c \
-		../../gnline/get_next_line_utils.c \
-		tests/main.c \
-		expand_heredoc.c \
-		expand_var.c 
+		#../../gnline/get_next_line.c \
+		#../../gnline/get_next_line_utils.c \
+		#tests/main.c \
+		#expand_heredoc.c \
+		#expand_var.c 
+
+SRC_T := wildcard.c \
+		tests/wildcard.c \
 
 ex:  libft dslib corelib lexerlib
 	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT) $(CORE_LIB) $(DS_LIB) $(LEXER_LIB) $(SRC_T) -o ex

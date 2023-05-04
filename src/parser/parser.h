@@ -17,6 +17,7 @@
 # define NO_REDIRS (t_list *)-1
 
 # include <unistd.h>
+# include <dirent.h>
 # include "minishell_types.h"
 # include "lexer.h"
 # include "core.h"
@@ -45,6 +46,8 @@ char		*expand_var(char *str);
 int			expand_heredoc(int fd);
 int			is_invalid_key(const char *key);
 char		*get_key(char *str);
+t_list		*expand_wildcard(char *line);
+int			should_expand_wildcard(char *line);
 
 int			is_redirection(const char *token);
 int			is_an_operator(const char *token);
