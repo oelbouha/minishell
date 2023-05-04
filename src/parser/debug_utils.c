@@ -106,7 +106,7 @@ void	print_compound_cmd(t_cmd *cmd, int n)
 	for (int i = 0; i < cmd->count; i++)
 	{
 		int j = 1;
-		for (t_list *cur = cmd->compound.cmds[i]; cur;)
+		for (t_list *cur = cmd->compound.arr[i]; cur;)
 		{
 			print_cmd(cur->content, n + j++);
 			cur = cur->next;

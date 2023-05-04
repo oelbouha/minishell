@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/30 16:06:43 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:42:34 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include "libft.h"
 
-#define simple data._simple
-#define compound data._compound
-#define heredocfd to.heredoc.fd
-#define rfilename to.filename
+# define simple data._simple
+# define compound data._compound
+# define heredocfd to.heredoc.fd
+# define rfilename to.filename
 
 typedef enum e_cmd_type
 {
@@ -59,7 +59,7 @@ struct s_simple_cmd
 
 struct s_compound_cmd
 {
-	t_list	**cmds;
+	t_list	**arr;
 	t_bool	subshell;
 };
 

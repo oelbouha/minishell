@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:41:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/29 12:15:14 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:45:27 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_an_operator(const char *token)
 	int	ret;
 
 	ret = (ft_templatecmp(token, "|:>:>>:<:<<", ':')
-		|| (BONUS && ft_templatecmp(token, "(:):||:&&", ':')));
+			|| (BONUS && ft_templatecmp(token, "(:):||:&&", ':')));
 	return (ret);
 }
 

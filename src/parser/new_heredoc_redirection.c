@@ -6,11 +6,16 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 22:31:32 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/17 15:10:34 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:41:19 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+int	is_heredoc(t_redir *redir)
+{
+	return (redir->type == HEREDOC);
+}
 
 t_redir	*new_heredoc_redirection(char *eof)
 {
@@ -25,4 +30,12 @@ t_redir	*new_heredoc_redirection(char *eof)
 		redir->to.heredoc.expand = FALSE;
 	redir->to.heredoc.fd = read_heredoc(eof);
 	return (redir);
+}
+
+void	del_heredoc(t_redir *redir)
+{
+	if (redir == NULL)
+		return ;
+	close(redir->to.heredoc.fd);
+	free(redir);
 }
