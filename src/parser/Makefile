@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/01 17:37:24 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/04 18:13:02 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ SRC := new_command.c \
 		new_file_redirection.c \
 		new_heredoc_redirection.c \
 		read_heredoc.c \
-		expand.c \
+		remove_quotes.c \
 		utils.c
 
 #**************************************************************************************#
