@@ -2,6 +2,17 @@
 
 #include "../parser/parser.h"
 
+void	free_lst(t_list *lst)
+{
+	t_list	*curr;
+
+	while (lst)
+	{
+		curr = lst;
+		lst = lst->next;
+		free(curr);
+	}
+}
 
 int	should_expand_wildcard(char *line)
 {
@@ -16,6 +27,8 @@ int	is_tail_matched(char *file_name, char *str)
 {
 	char	*tail;
 
+	if (!str)
+		return (0);
 	tail = ft_strchr(file_name, str[0]);
 	if (tail && ft_strcmp(tail, str) == 0)
 		return (1);
@@ -52,13 +65,13 @@ int	is_matched(char *file_name, char *head, char **arr)
 	tail = &file_name[ft_strlen(file_name) - ft_strlen(arr[len])];
 	while (arr[i] && i < len)
 	{
-		if (!ft_strnstr(file_name, arr[i], len_to_compare))
+		if (ft_strnstr(file_name, arr[i], len_to_compare))
+			file_name += ft_strlen(arr[i]);
+		else
 			return (0);
 		i++;
 	}
-	if (arr[i] && !is_tail_matched(tail, arr[i]))
-		return (0);
-	return (1);
+	return (is_tail_matched(tail, arr[i]));
 }
 
 int	add_file_name_to_list(t_list **lst, char *file_name, char *line)
@@ -98,14 +111,15 @@ t_list *expand_wildcard(char *line)
     while ((entry = readdir(dir)) != NULL)
 	{
 		if (add_file_name_to_list(&lst, entry->d_name, line) == -1)
-			return (closedir(dir), ft_lstclear(&lst, free), NULL);
+			return (closedir(dir), free_lst(lst), NULL);
     }
 	if (!lst)
 	{
 		node = ft_lstnew(line);
 		if (node == NULL)
-			return (closedir(dir), ft_lstclear(&lst, free), NULL);
+			return (closedir(dir), free_lst(lst), NULL);
 		ft_lstadd_back(&lst, node);
+		msh_err("no matches found:", line);
 	}
 	return (closedir(dir), lst);
 }

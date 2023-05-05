@@ -14,6 +14,6 @@ int		main()
 			lst = expand_wildcard(line);
 		add_history(line);
 		print(lst);
-		ft_lstclear(&lst, free);
+		free(line);
 	}
 }
