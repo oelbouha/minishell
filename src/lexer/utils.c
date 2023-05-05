@@ -66,13 +66,15 @@ t_list	*remove_last_node(t_list **lst)
 void	print(t_list *lst)
 {
 	int		i;
+	t_list	*temp;
 
-	if (!lst)
+	temp = lst;
+	if (!temp)
 		return ;
 	i = 1;
-	while (lst)
+	while (temp)
 	{
-		printf("[%2d]: %s\n",i++, lst->content);
-		lst = lst->next;
+		printf("[%2d]: %s\n",i++, temp->content);
+		temp = temp->next;
 	}
 }

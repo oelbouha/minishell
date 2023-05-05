@@ -1,6 +1,6 @@
 
 
-#include "parser.h"
+#include "../parser/parser.h"
 
 int		main()
 {
@@ -15,6 +15,5 @@ int		main()
 		add_history(line);
 		print(lst);
 		ft_lstclear(&lst, free);
-		free(line);
 	}
 }

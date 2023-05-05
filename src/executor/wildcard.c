@@ -1,6 +1,6 @@
 
 
-#include "parser.h"
+#include "../parser/parser.h"
 
 
 int	should_expand_wildcard(char *line)
@@ -12,12 +12,12 @@ int	should_expand_wildcard(char *line)
 	return (0);
 }
 
-int	check_end(char *file_name, char *str)
+int	is_tail_matched(char *file_name, char *str)
 {
-	char	*end;
+	char	*tail;
 
-	end = ft_strchr(file_name, str[0]);
-	if (end && ft_strcmp(end, str) == 0)
+	tail = ft_strchr(file_name, str[0]);
+	if (tail && ft_strcmp(tail, str) == 0)
 		return (1);
 	return (0);	
 }
@@ -32,24 +32,31 @@ int	get_length(char **arr)
 	return (i);
 }
 
-int	is_matched(char *file_name, char *start, char **arr)
+int	is_matched(char *file_name, char *head, char **arr)
 {
-	int	i;
+	int		len_to_compare;
+	char	*tail;
+	int		len;
+	int		i;
 	
 	i = 0;
-	if (start)
+	len = get_length(arr) - 1;
+	if (head)
 	{
-		if (ft_strncmp(start, file_name, ft_strlen(start)))
+		if (ft_strncmp(head, file_name, ft_strlen(head)))
 			return (0);
+		file_name += ft_strlen(head);
 		i += 1;
 	}
-	while (arr[i] && i < (get_length(arr) - 1))
+	len_to_compare = ft_strlen(file_name) - ft_strlen(arr[len]);
+	tail = &file_name[ft_strlen(file_name) - ft_strlen(arr[len])];
+	while (arr[i] && i < len)
 	{
-		if (!ft_strnstr(file_name, arr[i], ft_strlen(file_name)))
+		if (!ft_strnstr(file_name, arr[i], len_to_compare))
 			return (0);
 		i++;
 	}
-	if (arr[i] && !check_end(file_name, arr[i]))
+	if (arr[i] && !is_tail_matched(tail, arr[i]))
 		return (0);
 	return (1);
 }
@@ -57,19 +64,19 @@ int	is_matched(char *file_name, char *start, char **arr)
 int	add_file_name_to_list(t_list **lst, char *file_name, char *line)
 {
 	t_list	*node;
-	char	*start;
+	char	*head;
 	char	**arr;
 
-	start = NULL;
+	head = NULL;
 	arr = ft_split(line, '*');
 	if (!arr)
 		return (-1);
 	if (*line != '*')
-		start = arr[0];
-	if (is_matched(file_name, start, arr))
+		head = arr[0];
+	if (is_matched(file_name, head, arr))
 	{
 		node = ft_lstnew(file_name);
-		if (!node)
+		if (node == NULL)
 			return (free_arr(arr), -1);
 		ft_lstadd_back(lst, node);
 	}
@@ -79,20 +86,26 @@ int	add_file_name_to_list(t_list **lst, char *file_name, char *line)
 
 t_list *expand_wildcard(char *line)
 {
-	t_list			*lst;
-    DIR				*dir;
     struct dirent 	*entry;
+	t_list			*lst;
+	t_list			*node;
+    DIR				*dir;
 
 	lst = NULL;
     dir = opendir(".");
     if (dir == NULL)
-        return  (perror("minishell: opendir failed"), NULL);
+        return  (perror("-minishell"), NULL);
     while ((entry = readdir(dir)) != NULL)
 	{
 		if (add_file_name_to_list(&lst, entry->d_name, line) == -1)
-			return (ft_lstclear(&lst, free), NULL);
+			return (closedir(dir), ft_lstclear(&lst, free), NULL);
     }
 	if (!lst)
-		ft_lstadd_back(&lst, ft_lstnew(line));
-	return (lst);
+	{
+		node = ft_lstnew(line);
+		if (node == NULL)
+			return (closedir(dir), ft_lstclear(&lst, free), NULL);
+		ft_lstadd_back(&lst, node);
+	}
+	return (closedir(dir), lst);
 }
