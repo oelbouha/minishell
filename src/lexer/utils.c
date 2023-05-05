@@ -65,8 +65,8 @@ t_list	*remove_last_node(t_list **lst)
 
 void	print(t_list *lst)
 {
-	int		i;
 	t_list	*temp;
+	int		i;
 
 	temp = lst;
 	if (!temp)
