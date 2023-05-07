@@ -6,11 +6,12 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 14:25:47 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/04/08 14:25:58 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/06 21:41:33 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+t_list	*tokenize(const char *line);
 
 int	main(void)
 {
@@ -19,7 +20,7 @@ int	main(void)
 	{
 		char *line = readline("Lexer:$ ");
 		add_history(line);
-		l = split_line(line);
+		l = tokenize(line);
 		print(l);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/13 23:27:04 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/06 21:42:31 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ CORE_DIR := ../core
 CORE_LIB := ../core/core.a
 
 SRC :=	get_line.c \
+		tokenizer.c \
 		split_line.c \
 		handle_quotes.c \
 		handle_token.c \
