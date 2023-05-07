@@ -1,19 +1,16 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcard.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/07 21:41:55 by oelbouha          #+#    #+#             */
+/*   Updated: 2023/05/07 21:41:56 by oelbouha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../parser/parser.h"
-
-void	free_lst(t_list *lst)
-{
-	t_list	*curr;
-
-	curr = NULL;
-	while (lst)
-	{
-		curr = lst;
-		lst = lst->next;
-		free(curr);
-	}
-}
 
 int	should_expand_wildcard(char *line)
 {
@@ -24,23 +21,21 @@ int	should_expand_wildcard(char *line)
 	return (0);
 }
 
-int	is_tail_matched(char *file_name, char *str, int check)
+int	is_tail_matched(char *file_name, char *str, char *line)
 {
 	char	*tail;
 
-	if (check)
+	if (line[ft_strlen(line) - 1] == '*')
 		return (1);
-	if (!str)
-		return (0);
 	tail = ft_strchr(file_name, str[0]);
 	if (tail && ft_strcmp(tail, str) == 0)
 		return (1);
-	return (0);	
+	return (0);
 }
 
 int	get_length(char **arr)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (arr[++i])
@@ -48,86 +43,102 @@ int	get_length(char **arr)
 	return (i);
 }
 
-int	is_matched(char *file_name, char *line, char **arr)
+int	is_midlde_name_matched(char *filename, int arr_len, char **arr, char *line)
 {
 	int		len_to_compare;
-	int		check;
 	char	*tail;
-	int		len;
+	char	*temp;
 	int		i;
-	
-	check = 0;
-	len = get_length(arr) - 1;
-	if (line[ft_strlen(line) - 1] == '*')
-		check = 1;
+
+	i = 0;
+	len_to_compare = ft_strlen(filename) - ft_strlen(arr[arr_len - 1]);
+	tail = &filename[len_to_compare];
+	while (arr[i])
+	{
+		if (line[ft_strlen(line) - 1] != '*' && i == arr_len - 1)
+			break ;
+		temp = ft_strnstr(filename, arr[i], len_to_compare);
+		if (temp == NULL)
+			return (1);
+		filename = temp + ft_strlen(arr[i]);
+		i++;
+	}
+	return (0);
+}
+
+int	is_matched(char *file_name, char *line, char **arr, int arr_len)
+{
+	char	*tail;
+	int		ret;
+	int		i;
+
 	i = 0;
 	if (*line && arr[0] == NULL)
 		return (1);
 	else if (*line != '*')
 	{
-		if (ft_strncmp(arr[i], file_name, ft_strlen(arr[i])))
+		if (ft_strncmp(arr[0], file_name, ft_strlen(arr[0])))
 			return (0);
-		file_name += ft_strlen(arr[i]);
+		file_name += ft_strlen(arr[0]);
 		i += 1;
 	}
-	len_to_compare = ft_strlen(file_name) - ft_strlen(arr[len]);
-	tail = &file_name[ft_strlen(file_name) - ft_strlen(arr[len])];
-	while (arr[i] && i <= len)
-	{
-		if (check == 0 && i >= len)
-			break;
-		if (ft_strnstr(file_name, arr[i], len_to_compare))
-			file_name += ft_strnstr(file_name, arr[i], len_to_compare) - file_name;
-		else
-			return (0);
-		i++;
-	}
-	return (is_tail_matched(tail, arr[i], check));
+	tail = &file_name[ft_strlen(file_name) - ft_strlen(arr[arr_len - 1])];
+	ret = is_midlde_name_matched(file_name, arr_len, &arr[i], line);
+	if (ret == 1)
+		return (0);
+	return (is_tail_matched(tail, arr[arr_len - 1], line));
 }
 
-int	add_file_name_to_list(t_list **lst, char *file_name, char *line)
+int	add_filename_to_list(t_list **lst, char *line, char **arr, DIR *dir)
 {
-	t_list	*node;
-	char	**arr;
+	struct dirent	*entry;
+	t_list			*node;
+	char			*name;
+
+	while (1)
+	{
+		entry = readdir(dir);
+		if (entry == NULL)
+			break ;
+		name = ft_strdup(entry->d_name);
+		if (name == NULL)
+			return (-1);
+		if (is_matched(entry->d_name, line, arr, get_length(arr)))
+		{
+			node = ft_lstnew(name);
+			if (node == NULL)
+				return (-1);
+			ft_lstadd_back(lst, node);
+		}
+	}
+	return (0);
+}
+
+t_list	*expand_wildcard(char *line)
+{
+	t_list		*matches;
+	t_list		*node;
+	DIR			*dir;
+	char		**arr;
 
 	arr = ft_split(line, '*');
 	if (!arr)
-		return (-1);
-	if (is_matched(file_name, line, arr))
+		return (NULL);
+	matches = NULL;
+	dir = opendir(".");
+	if (dir == NULL)
+		return (perror("-minishell"), free_arr(arr), NULL);
+	if (add_filename_to_list(&matches, line, arr, dir) == -1)
+		return (closedir(dir), ft_lstclear(&matches, free),
+			free_arr(arr), NULL);
+	if (!matches)
 	{
-		node = ft_lstnew(file_name);
+		node = ft_lstnew(ft_strdup(line));
 		if (node == NULL)
-			return (free_arr(arr), -1);
-		ft_lstadd_back(lst, node);
-	}
-	return (free_arr(arr), 0);
-}
-
-
-t_list *expand_wildcard(char *line)
-{
-    struct dirent 	*entry;
-	t_list			*lst;//matches;
-	t_list			*node;
-    DIR				*dir;
-
-	lst = NULL;
-    dir = opendir(".");
-    if (dir == NULL)
-        return  (perror("-minishell"), NULL);
-    while ((entry = readdir(dir)) != NULL)
-	{
-		if (add_file_name_to_list(&lst, entry->d_name, line) == -1)
-			return (closedir(dir), free_lst(lst), NULL);
-		entry->d_name[0] = 'A';
-    }
-	if (!lst)
-	{
-		node = ft_lstnew(line);
-		if (node == NULL)
-			return (closedir(dir), free_lst(lst), NULL);
-		ft_lstadd_back(&lst, node);
+			return (closedir(dir), ft_lstclear(&matches, free),
+				free_arr(arr), NULL);
+		ft_lstadd_back(&matches, node);
 		msh_err("no matches found:", line);
 	}
-	return (closedir(dir), lst);
+	return (closedir(dir), free_arr(arr), matches);
 }

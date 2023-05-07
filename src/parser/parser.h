@@ -49,6 +49,7 @@ int			expand_heredoc(int fd);
 int			is_invalid_key(const char *key);
 char		*get_key(char *str);
 t_list		*expand_wildcard(char *line);
+char		*split_expanded(char *expanded);
 int			should_expand_wildcard(char *line);
 
 int			is_redirection(const char *token);

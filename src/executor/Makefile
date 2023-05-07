@@ -46,8 +46,11 @@ LEXER_LIB := ../lexer/lexer.a
 
 #**************************************************************************************#
 
-SRC_T := wildcard.c \
+SRC_T := 	../../gnline/get_next_line.c \
+		../../gnline/get_next_line_utils.c \
 		tests/wildcard.c \
+		expand_heredoc.c \
+		expand_var.c 
 
 ex:  libft dslib corelib lexerlib
 	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT) $(CORE_LIB) $(DS_LIB) $(LEXER_LIB) $(SRC_T) -o ex

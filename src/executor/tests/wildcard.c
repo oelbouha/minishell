@@ -2,19 +2,26 @@
 
 #include "../parser/parser.h"
 
-int		main()
+int		main(int c, char **v, char **env)
 {
-	t_list *lst;
-
-	lst = NULL;
+	(void)c;
+	(void)v;
+	setup(env);
 	while (1)
 	{
-		char *line = readline("$$: ");
-		// lst = split_line(line);
-		if (should_expand_wildcard(line))
-			lst = expand_wildcard(line);
+		// char *line = readline("$$: ");
+		// // lst = split_line(line);
+		// if (should_expand_wildcard(line))
+		// 	lst = expand_wildcard(line);
+		// print(lst);
+		// ft_lstclear(&lst, free);
+		// free(line);
+		char *line = readline("$$$: ");
+		char *expanded = expand_var(line);
 		add_history(line);
-		print(lst);
+		printf("result:   %s\n", expanded);
+		printf("after split:  %s\n", split_expanded(expanded));
 		free(line);
+		free(expanded);
 	}
 }

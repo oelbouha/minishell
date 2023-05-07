@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../parser/parser.h"
 
 int	is_invalid_key(const char *key)
 {
@@ -129,18 +129,12 @@ void	handle_single_quote(char *expanded, char *str, int *x, int *y)
 }
 
 
-char	*expand_var(char *str)
+char	*replace_dollar_sign(char *str, char *expanded)
 {
-	char	*expanded;
-	int		len;
 	int		err;
 	int		i;
 	int		j;
-	
-	len = get_length(str);
-	expanded = malloc(len + 1);
-	if (expanded == NULL || len == -1)
-		return (free(expanded), NULL);
+
 	i = 0;
 	j = 0;
 	err = 0;
@@ -159,4 +153,44 @@ char	*expand_var(char *str)
 	}
 	expanded[j] = '\0';
 	return (expanded);
+}
+
+char	*split_expanded(char *expanded)
+{
+	char	*new_expanded;
+	char	next_char;
+	int		i;
+	int		j;
+
+	new_expanded = malloc(ft_strlen(expanded) + 1);
+	if (!new_expanded)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (expanded[i])
+	{
+		if (expanded[i] == ' ' || expanded[i] == '\t')
+		{
+			next_char = expanded[i];
+			new_expanded[j++] = expanded[i++];
+			while (expanded[i] == next_char)
+				i++;
+		}
+		else
+			new_expanded[j++] = expanded[i++];
+	}
+	new_expanded[j] = '\0';
+	return (new_expanded);
+}
+
+char	*expand_var(char *str)
+{
+	char	*expanded;
+	int		len;
+
+	len = get_length(str);
+	expanded = malloc(len + 1);
+	if (expanded == NULL || len == -1)
+		return (free(expanded), NULL);
+	return (replace_dollar_sign(str, expanded));
 }
