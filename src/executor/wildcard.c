@@ -61,7 +61,9 @@ int	is_matched(char *file_name, char *line, char **arr)
 	if (line[ft_strlen(line) - 1] == '*')
 		check = 1;
 	i = 0;
-	if (*line != '*')
+	if (*line && arr[0] == NULL)
+		return (1);
+	else if (*line != '*')
 	{
 		if (ft_strncmp(arr[i], file_name, ft_strlen(arr[i])))
 			return (0);
@@ -105,7 +107,7 @@ int	add_file_name_to_list(t_list **lst, char *file_name, char *line)
 t_list *expand_wildcard(char *line)
 {
     struct dirent 	*entry;
-	t_list			*lst;
+	t_list			*lst;//matches;
 	t_list			*node;
     DIR				*dir;
 
@@ -117,6 +119,7 @@ t_list *expand_wildcard(char *line)
 	{
 		if (add_file_name_to_list(&lst, entry->d_name, line) == -1)
 			return (closedir(dir), free_lst(lst), NULL);
+		entry->d_name[0] = 'A';
     }
 	if (!lst)
 	{
