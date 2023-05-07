@@ -10,6 +10,7 @@ int		main()
 	while (1)
 	{
 		char *line = readline("$$: ");
+		// lst = split_line(line);
 		if (should_expand_wildcard(line))
 			lst = expand_wildcard(line);
 		add_history(line);
