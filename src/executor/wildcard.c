@@ -6,6 +6,7 @@ void	free_lst(t_list *lst)
 {
 	t_list	*curr;
 
+	curr = NULL;
 	while (lst)
 	{
 		curr = lst;
@@ -23,10 +24,12 @@ int	should_expand_wildcard(char *line)
 	return (0);
 }
 
-int	is_tail_matched(char *file_name, char *str)
+int	is_tail_matched(char *file_name, char *str, int check)
 {
 	char	*tail;
 
+	if (check)
+		return (1);
 	if (!str)
 		return (0);
 	tail = ft_strchr(file_name, str[0]);
@@ -45,48 +48,50 @@ int	get_length(char **arr)
 	return (i);
 }
 
-int	is_matched(char *file_name, char *head, char **arr)
+int	is_matched(char *file_name, char *line, char **arr)
 {
 	int		len_to_compare;
+	int		check;
 	char	*tail;
 	int		len;
 	int		i;
 	
-	i = 0;
+	check = 0;
 	len = get_length(arr) - 1;
-	if (head)
+	if (line[ft_strlen(line) - 1] == '*')
+		check = 1;
+	i = 0;
+	if (*line != '*')
 	{
-		if (ft_strncmp(head, file_name, ft_strlen(head)))
+		if (ft_strncmp(arr[i], file_name, ft_strlen(arr[i])))
 			return (0);
-		file_name += ft_strlen(head);
+		file_name += ft_strlen(arr[i]);
 		i += 1;
 	}
 	len_to_compare = ft_strlen(file_name) - ft_strlen(arr[len]);
 	tail = &file_name[ft_strlen(file_name) - ft_strlen(arr[len])];
-	while (arr[i] && i < len)
+	while (arr[i] && i <= len)
 	{
+		if (check == 0 && i >= len)
+			break;
 		if (ft_strnstr(file_name, arr[i], len_to_compare))
-			file_name += ft_strlen(arr[i]);
+			file_name += ft_strnstr(file_name, arr[i], len_to_compare) - file_name;
 		else
 			return (0);
 		i++;
 	}
-	return (is_tail_matched(tail, arr[i]));
+	return (is_tail_matched(tail, arr[i], check));
 }
 
 int	add_file_name_to_list(t_list **lst, char *file_name, char *line)
 {
 	t_list	*node;
-	char	*head;
 	char	**arr;
 
-	head = NULL;
 	arr = ft_split(line, '*');
 	if (!arr)
 		return (-1);
-	if (*line != '*')
-		head = arr[0];
-	if (is_matched(file_name, head, arr))
+	if (is_matched(file_name, line, arr))
 	{
 		node = ft_lstnew(file_name);
 		if (node == NULL)
