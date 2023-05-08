@@ -19,8 +19,7 @@ int		main(int c, char **v, char **env)
 		char *line = readline("$$$: ");
 		char *expanded = expand_var(line);
 		add_history(line);
-		printf("result:   %s\n", expanded);
-		printf("after split:  %s\n", split_expanded(expanded));
+			printf("result:   %s\n", expanded);
 		free(line);
 		free(expanded);
 	}

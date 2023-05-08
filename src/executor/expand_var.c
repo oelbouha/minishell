@@ -33,7 +33,7 @@ char	*get_key(char *str)
 	return (ft_substr(str, 0, i));
 }
 
-int		get_length(char *str)
+int	get_expanded_length(char *str)
 {
 	char	*key;
 	int		len;
@@ -128,7 +128,6 @@ void	handle_single_quote(char *expanded, char *str, int *x, int *y)
 	*y += j;
 }
 
-
 char	*replace_dollar_sign(char *str, char *expanded)
 {
 	int		err;
@@ -155,15 +154,15 @@ char	*replace_dollar_sign(char *str, char *expanded)
 	return (expanded);
 }
 
-char	*split_expanded(char *expanded)
+char	*modify_expanded(char *expanded)
 {
-	char	*new_expanded;
+	char	*modified;
 	char	next_char;
 	int		i;
 	int		j;
 
-	new_expanded = malloc(ft_strlen(expanded) + 1);
-	if (!new_expanded)
+	modified = malloc(ft_strlen(expanded) + 1);
+	if (!modified)
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -171,16 +170,36 @@ char	*split_expanded(char *expanded)
 	{
 		if (expanded[i] == ' ' || expanded[i] == '\t')
 		{
-			next_char = expanded[i];
-			new_expanded[j++] = expanded[i++];
+			next_char = expanded[i++];
+			modified[j++] = ' ';
 			while (expanded[i] == next_char)
 				i++;
 		}
 		else
-			new_expanded[j++] = expanded[i++];
+			modified[j++] = expanded[i++];
 	}
-	new_expanded[j] = '\0';
-	return (new_expanded);
+	modified[j] = '\0';
+	return (modified);
+}
+
+char	**split_expanded(char *expanded)
+{
+	char	**expanded_args;
+
+	if (expanded == NULL)
+		return (NULL);
+	expanded_args = NULL;
+	if (ft_templatecmp(expanded, "'\"", ':'))
+	{
+		expanded_args = malloc(2 * sizeof(char *));
+		expanded_args[0] = ft_strdup(expanded);
+		if (expanded_args[0] == NULL)
+			return (NULL);
+		expanded_args[1] = NULL;
+	}
+	else
+		expanded_args = ft_split(expanded, ' ');
+	return (expanded_args);
 }
 
 char	*expand_var(char *str)
@@ -188,7 +207,7 @@ char	*expand_var(char *str)
 	char	*expanded;
 	int		len;
 
-	len = get_length(str);
+	len = get_expanded_length(str);
 	expanded = malloc(len + 1);
 	if (expanded == NULL || len == -1)
 		return (free(expanded), NULL);
