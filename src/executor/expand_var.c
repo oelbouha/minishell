@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 13:26:18 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/03 17:48:16 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/09 15:30:51 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,61 @@ int	add_nodes_to_expanded_list(t_list **expanded, t_list *lst)
 	}
 	return (ft_lstclear(&curr, free), 0);
 }
+
+
+/*
+	PREP_ARGS; CHAR **
+	while (arg)
+	{
+		if (should_expand)
+			expand(&arg);
+		else
+			remove quotes;
+		next;
+	}
+	args = ft_lst_to_array(lst);
+
+	EXPAND( ARG )
+	t_list *lst;
+	lst = split(*arg->content);
+	lst = expand_and_join(lst);
+	temp = *arg->next;
+	*arg = lst;
+	lst = ft_lstlast(lst);
+	lst->next = temp;
+
+	
+	EXPAND_AND_JOIN
+	{//if needs spliting	
+		expand;
+		if (*expnaded == 0)
+		{
+			temp = cur;
+			cur = cur->next;
+			prev->next = cur;
+			ft_lstdelone(temp, free);
+			continue ;
+		}
+		newlst = split;
+		join newlst with prev
+		last = ft_lstlast(newlst);
+		last->next = cur->next;
+		prev->next = newlst->next;
+		ft_lstdelone(cur, free);
+		ft_lstdelone(newlst, free);
+		cur = last->next;
+	}
+	{else
+		remove quotes;
+		expand_vars;
+		join with prev if there is a prev node;prev->content = join
+		prev->next = cur->next;
+		ft_lstdelone(cur, free);
+		cur = prev->next;
+	}
+
+
+   */
 
 t_list	*split_expanded(t_list *lst)
 {
