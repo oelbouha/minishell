@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../parser/parser.h"
 
 int	change_var(char *line, int fd, int *i)
 {

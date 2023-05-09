@@ -54,3 +54,4 @@ char	*get_token(char *str, int *err)
 		*err = 1;
 	return (token);
 }
+

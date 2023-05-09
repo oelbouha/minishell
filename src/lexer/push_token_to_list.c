@@ -12,7 +12,6 @@
 
 #include "lexer.h"
 
-
 int	push_token_to_list(t_list **lst, char *token)
 {
 	t_list	*node;
