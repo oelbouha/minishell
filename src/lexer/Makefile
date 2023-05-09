@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/06 21:42:31 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/09 11:31:19 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC :=	get_line.c \
 		utils.c	\
 		simple_word.c \
 		analyzer.c \
+		analyzer.new.c \
 		push_token_to_list.c
 
 OBJ := $(SRC:%.c=%.o)

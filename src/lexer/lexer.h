@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:14:18 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/04 15:06:00 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/09 14:35:59 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <dirent.h>
 # include <sys/errno.h>
 # include "core.h"
+# include "libft.h"
 
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
@@ -33,6 +34,14 @@
 # endif
 
 typedef unsigned long long	t_ull;
+
+typedef struct s_analyzer_stats
+{
+	int	syntax_error;
+	int	heredoc_count;
+	int	parentheses_count;
+	int	cant_be_word;
+}	t_analyzer_stats;
 
 void		print(t_list *lst);
 void		configure_readline(void);

@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 22:16:56 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/06 22:31:37 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/09 12:11:32 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	get_word_length(const char *line);
 
-int	is_word_delimiter_(const char *line)
+int	is_word_delimiter(const char *line)
 {
 	if (ft_strchr(" \t|<>()", *line) || ft_strncmp(line, "&&", 2) == 0)
 		return (1);
 	return (0);
 }
-int	get_token_length_(const char *line)
+int	get_token_length(const char *line)
 {
 	if (ft_strncmp(line, ">>", 2) == 0 || ft_strncmp(line, "<<", 2) == 0
 		|| ft_strncmp(line, "||", 2) == 0 || ft_strncmp(line, "&&", 2) == 0)
@@ -32,13 +32,13 @@ int	get_token_length_(const char *line)
 }
 
 
-int	is_word_delimiter(const char *line)
+int	is_word_delimiter_(const char *line)
 {
 	if (ft_strchr(" \t|<>", *line))
 		return (1);
 	return (0);
 }
-int	get_token_length(const char *line)
+int	get_token_length_(const char *line)
 {
 	if (ft_strncmp(line, ">>", 2) == 0 || ft_strncmp(line, "<<", 2) == 0)
 		return (2);
