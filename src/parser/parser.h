@@ -43,7 +43,11 @@ void		del_heredoc(t_redir *redir);
 void		destroy_redir(t_redir *redir);
 int			read_heredoc(char *limiter);
 
+t_list		*split_content(char *line);
+t_list		*split_expanded(t_list *lst);
+int			should_expand_var(char *str);
 char		*remove_quotes(char *arg);
+char		*remove_double_quotes(char *arg);
 char		*expand_var(char *str);
 int			expand_heredoc(int fd);
 int			is_invalid_key(const char *key);
