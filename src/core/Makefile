@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/15 12:56:49 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/11 16:49:46 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBFT := ../../libft/libft.a
 DS_DIR := ../datastructures
 DS_LIB := ../datastructures/datastructures.a
 
-SRC := builtins.c \
+CORE_SRC := builtins.c \
 		cd.c \
 		echo.c \
 		env.c \
@@ -38,10 +38,9 @@ SRC := builtins.c \
 		get_last_status.c \
 		set_last_status.c \
 		utils.c \
-#		test.c \
 
-OBJ := $(SRC:%.c=%.o)
-OBJ := $(addprefix obj/, $(OBJ))
+CORE_OBJ := $(CORE_SRC:%.c=%.o)
+CORE_OBJ := $(addprefix obj/, $(CORE_OBJ))
 
 N :=\x1b[0m
 G :=\x1b[32;01m
@@ -51,13 +50,13 @@ O :=\x1b[33;01m
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(CORE_OBJ)
 	@ar -rcs $@ $^
 
 test: libft dslib core_test
 
-core_test: obj/test.o $(OBJ) $(LIBFT) $(DS_LIB)
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(OBJ) $(LIBFT) $(DS_LIB)
+core_test: obj/test.o $(CORE_OBJ) $(LIBFT) $(DS_LIB)
+	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(CORE_OBJ) $(LIBFT) $(DS_LIB)
 
 libft: 
 	@make -s -C $(LIBFT_DIR)

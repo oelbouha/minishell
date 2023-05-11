@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_line.c                                         :+:      :+:    :+:   */
+/*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/13 12:18:59 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/11 16:27:56 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,18 @@ char	*read_line(t_ull state)
 		configure_readline();
 	prompt = get_prompt();
 	line = NULL;
-	while (line == NULL || *line == 0 || ft_issubset(" \t", line))
+	while (line == NULL || ft_issubset(" \t", line))
 	{
 		free(line);
 		if (prompt)
 			line = readline(prompt);
 		else
 			line = readline("→ ");
+		if (line == NULL)
+			return (line);
 	}
+	if (*line == 0)
+		return (line);
 	add_history(line);
 	trimmed = ft_strtrim(line, " \t");
 	return (free(line), trimmed);

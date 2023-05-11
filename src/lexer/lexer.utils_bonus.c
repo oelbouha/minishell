@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer.utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/08 14:25:47 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/11 13:24:13 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/05/11 15:12:04 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/05/11 15:14:43 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "lexer_bonus.h"
 
-int	main(void)
+int	is_an_operator(const char *token)
 {
-	t_list *l;
-	while (1)
-	{
-		char *line = read_line(0);
-		if (line == NULL)
-			return (0);
-		l = tokenize(line);
-		analyze(&l);
-		if (l)
-			print(l);
-		free(line);
-		ft_lstclear(&l, free);
-	}
-	return (0);
+	return (ft_templatecmp(token, OPERATORS, ':'));
 }

@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   index.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/08 14:25:47 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/11 13:24:13 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/05/11 16:30:15 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/05/11 17:11:06 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "core.h"
 #include "lexer.h"
+#include "parser.h"
 
 int	main(void)
 {
-	t_list *l;
+	char	*line;
+	t_list	*tokens;
+	t_list	*command;
+	int		err;
+
 	while (1)
 	{
-		char *line = read_line(0);
+		ft_printf("stts: %d\n", get_last_status());
+		line = read_line(1);
 		if (line == NULL)
-			return (0);
-		l = tokenize(line);
-		analyze(&l);
-		if (l)
-			print(l);
+			return (get_last_status());
+		tokens = tokenize(line);
+		err = analyze(&tokens);
+		print(tokens);
+		(void)command;
 		free(line);
-		ft_lstclear(&l, free);
+		set_last_status(get_last_status() + 1);
 	}
-	return (0);
 }

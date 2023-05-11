@@ -6,47 +6,11 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 22:16:56 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/09 12:11:32 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/10 18:27:16 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-int	get_word_length(const char *line);
-
-int	is_word_delimiter(const char *line)
-{
-	if (ft_strchr(" \t|<>()", *line) || ft_strncmp(line, "&&", 2) == 0)
-		return (1);
-	return (0);
-}
-int	get_token_length(const char *line)
-{
-	if (ft_strncmp(line, ">>", 2) == 0 || ft_strncmp(line, "<<", 2) == 0
-		|| ft_strncmp(line, "||", 2) == 0 || ft_strncmp(line, "&&", 2) == 0)
-		return (2);
-	else if (ft_strchr("<>|()", *line))
-		return (1);
-	else
-		return (get_word_length(line));
-}
-
-
-int	is_word_delimiter_(const char *line)
-{
-	if (ft_strchr(" \t|<>", *line))
-		return (1);
-	return (0);
-}
-int	get_token_length_(const char *line)
-{
-	if (ft_strncmp(line, ">>", 2) == 0 || ft_strncmp(line, "<<", 2) == 0)
-		return (2);
-	else if (ft_strchr("<>|", *line))
-		return (1);
-	else
-		return (get_word_length(line));
-}
 
 int	get_word_length(const char *line)
 {
@@ -58,10 +22,14 @@ int	get_word_length(const char *line)
 	{
 		if (line[length] == '"' || line[length] == '\'')
 		{
-			res = ft_strchr(&line[length + 1], line[length]) + 1;
+			res = ft_strchr(&line[length + 1], line[length]);
 			if (res == NULL)
+			{
 				res = ft_strchr(line, '\0');
-			length += res - &line[length];
+				length += res - &line[length];
+				return (length);
+			}
+			length += res - &line[length] + 1;
 		}
 		else if (is_word_delimiter(&line[length]))
 			break ;

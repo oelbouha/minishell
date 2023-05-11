@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/09 11:31:19 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/11 16:39:45 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,11 +54,41 @@ OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
 
 
-lexer: main.c libft dslib corelib $(NAME)
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(NAME) $(LIBFT) $(DS_LIB) $(CORE_LIB)
-	
-test: $(testfile) libft dslib corelib $(NAME)
-	$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(NAME) $(LIBFT) $(DS_LIB) $(CORE_LIB)
+
+BASE := read_line.c \
+	tokenizer.c \
+	analyzer.utils.c \
+	utils.c
+
+LEXER_SRC := $(BASE) \
+	tokenizer.utils.c \
+	analyzer.c \
+	analyzer.check_common.c \
+	lexer.utils.c
+
+LEXER_BONUS := $(BASE) \
+	tokenizer.utils_bonus.c \
+	analyzer_bonus.c \
+	analyzer.check_common_bonus.c \
+	analyzer.check_logical_operators_bonus.c \
+	analyzer.check_parentheses_bonus.c \
+	lexer.utils_bonus.c
+
+LEXER_SRC_OBJ := $(LEXER_SRC:%.c=%.o)
+LEXER_SRC_OBJ := $(addprefix obj/, $(LEXER_SRC_OBJ))
+
+LEXER_BONUS_OBJ := $(LEXER_BONUS:%.c=%.o)
+LEXER_BONUS_OBJ := $(addprefix obj/, $(LEXER_BONUS_OBJ))
+
+lexer_bonus: main.c libft dslib corelib $(LEXER_BONUS_OBJ)
+	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(LEXER_BONUS_OBJ) \
+		$(LIBFT) $(DS_LIB) $(CORE_LIB)
+	./lexer_bonus
+
+lexer_mandatory: main.c libft dslib corelib $(LEXER_SRC_OBJ)
+	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(LEXER_SRC_OBJ) \
+		$(LIBFT) $(DS_LIB) $(CORE_LIB)
+	./lexer_mandatory
 
 all: $(NAME)
 
