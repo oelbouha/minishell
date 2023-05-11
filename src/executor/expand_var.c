@@ -154,99 +154,6 @@ char	*replace_dollar_sign(char *str, char *expanded)
 	return (expanded);
 }
 
-char	*modify_expanded_spaces(char *expanded)
-{
-	char	*modified;
-	char	next_char;
-	int		i;
-	int		j;
-
-	modified = malloc(ft_strlen(expanded) + 1);
-	if (!modified)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (expanded[i])
-	{
-		if (expanded[i] == ' ' || expanded[i] == '\t')
-		{
-			next_char = expanded[i++];
-			modified[j++] = ' ';
-			while (expanded[i] == next_char)
-				i++;
-		}
-		else
-			modified[j++] = expanded[i++];
-	}
-	modified[j] = '\0';
-	return (modified);
-}
-
-int	should_expand_var(char *str)
-{
-	char	next_quote;
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-		{
-			next_quote = str[i];
-			i++;
-			while (str[i] && str[i] != next_quote)
-				i++;
-			i++;
-		}
-		else if (str[i] == '$')
-			return (1);
-		else
-			i++;
-	}
-	return (0);
-}
-
-
-int	add_nodes_to_expanded_list(t_list **expanded, t_list *lst)
-{
-	t_list	*node;
-	t_list	*curr;
-	char	**arr;
-	int		i;
-
-	curr = lst;
-	while (lst)
-	{
-		if (should_expand_var(lst->content))
-		{
-			char *str = expand_var(lst->content);
-			// str = str_expanded_spaces(lst->content);
-			arr = ft_split(str, ' ');
-			free(str);
-			if (arr == NULL)
-				return (ft_lstclear(&lst, free), -1);
-			i = -1;
-			while (arr[++i])
-			{
-				node = ft_lstnew(arr[i]);
-				if (node == NULL)
-					return (ft_lstclear(&lst, free), free_arr(arr), -1);
-				ft_lstadd_back(expanded, node);
-			}
-			free(arr);
-		}
-		else
-		{
-			lst->content = remove_quotes(lst->content);
-			node = ft_lstnew(ft_strdup(lst->content));
-			if (node == NULL)
-				return (ft_lstclear(&lst, free), -1);
-			ft_lstadd_back(expanded, node);
-		}
-		lst = lst->next;
-	}
-	return (ft_lstclear(&curr, free), 0);
-}
 
 
 /*
@@ -299,40 +206,18 @@ int	add_nodes_to_expanded_list(t_list **expanded, t_list *lst)
 		ft_lstdelone(cur, free);
 		cur = prev->next;
 	}
+*/
 
 
-   */
+/*
 
-t_list	*split_expanded(t_list *lst)
-{
-	t_list	*expanded;
-	t_list	*curr;
-	t_list	*node;
 
-	curr = lst;
-	expanded = NULL;
-	while (curr)
-	{
-		if (should_expand_var(curr->content))
-		{
-			node = split_content(curr->content);
-			if (node == NULL)
-				return (ft_lstclear(&expanded, free), NULL);
-			if (add_nodes_to_expanded_list(&expanded, node) == -1)
-				return (ft_lstclear(&expanded, free), ft_lstclear(&node, free), NULL);
-		}
-		else
-		{
-			curr->content = remove_quotes(curr->content);
-			node = ft_lstnew(ft_strdup(lst->content));
-			if (node == NULL)
-				return (ft_lstclear(&expanded, free), NULL);
-			ft_lstadd_back(&expanded, node);
-		}
-		curr = curr->next;
-	}
-	return (ft_lstclear(&lst, free), expanded);
-}
+	fdfdfd f d fd f d 
+	join node 1;
+	prev point to last node
+
+*/
+
 
 char	*expand_var(char *str)
 {

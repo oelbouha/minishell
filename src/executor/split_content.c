@@ -8,20 +8,10 @@ int	quotes_len(char *str)
 	int		i;
 
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] == SINGLE_QUOTE || str[i] == DOUBLE_QUOTE)
-		{
-			next_quote = str[i];
-			while (str[++i] && str[i] != next_quote)
-				;
-			i++;
-		}
-		else if (str[i] == '$')
-			return (i);
-		else
-			i++;
-	}
+	next_quote = str[i];
+	while (str[++i] && str[i] != next_quote)
+		;
+	i++;
 	return (i);
 }
 
@@ -55,6 +45,7 @@ int	simple_word_len(char *str)
 			while (str[++i] && str[i] != next_quote)
 				;
 			i++;
+			return (i);
 		}
 		else if (str[i] == '$')
 			return (i);
