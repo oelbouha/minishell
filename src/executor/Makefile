@@ -52,7 +52,8 @@ SRC_T := 	../../gnline/get_next_line.c \
 		expand_heredoc.c \
 		../parser/remove_quotes.c \
 		expand_var.c \
-		split_expanded.c
+		split_content.c \
+		expand_and_split.c
 
 ex:  libft dslib corelib lexerlib
 	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT) $(CORE_LIB) $(DS_LIB) $(LEXER_LIB) $(SRC_T) -o ex
