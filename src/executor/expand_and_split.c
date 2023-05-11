@@ -1,6 +1,7 @@
 
 
 #include "../parser/parser.h"
+#define EMPTY_LST	(t_list *)-1
 
 int	needs_spliting(char *str)
 {
@@ -125,7 +126,7 @@ void	expand_var_ad_join(t_list **prv, t_list **lst, t_list **tmp, char *str)
 	}
 }
 
-void	rm_quotes_and_expand(t_list **prev, t_list **lst, t_list **temp)
+void	rm_quotes_and_expand(t_list **prev, t_list **lst, t_list **new_lst)
 {
 	char	*str;
 
@@ -151,7 +152,7 @@ void	rm_quotes_and_expand(t_list **prev, t_list **lst, t_list **temp)
 	{
 		*prev = *lst;
 		*lst = (*lst)->next;
-		*temp = *prev;
+		*new_lst = *prev;
 	}
 }
 
@@ -165,13 +166,13 @@ void	not_a_valid_var(t_list **lst, t_list **prev, char *expanded)
 
 t_list	*split_and_join(t_list *lst)
 {
-	char	*expanded;
-	t_list	*prev;
 	t_list	*new_lst;
+	t_list	*prev;
+	char	*expanded;
 
 	prev = NULL;
-	new_lst = (t_list *)-1;
-	while (lst)
+	new_lst = EMPTY_LST;
+	while (lst && new_lst)
 	{
 		if (needs_spliting(lst->content))
 		{
@@ -187,43 +188,57 @@ t_list	*split_and_join(t_list *lst)
 	return (new_lst);
 }
 
-void	expand(t_list **arg)
+t_list	*expand(t_list *cur, t_list *prev, t_list **lst_ptr)
 {
-	t_list	*temp;
 	t_list	*lst;
-	t_list	*t;
+	t_list	*temp;
 
-	lst = split_content((*arg)->content);
+	lst = split_content(cur->content);
 	lst = split_and_join(lst);
-	if (lst == NULL)
-		return ;
-	else if (lst == (t_list *)-1)
+	if (lst == EMPTY_LST)
 	{
-		temp = *arg;
-		*arg = (*arg)->next;
-		ft_lstdelone(temp, free);
-		return ;
+		ft_lstdel_first(&cur, free);
+		if (prev)
+			prev->next = cur;
+		return (prev);
 	}
-	temp = (*arg)->next;
-	t = *arg;
-	*arg = lst;
-	lst = ft_lstlast(lst);
-	lst->next = temp;
-	ft_lstdelone(t, free);
+	if (prev)
+	{
+		temp = cur->next;
+		prev->next = lst;
+	}
+	else
+	{
+		*lst_ptr = lst;
+		temp = cur->next;
+	}
+	prev = ft_lstlast(lst);
+	prev->next = temp;
+	return (ft_lstdel_first(&cur, free), prev);
 }
 
 t_list	*split_expanded(t_list *lst)
 {
-	t_list	*curr;
+	t_list	*cur;
+	t_list	*prev;
 
-	curr = lst;
-	while (curr)
+	prev = NULL;
+	cur = lst;
+	while (cur)
 	{
-		if (should_expand_var(curr->content))
-			expand(&lst);
+		if (should_expand_var(cur->content))
+		{
+			prev = expand(cur, prev, &lst);
+			if (prev == NULL)
+				return (NULL);
+			cur = prev->next;
+		}
 		else
-			curr->content = remove_quotes(curr->content);
-		curr = curr->next;
+		{
+			cur->content = remove_quotes(cur->content);
+			prev = cur;
+			cur = cur->next;
+		}
 	}
 	return (lst);
 }
