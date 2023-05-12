@@ -12,8 +12,11 @@
 
 #include "lexer.h"
 
-int	main(void)
+int	main(int c, char **v, char **env)
 {
+	(void)c;
+	(void)v;
+	setup(env);
 	t_list *l;
 	while (1)
 	{
@@ -22,8 +25,7 @@ int	main(void)
 			return (0);
 		l = tokenize(line);
 		analyze(&l);
-		if (l)
-			print(l);
+		print(l);
 		free(line);
 		ft_lstclear(&l, free);
 	}

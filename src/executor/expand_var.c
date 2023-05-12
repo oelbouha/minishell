@@ -12,60 +12,10 @@
 
 #include "../parser/parser.h"
 
-int	is_invalid_key(const char *key)
-{
-	return (!(ft_isalpha(*key) || ft_strchr("$?_", *key) || ft_isdigit(*key)));
-}
-
-char	*get_key(char *str)
-{
-	int	i;
-
-	i = 1;
-	if (!(ft_isalpha(*str) || *str == '_'))
-		return (ft_substr(str, 0, i));
-	while (str[i])
-	{
-		if (!(ft_isalnum(str[i]) || str[i] == '_'))
-			break ;
-		i++;
-	}
-	return (ft_substr(str, 0, i));
-}
-
-int	get_expanded_length(char *str)
-{
-	char	*key;
-	int		len;
-
-	len = 0;
-	while (*str)
-	{
-		if (*str == '\'')
-		{
-			while (++str && *str != '\'')
-				len++;
-			len += 2;
-		}
-		if (*str == '$' && !(str[1] == 0 || is_invalid_key(str + 1)))
-		{
-			key = get_key(++str);
-			if (!key)
-				return (-1);
-			str += ft_strlen(key);
-			len += get_env_var_len(key);
-			free(key);
-		}
-		else if (str++)
-			len++;
-	}
-	return (len);
-}
-
 int	replace_var(char *expanded, char *str, int *i, int *j)
 {
-	char		*key;
-	char		*value;
+	char	*key;
+	char	*value;
 
 	if ((*str == 0 || is_invalid_key(str)) && ++(*j))
 		*expanded = '$';
@@ -128,6 +78,7 @@ void	handle_single_quote(char *expanded, char *str, int *x, int *y)
 	*y += j;
 }
 
+
 char	*replace_dollar_sign(char *str, char *expanded)
 {
 	int		err;
@@ -153,71 +104,6 @@ char	*replace_dollar_sign(char *str, char *expanded)
 	expanded[j] = '\0';
 	return (expanded);
 }
-
-
-
-/*
-	PREP_ARGS; CHAR **
-	while (arg)
-	{
-		if (should_expand)
-			expand(&arg);
-		else
-			remove quotes;
-		next;
-	}
-	args = ft_lst_to_array(lst);
-
-	EXPAND( ARG )
-	t_list *lst;
-	lst = split(*arg->content);
-	lst = expand_and_join(lst);
-	temp = *arg->next;
-	*arg = lst;
-	lst = ft_lstlast(lst);
-	lst->next = temp;
-
-	
-	EXPAND_AND_JOIN
-	{//if needs spliting	
-		expand;
-		if (*expnaded == 0)
-		{
-			temp = cur;
-			cur = cur->next;
-			prev->next = cur;
-			ft_lstdelone(temp, free);
-			continue ;
-		}
-		newlst = split;
-		join newlst with prev
-		last = ft_lstlast(newlst);
-		last->next = cur->next;
-		prev->next = newlst->next;
-		ft_lstdelone(cur, free);
-		ft_lstdelone(newlst, free);
-		cur = last->next;
-	}
-	{else
-		remove quotes;
-		expand_vars;
-		join with prev if there is a prev node;prev->content = join
-		prev->next = cur->next;
-		ft_lstdelone(cur, free);
-		cur = prev->next;
-	}
-*/
-
-
-/*
-
-
-	fdfdfd f d fd f d 
-	join node 1;
-	prev point to last node
-
-*/
-
 
 char	*expand_var(char *str)
 {

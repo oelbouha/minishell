@@ -1,34 +1,29 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_content.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/11 22:08:08 by oelbouha          #+#    #+#             */
+/*   Updated: 2023/05/11 22:08:13 by oelbouha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../parser/parser.h"
 
-int	quotes_len(char *str)
+int	push_token_to_list(t_list **lst, char *token)
 {
-	char	next_quote;
-	int		i;
+	t_list	*node;
 
-	i = 0;
-	next_quote = str[i];
-	while (str[++i] && str[i] != next_quote)
-		;
-	i++;
-	return (i);
-}
-
-int	get_key_len(char *str)
-{
-	int		i;
-
-	i = 1;
-	while(str[i] && str[i] == '$')
-		i++;
-	while (str[i])
+	node = ft_lstnew(token);
+	if (node == NULL)
 	{
-		if (str[i] == '"' || str[i] == '\'' || str[i] == '$')
-			return (i);
-		i++;
+		free(token);
+		return (1);
 	}
-	return (i);
+	ft_lstadd_back(lst, node);
+	return (0);
 }
 
 int	simple_word_len(char *str)
@@ -55,12 +50,12 @@ int	simple_word_len(char *str)
 	return (i);
 }
 
-int	get_len(char *line)
+int	get_token_len(char *line)
 {
 	int			len;
 
 	len = 0;
-	if (line[0] == '\''|| line[0] == '"')
+	if (line[0] == '\'' || line[0] == '"')
 		len = quotes_len(line);
 	else if (*line == '$')
 		len = get_key_len(line);
@@ -74,7 +69,7 @@ char	*create_token(char *str)
 	char	*token;
 	int		len;
 
-	len = get_len(str);
+	len = get_token_len(str);
 	if (len == 0)
 		return (NULL);
 	token = ft_substr(str, 0, len);

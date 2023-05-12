@@ -12,15 +12,6 @@
 
 #include "../parser/parser.h"
 
-int	should_expand_wildcard(char *line)
-{
-	if (ft_templatecmp(line, "'\"/", ':'))
-		return (0);
-	else if (ft_strchr(line, '*'))
-		return (1);
-	return (0);
-}
-
 int	is_tail_matched(char *file_name, char *str, char *line)
 {
 	char	*tail;
@@ -31,16 +22,6 @@ int	is_tail_matched(char *file_name, char *str, char *line)
 	if (tail && ft_strcmp(tail, str) == 0)
 		return (1);
 	return (0);
-}
-
-int	get_length(char **arr)
-{
-	int	i;
-
-	i = -1;
-	while (arr[++i])
-		;
-	return (i);
 }
 
 int	is_midlde_name_matched(char *filename, int arr_len, char **arr, char *line)

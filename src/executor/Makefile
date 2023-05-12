@@ -48,21 +48,28 @@ LEXER_LIB := ../lexer/lexer.a
 
 SRC_T := 	../../gnline/get_next_line.c \
 		../../gnline/get_next_line_utils.c \
-		tests/wildcard.c \
+		main.c \
 		expand_heredoc.c \
 		../parser/remove_quotes.c \
 		expand_var.c \
 		split_content.c \
-		expand_and_split.c
+		split_expanded_and_join.c \
+		expand.c \
+		remove_quotes_and_expand.c\
+		split_utils.c\
+		wildcard_utils.c\
+		wildcard.c\
+		expand_utils.c \
 
-ex:  libft dslib corelib lexerlib
-	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT) $(CORE_LIB) $(DS_LIB) $(LEXER_LIB) $(SRC_T) -o ex
+
+ex:  libft corelib dslib
+	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT)  $(DS_LIB) $(CORE_LIB) $(LEXER_LIB)  $(SRC_T) -o ex
 	./ex
 
 #***************************************************************************************#
 
 
-OBJ := $(SRC:%.c=%.o)
+OBJ := $(SRC_T:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
 
 all: $(NAME)

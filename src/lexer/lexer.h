@@ -22,6 +22,7 @@
 # include <sys/errno.h>
 # include "core.h"
 # include "libft.h"
+# include "../parser/parser.h"
 
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34

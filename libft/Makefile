@@ -76,6 +76,7 @@ SRC := ft_atoi.c \
 		print_pointer.c \
 		print_number.c \
 		print_hex.c \
+		ft_replace.c \
 		utils.c
 
 OBJF := $(SRC:%.c=%.o)

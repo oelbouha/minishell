@@ -14,8 +14,8 @@
 
 int	change_var(char *line, int fd, int *i)
 {
-	char 	*value;
-	char 	*key;
+	char	*value;
+	char	*key;
 
 	if (*line == '$')
 		*i += 1;

@@ -38,17 +38,18 @@ DS_LIB := ../datastructures/datastructures.a
 CORE_DIR := ../core
 CORE_LIB := ../core/core.a
 
-SRC :=	get_line.c \
-		tokenizer.c \
-		split_line.c \
-		handle_quotes.c \
-		handle_token.c \
-		handle_redir_and_pipe.c \
-		utils.c	\
-		simple_word.c \
+SRC :=	tokenizer.utils_bonus.c \
+		analyzer_bonus.c \
+		analyzer.check_common_bonus.c \
+		analyzer.check_logical_operators_bonus.c \
+		analyzer.check_parentheses_bonus.c \
+		lexer.utils_bonus.c \
+		tokenizer.utils.c \
 		analyzer.c \
-		analyzer.new.c \
-		push_token_to_list.c
+		tokenizer.c \
+		utils.c \
+		analyzer.check_common.c \
+		lexer.utils.c
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
