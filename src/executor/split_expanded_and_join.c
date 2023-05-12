@@ -19,6 +19,7 @@ t_list	*split_var(char *expanded)
 	char	**arr;
 
 	new_lst = NULL;
+	expanded = ft_replace(expanded, ' ');
 	arr = ft_split(expanded, ' ');
 	free(expanded);
 	if (arr == NULL)
@@ -42,22 +43,19 @@ int	join_prev_with_newlst(t_list **prv, t_list **lst, t_list **newlst)
 	char	*content;
 
 	last = ft_lstlast(*newlst);
-	print(*newlst);
+	int newlst_len = ft_lstsize(*newlst);
 	str = (*prv)->content;
-	printf("prev content : %s\n", str);
 	content = ft_strjoin(str, (*newlst)->content);
 	if (content == NULL)
 		return (-1);
-	printf("after join : %s\n", content);
 	free(str);
 	(*prv)->content = content;
-	// ft_lstdel_first(lst, free);
-	last->next = (*lst)->next;
-	// ft_lstdel_first(newlst, free);
-	(*prv)->next = (*newlst)->next;
-	*lst = last->next;
-	*prv = last;
-	printf("after join : %s\n", content);
+	ft_lstdel_first(lst, free);
+	last->next = *lst;
+	ft_lstdel_first(newlst, free);
+	(*prv)->next = *newlst;
+	if (newlst_len > 1)
+		*prv = last;
 	return (0);
 }
 

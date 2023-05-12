@@ -12,6 +12,25 @@
 
 #include "../parser/parser.h"
 
+int	check_double_quote(char *str, int *i)
+{
+	char	quote;
+	int		j;
+
+	j = 0;
+	quote = str[j];
+	j++;
+	while (str[j] && str[j] != quote)
+	{
+		if (str[j] == '$')
+			return (1);
+		j++;
+	}
+	j++;
+	*i += j;
+	return (0);
+}
+
 int	should_expand_var(char *str)
 {
 	char	quote;
@@ -20,7 +39,12 @@ int	should_expand_var(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == '"')
+		{
+			if (check_double_quote(&str[i], &i))
+				return (1);
+		}
+		else if (str[i] == '\'')
 		{
 			quote = str[i];
 			i++;
@@ -38,58 +62,9 @@ int	should_expand_var(char *str)
 
 int	needs_spliting(char *str)
 {
-	if (ft_strchr(str, '"') || ft_strchr(str, '\'') || !should_expand_var(str))
+	if (ft_strchr(str, '"') || ft_strchr(str, '\''))
 		return (0);
 	else
 		return (1);
 }
 
-int	is_invalid_key(const char *key)
-{
-	return (!(ft_isalpha(*key) || ft_strchr("$?_", *key) || ft_isdigit(*key)));
-}
-
-int	get_expanded_length(char *str)
-{
-	char	*key;
-	int		len;
-
-	len = 0;
-	while (*str)
-	{
-		if (*str == '\'')
-		{
-			while (++str && *str != '\'')
-				len++;
-			len += 2;
-		}
-		if (*str == '$' && !(str[1] == 0 || is_invalid_key(str + 1)))
-		{
-			key = get_key(++str);
-			if (!key)
-				return (-1);
-			str += ft_strlen(key);
-			len += get_env_var_len(key);
-			free(key);
-		}
-		else if (str++)
-			len++;
-	}
-	return (len);
-}
-
-char	*get_key(char *str)
-{
-	int	i;
-
-	i = 1;
-	if (!(ft_isalpha(*str) || *str == '_'))
-		return (ft_substr(str, 0, i));
-	while (str[i])
-	{
-		if (!(ft_isalnum(str[i]) || str[i] == '_'))
-			break ;
-		i++;
-	}
-	return (ft_substr(str, 0, i));
-}

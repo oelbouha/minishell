@@ -40,18 +40,16 @@ int	remove_quotes_and_expand(t_list **prev, t_list **lst, t_list **new_lst)
 	if (str == NULL)
 		return (ft_lstclear(lst, free), -1);
 	(*lst)->content = str;
-	
 	if (*prev)
 	{
-		// print(*new_lst);
 		str = (*prev)->content;
 		content = ft_strjoin(str, (*lst)->content);
 		if (content == NULL)
 			return (ft_lstclear(new_lst, free), -1);
 		(*prev)->content = content;
-		// free(str);
-		// ft_lstdel_first(lst, free);
-		(*prev)->next = (*lst)->next;
+		free(str);
+		ft_lstdel_first(lst, free);
+		(*prev)->next = *lst;
 		*lst = (*prev)->next;
 	}
 	else

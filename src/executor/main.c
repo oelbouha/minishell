@@ -17,8 +17,7 @@ int		main(int c, char **v, char **env)
 		temp = tokenize(line);
 		lst = split_expanded(temp);
 		add_history(line);
-		// if (lst)
-			print(lst);
+		print(lst);
 		ft_lstclear(&lst, free);
 		free(line);
 	}

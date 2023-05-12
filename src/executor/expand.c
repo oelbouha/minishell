@@ -40,8 +40,7 @@ t_list	*expand(t_list *cur, t_list *prev, t_list **lst_ptr)
 	}
 	prev = ft_lstlast(lst);
 	prev->next = temp;
-	// ft_lstdel_first(&cur, free);
-	cur = cur->next;
+	ft_lstdel_first(&cur, free);
 	return (prev);
 }
 
@@ -57,13 +56,9 @@ t_list	*split_expanded(t_list *lst)
 		if (should_expand_var(cur->content))
 		{
 			prev = expand(cur, prev, &lst);
-			// printf("+++++++++++++++++++++++\n");
-			// print(prev);
-			// printf("+++++++++++++++++++++++\n");
 			if (prev == NULL)
 				return (NULL);
 			cur = prev->next;
-			// printf("done\n");
 		}
 		else
 		{
@@ -72,6 +67,5 @@ t_list	*split_expanded(t_list *lst)
 			cur = cur->next;
 		}
 	}
-	// printf("last return \n");
 	return (lst);
 }
