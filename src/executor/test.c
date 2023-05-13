@@ -15,10 +15,16 @@ int		main(int c, char **v, char **env)
 	{
 		char *line = readline("-> ");
 		temp = tokenize(line);
-		lst = split_expanded(temp);
+		lst = get_expanded(temp);
 		add_history(line);
-		print(lst);
-		ft_lstclear(&lst, free);
+		// print(lst);
+		char **arr = convert_list_to_array(lst);
+		if (arr)
+		{
+			for (int i = 0; arr[i]; i++)
+			printf("arr[%d]: %s\n", i, arr[i]);
+		}
+		free_arr(arr);
 		free(line);
 	}
 }

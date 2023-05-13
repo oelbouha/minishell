@@ -12,6 +12,14 @@
 
 #include "../parser/parser.h"
 
+t_list	*not_a_valid_key(t_list *prev, t_list **cur)
+{
+	ft_lstdel_first(cur, free);
+	if (prev)
+		prev->next = *cur;
+	return (prev);
+}
+
 t_list	*expand(t_list *cur, t_list *prev, t_list **lst_ptr)
 {
 	t_list	*lst;
@@ -22,12 +30,7 @@ t_list	*expand(t_list *cur, t_list *prev, t_list **lst_ptr)
 	if (lst == NULL)
 		return (ft_lstclear(&cur, free), NULL);
 	if (lst == EMPTY_LST)
-	{
-		ft_lstdel_first(&cur, free);
-		if (prev)
-			prev->next = cur;
-		return (prev);
-	}
+		return (not_a_valid_key(prev, &cur));
 	if (prev)
 	{
 		temp = cur->next;
@@ -44,7 +47,7 @@ t_list	*expand(t_list *cur, t_list *prev, t_list **lst_ptr)
 	return (prev);
 }
 
-t_list	*split_expanded(t_list *lst)
+t_list	*get_expanded(t_list *lst)
 {
 	t_list	*cur;
 	t_list	*prev;
@@ -53,7 +56,7 @@ t_list	*split_expanded(t_list *lst)
 	cur = lst;
 	while (cur)
 	{
-		if (should_expand_var(cur->content))
+		if (should_expand(cur->content))
 		{
 			prev = expand(cur, prev, &lst);
 			if (prev == NULL)

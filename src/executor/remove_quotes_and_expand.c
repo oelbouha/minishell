@@ -12,12 +12,12 @@
 
 #include "../parser/parser.h"
 
-char	*remove_quotes_and_expand_var(char *content)
+char	*remove_quotes_and_get_expanded(char *content)
 {
 	char	*expanded;
 	char	*str;
 
-	if (should_expand_var(content))
+	if (should_expand(content))
 	{
 		expanded = remove_quotes(content);
 		str = content;
@@ -36,10 +36,9 @@ int	remove_quotes_and_expand(t_list **prev, t_list **lst, t_list **new_lst)
 	char	*str;
 	char	*content;
 
-	str = remove_quotes_and_expand_var((*lst)->content);
-	if (str == NULL)
+	(*lst)->content = remove_quotes_and_get_expanded((*lst)->content);
+	if ((*lst)->content == NULL)
 		return (ft_lstclear(lst, free), -1);
-	(*lst)->content = str;
 	if (*prev)
 	{
 		str = (*prev)->content;

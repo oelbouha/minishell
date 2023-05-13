@@ -12,6 +12,25 @@
 
 #include "../parser/parser.h"
 
+int	should_expand_wildcard(char *line)
+{
+	if (ft_templatecmp(line, "'\"/", ':'))
+		return (0);
+	else if (ft_strchr(line, '*'))
+		return (1);
+	return (0);
+}
+
+int	get_length(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		;
+	return (i);
+}
+
 int	check_double_quote(char *str, int *i)
 {
 	char	quote;
@@ -31,7 +50,7 @@ int	check_double_quote(char *str, int *i)
 	return (0);
 }
 
-int	should_expand_var(char *str)
+int	should_expand(char *str)
 {
 	char	quote;
 	int		i;
@@ -67,4 +86,3 @@ int	needs_spliting(char *str)
 	else
 		return (1);
 }
-

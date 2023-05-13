@@ -48,7 +48,7 @@ LEXER_LIB := ../lexer/lexer.a
 
 SRC_T := 	../../gnline/get_next_line.c \
 		../../gnline/get_next_line_utils.c \
-		main.c \
+		test.c \
 		expand_heredoc.c \
 		../parser/remove_quotes.c \
 		expand_var.c \
@@ -57,9 +57,9 @@ SRC_T := 	../../gnline/get_next_line.c \
 		expand.c \
 		remove_quotes_and_expand.c\
 		split_utils.c\
-		wildcard_utils.c\
 		wildcard.c\
-		expand_utils.c \
+		expansion_utils.c \
+		convert_list_to_array.c 
 
 
 ex:  libft corelib dslib
