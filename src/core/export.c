@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/16 17:46:50 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 15:38:57 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	shell_export(int c, char **v)
 			return (free(key), 1);
 		else if (ft_strcmp(key, "PATH") == 0)
 		{
-			//free_string_arr(g_shell.path);
-			g_shell.path = ft_split(value, ':');
+			free_arr(g_shell.paths);
+			g_shell.paths = ft_split(value, ':');
 		}
 		free(key);
 	}

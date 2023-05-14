@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/11 18:21:30 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 15:38:27 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 int	setup(char *env[])
 {
+	char	*path;
+
 	g_shell.env = new_dictionary(env, '=');
 	if (g_shell.env == NULL)
 		return (1);
@@ -29,6 +31,16 @@ int	setup(char *env[])
 	g_shell.wd = getcwd(NULL, 0);
 	if (g_shell.wd == NULL)
 		return (1);
+	path = get_env_var("PATH");
+	if (path == NULL)
+	{
+		set_env_var("PATH","/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+		path = get_env_var("PATH");
+	}// if path is still NULL return (1);
+	g_shell.paths = ft_split(path, ':');
+	free(path);
+	for (int i = 0; g_shell.paths[i]; i++)
+		ft_printf("%s\n", g_shell.paths[i]);
 	g_shell.last_stts = 0;
 	return (0);
 }

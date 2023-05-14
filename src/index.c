@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:30:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 14:05:52 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 15:35:04 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int c, char **v, char **e)
 	t_list	*tokens;
 	t_list	*command;
 	int		err;
+	int		parser_output = 0;
 
 	(void)c;
 	(void)v;
@@ -31,9 +32,9 @@ int	main(int c, char **v, char **e)
 			return (get_last_status());
 		tokens = tokenize(line);
 		err = analyze(&tokens);
-		print(tokens);
+		//print(tokens);
 		command = new_command(&tokens, NONE);
-		for (t_list *cur = command; cur; indent++)
+		for (t_list *cur = command; parser_output && cur; indent++)
 		{
 			print_cmd(cur->content, indent);
 			cur = cur->next;

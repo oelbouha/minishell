@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/04 17:42:34 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 15:30:05 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define compound data._compound
 # define heredocfd to.heredoc.fd
 # define rfilename to.filename
+# define SIMPLE dats._simple
 
 typedef enum e_cmd_type
 {
@@ -36,6 +37,8 @@ typedef enum e_cmd_exec_cond
 typedef enum e_redir_type
 {
 	HEREDOC,
+	PIPE_IN,
+	PIPE_OUT,
 	FILE_IN,
 	FILE_OUT,
 	FILE_APPEND,
@@ -87,7 +90,7 @@ struct s_heredoc
 union u_redir
 {
 	t_file_redir	filename;
-	t_heredoc		heredoc;
+	t_heredoc		heredoc;//fildes
 };
 
 struct s_redir
@@ -95,5 +98,18 @@ struct s_redir
 	t_redir_u		to;
 	t_redir_type	type;
 };
+
+
+/*
+
+t_redir	*redir;
+
+redir = cur->content;
+if (redir->type == HEREDOC)					to = (redir->type == PIPE_OUT) // 1 0
+ // HEREDOC									dup2(redir->to.heredoc.fd, to);
+else if (redir->type == PIPE_OUT)
+ // pipe output
+
+*/
 
 #endif

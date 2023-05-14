@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:40:23 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 13:17:28 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 16:11:49 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 int	get_exit_status(pid_t pid)
 {
+	int				ret;
 	unsigned char	*status;
 	int				stts;
 
@@ -24,5 +25,6 @@ int	get_exit_status(pid_t pid)
 	status = (unsigned char *) &stts;
 	if (status[0])
 		return (status[0] + 128);
-	return (status[1]);
+	ret = (unsigned char) status[1];
+	return (ret);
 }

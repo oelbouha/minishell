@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:38:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 14:13:29 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 16:11:31 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	pid = fork();
 	if (pid)
 	{
+		// CLOSE PIPE_IN;
 		if (wait_child == TRUE)
 			return (get_exit_status(pid));
 		return (0);
@@ -70,6 +71,7 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	args = prep_args(cmd->data._simple.args); // if alloc fails exit
 	if (builtin)
 		exit(builtin(cmd->count, args));
-	execve(cmd->data._simple.path, args, get_env_arr());
-	return (5);
+	if (execve(cmd->data._simple.path, args, get_env_arr()))
+		return (perror("minishell"), exit(-1), 0);
+	return (0);
 }

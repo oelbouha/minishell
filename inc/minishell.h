@@ -6,13 +6,14 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:25:44 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/13 16:51:24 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 15:43:11 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include "libft.h"
 # include "core.h"
 # include "debug.h"

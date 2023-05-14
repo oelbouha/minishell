@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 12:55:49 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 15:34:05 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ struct s_shell
 	t_list	*env;
 	t_list	*builtins;
 	char	*wd;
-	char	**path;
+	char	**paths;
 	int		last_stts;
 };
 
