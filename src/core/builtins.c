@@ -6,13 +6,13 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:41:48 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/04 17:05:27 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 12:56:11 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
-int	add_builtin(t_list **builtins, char *name, t_builtin *f)
+int	add_builtin(t_list **builtins, char *name, t_builtin f)
 {
 	t_list		*node;
 	t_keyvalue	*kv;
@@ -47,6 +47,8 @@ t_list	*construct_builtins_list(void)
 	if (add_builtin(&builtins, "env", env))
 		return (ft_lstclear(&builtins, (t_lstdel)destroy_keyvalue), NULL);
 	if (add_builtin(&builtins, "unset", unset))
+		return (ft_lstclear(&builtins, (t_lstdel)destroy_keyvalue), NULL);
+	if (add_builtin(&builtins, "exit", shell_exit))
 		return (ft_lstclear(&builtins, (t_lstdel)destroy_keyvalue), NULL);
 	return (builtins);
 }

@@ -6,32 +6,42 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:30:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/11 17:11:06 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 15:35:04 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "core.h"
-#include "lexer.h"
-#include "parser.h"
+#include "minishell.h"
+#include "executer.h"
 
-int	main(void)
+int	main(int c, char **v, char **e)
 {
 	char	*line;
 	t_list	*tokens;
 	t_list	*command;
 	int		err;
+	int		parser_output = 0;
 
+	(void)c;
+	(void)v;
+	setup(e);
 	while (1)
 	{
-		ft_printf("stts: %d\n", get_last_status());
+		int		indent = 0;
 		line = read_line(1);
 		if (line == NULL)
 			return (get_last_status());
 		tokens = tokenize(line);
 		err = analyze(&tokens);
-		print(tokens);
-		(void)command;
+		//print(tokens);
+		command = new_command(&tokens, NONE);
+		for (t_list *cur = command; parser_output && cur; indent++)
+		{
+			print_cmd(cur->content, indent);
+			cur = cur->next;
+		}
+		execute(command);
+		ft_printf("executed [ %d ]\n", get_last_status());
 		free(line);
-		set_last_status(get_last_status() + 1);
+		ft_lstclear(&command, (t_lstdel)destroy_command);
 	}
 }

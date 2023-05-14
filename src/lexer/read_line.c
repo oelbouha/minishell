@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/11 16:27:56 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/11 18:10:38 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_styled_user(int wd)
 	if (wd && len > ft_strlen(styled_user))
 		ft_strlcat(styled_user, " \x1b[36;01m@[ ", 256);
 	else if (wd == 0 && len == ft_strlen(styled_user))
-		styled_user[ ft_strrchr(styled_user, ']') - styled_user + 1 ] = 0;
+		styled_user[ft_strrchr(styled_user, ']') - styled_user + 1] = 0;
 	return (styled_user);
 }
 
@@ -99,4 +99,3 @@ char	*read_line(t_ull state)
 	trimmed = ft_strtrim(line, " \t");
 	return (free(line), trimmed);
 }
-

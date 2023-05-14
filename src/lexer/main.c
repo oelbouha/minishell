@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 14:25:47 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/11 13:24:13 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 14:39:48 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int	main(int c, char **v, char **env)
 {
+	char	*line;
+	t_list	*l;
 	(void)c;
 	(void)v;
 	setup(env);
-	t_list *l;
 	while (1)
 	{
-		char *line = read_line(0);
+		line = read_line(0);
 		if (line == NULL)
 			return (0);
 		l = tokenize(line);

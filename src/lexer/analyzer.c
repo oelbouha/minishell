@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 22:41:58 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/11 15:29:26 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/11 21:30:12 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,20 @@ void	check_first_node(t_list *first, t_analyzer_stats *stats)
 		err = ft_templatecmp(first->content, CANT_BE_FIRST, ':');
 		stats->syntax_error = err;
 		stats->heredoc_count += ft_strcmp(first->content, "<<") == 0;
+		stats->unclosed_quote = check_for_unclosed_quote(first->content);
 	}
 	else
 		stats->syntax_error = 1;
 }
 
-int	check_errors(t_analyzer_stats stats, t_list **lst, t_list *prev, t_list *cur)
+int	check_errs(t_analyzer_stats stats, t_list **lst, t_list *prev, t_list *cur)
 {
-	if (stats.unclosed_quote)
+	if (stats.syntax_error || stats.unclosed_quote)
 	{
-		ft_printf("-minishell: unexpected EOF while looking for matching `%c'\n",
-				stats.unclosed_quote);
-		ft_printf("-minishell: syntax error: unexpected end of file\n");
-		if (prev)
-			prev->next = NULL;
-		ft_lstdelone(cur, free);
-		remove_last_if(lst, (t_lstcmp)cant_be_last);
-		return (1);
-	}
-	else if (stats.syntax_error)
-	{
-		print_error(cur);
+		if (stats.syntax_error)
+			print_syntax_error(cur);
+		else
+			print_quote_error(stats.unclosed_quote);
 		if (prev)
 			prev->next = NULL;
 		else
@@ -57,7 +50,7 @@ int	check_errors(t_analyzer_stats stats, t_list **lst, t_list *prev, t_list *cur
 	}
 	else if (stats.heredoc_count > 16)
 	{
-		ft_printf("-minishell: maximum here-document count exceeded\n");
+		ft_putstr_fd("-minishell: maximum here-document count exceeded\n", 2);
 		ft_lstclear(lst, free);
 		*lst = NULL;
 		return (1);
@@ -75,7 +68,7 @@ int	analyze(t_list **lst)
 	cur = *lst;
 	ft_bzero(&stats, sizeof(t_analyzer_stats));
 	check_first_node(cur, &stats);
-	while (check_errors(stats, lst, prev, cur) == 0 && (cur || prev))
+	while (check_errs(stats, lst, prev, cur) == 0 && (cur || prev))
 	{
 		prev = cur;
 		if (prev == NULL)

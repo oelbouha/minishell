@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/04 18:13:02 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/14 14:31:10 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME := executer.a
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-I := -I../../inc \
+I := -I../../inc -I../parser \
 		-I../../libft/inc \
 		-I../core \
 		-I../lexer \
@@ -43,6 +43,16 @@ CORE_LIB := ../core/core.a
 
 LEXER_DIR := ../lexer
 LEXER_LIB := ../lexer/lexer.a
+
+
+EXECUTER_SRC := executer.c \
+		execute_simple_command.c \
+		executer.utils.c
+
+EXECUTER_BONUS :=
+
+
+
 
 #**************************************************************************************#
 
@@ -68,46 +78,10 @@ ex:  libft corelib dslib
 
 #***************************************************************************************#
 
+test: libft $(EXECUTER_SRC)
+	@$(CC) $I $(CFLAGS) $(READLINE) -o $@ $(EXECUTER_SRC) $(LIBFT)
+	@./$@
+
 
 OBJ := $(SRC_T:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
-
-all: $(NAME)
-
-$(NAME): $(OBJ)
-	@ar rcs $@ $(OBJ)
-
-libft: 
-	@make -s -C $(LIBFT_DIR)
-
-dslib: 
-	@make -s -C $(DS_DIR)
-
-corelib:
-	@make -s -C $(CORE_DIR)
-
-lexerlib:
-	@make -s -C $(LEXER_DIR)
-
-obj/%.o: %.c
-	@mkdir -p $(shell dirname $@)
-	@$(CC) $(CFLAGS) $I -c $< -o $@
-
-clean:
-	@rm -rf obj/
-	@make -C $(LIBFT_DIR) clean
-	@make -C $(CORE_DIR) clean
-	@make -C $(LEXER_DIR) clean
-	@make -C $(DS_DIR) clean
-
-fclean: clean
-	@rm -rf $(NAME)
-	@rm -rf test
-	@make -C $(LIBFT_DIR) fclean
-	@make -C $(CORE_DIR) fclean
-	@make -C $(LEXER_DIR) fclean
-	@make -C $(DS_DIR) fclean
-
-re: fclean all
-
-.PHONY: all lib clean fclean re

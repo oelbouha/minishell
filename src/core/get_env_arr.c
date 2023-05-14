@@ -1,19 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_last_status.c                                  :+:      :+:    :+:   */
+/*   get_env_arr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:46:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/13 17:25:35 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 16:00:18 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
-int	set_last_status(int status)
+char	**get_env_arr(void)
 {
-	g_shell.last_stts = status;
-	return (0);
+	char		**env_arr;
+	t_list		*env;
+	t_keyvalue	*kv;
+	int			size;
+	int			i;
+
+	size = ft_lstsize(g_shell.env);
+	env_arr = ft_calloc(size + 1, sizeof(char *));
+	if (env_arr == NULL)
+		return (NULL);
+	env = g_shell.env;
+	i = -1;
+	while (++i < size)
+	{
+		kv = env->content;
+		kv->key[ft_strlen(kv->key)] = '=';
+		env_arr[i] = kv->key;
+		env = env->next;
+	}
+	return (env_arr);
 }

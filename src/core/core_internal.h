@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/16 17:51:28 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 15:34:05 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ struct s_shell
 	t_list	*env;
 	t_list	*builtins;
 	char	*wd;
-	char	**path;
-	t_uchar	last_stts;
+	char	**paths;
+	int		last_stts;
 };
 
 /* ***  Global variable  **** */
@@ -47,6 +47,7 @@ int		shell_export(int c, char **v);
 int		pwd(int c, char **v);
 int		env(int c, char **v);
 int		unset(int c, char **v);
+int		shell_exit(int c, char **v);
 
 /* ***  Utils  **** */
 int		check_identifier(char *id);

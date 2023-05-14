@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   core.utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:03:28 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/07 14:39:33 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 14:33:21 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,13 @@ void	msh_err(char *msg, char *token)
 {
 	ft_putstr_fd("-minishell: ", 2);
 	ft_putstr_fd(msg, 2);
-	ft_putstr_fd(" ", 2);
-	ft_putchar_fd('`', 2);
-	ft_putstr_fd(token, 2);
-	ft_putchar_fd('\'', 2);
+	if (token)
+	{
+		ft_putstr_fd(" ", 2);
+		ft_putchar_fd('`', 2);
+		ft_putstr_fd(token, 2);
+		ft_putchar_fd('\'', 2);
+	}
 	ft_putstr_fd("\n", 2);
 }
 

@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/04 18:13:02 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/12 16:05:31 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,15 +44,23 @@ CORE_LIB := ../core/core.a
 LEXER_DIR := ../lexer
 LEXER_LIB := ../lexer/lexer.a
 
-SRC := new_command.c \
-		new_simple_command.c \
-		new_compound_command.c \
+BASE :=	new_simple_command.c \
 		new_redirection.c \
 		new_file_redirection.c \
 		new_heredoc_redirection.c \
 		read_heredoc.c \
 		remove_quotes.c \
-		utils.c
+		parser.utils.c \
+		debug_utils.c
+
+PARSER_SRC := $(BASE) \
+		new_command.c \
+		new_compound_command.c
+
+PARSER_BONUS := $(BASE) \
+		new_command_bonus.c \
+		new_compound_command_bonus.c \
+		new_subshell_command_bonus.c
 
 #**************************************************************************************#
 
@@ -62,59 +70,18 @@ SRC := new_command.c \
 		#expand_heredoc.c \
 		#expand_var.c 
 
-SRC_T := wildcard.c \
+PARSER_SRC_T := wildcard.c \
 		tests/wildcard.c \
 
 ex:  libft dslib corelib lexerlib
-	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT) $(CORE_LIB) $(DS_LIB) $(LEXER_LIB) $(SRC_T) -o ex
+	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT) $(CORE_LIB) $(DS_LIB) $(LEXER_LIB) $(PARSER_SRC_T) -o ex
 	./ex
 
 #***************************************************************************************#
 
 
-OBJ := $(SRC:%.c=%.o)
-OBJ := $(addprefix obj/, $(OBJ))
-
-all: $(NAME)
-
-$(NAME): $(OBJ)
-	@ar rcs $@ $(OBJ)
+PARSER_OBJ := $(PARSER_SRC:%.c=%.o)
+PARSER_OBJ := $(addprefix obj/, $(PARSER_OBJ))
 
 test: $(testfile) libft dslib corelib lexerlib $(NAME)
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< debug_utils.c $(OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB) $(LEXER_LIB)
-
-
-libft: 
-	@make -s -C $(LIBFT_DIR)
-
-dslib: 
-	@make -s -C $(DS_DIR)
-
-corelib:
-	@make -s -C $(CORE_DIR)
-
-lexerlib:
-	@make -s -C $(LEXER_DIR)
-
-obj/%.o: %.c
-	@mkdir -p $(shell dirname $@)
-	@$(CC) $(CFLAGS) $I -c $< -o $@
-
-clean:
-	@rm -rf obj/
-	@make -C $(LIBFT_DIR) clean
-	@make -C $(CORE_DIR) clean
-	@make -C $(LEXER_DIR) clean
-	@make -C $(DS_DIR) clean
-
-fclean: clean
-	@rm -rf $(NAME)
-	@rm -rf test
-	@make -C $(LIBFT_DIR) fclean
-	@make -C $(CORE_DIR) fclean
-	@make -C $(LEXER_DIR) fclean
-	@make -C $(DS_DIR) fclean
-
-re: fclean all
-
-.PHONY: all lib clean fclean re
+	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< debug_utils.c $(PARSER_OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB) $(LEXER_LIB)
