@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 10:14:04 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/11 14:33:31 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/11 17:54:40 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 
 # undef CANT_BE_LAST
 # define CANT_BE_LAST "|:>:<:>>:<<:&&:||:("
-
-# define msg "bonus"
 
 struct s_analyzer_stats
 {

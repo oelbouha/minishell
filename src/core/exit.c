@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_last_status.c                                  :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 15:46:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/13 17:25:35 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/05/14 12:52:45 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/05/14 12:56:01 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
-int	set_last_status(int status)
+int	shell_exit(int c, char **v)
 {
-	g_shell.last_stts = status;
+	(void)c;
+	(void)v;
+	exit(g_shell.last_stts);
 	return (0);
 }

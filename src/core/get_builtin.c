@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_last_status.c                                  :+:      :+:    :+:   */
+/*   get_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/07 15:46:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/13 17:25:35 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/05/14 12:00:58 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/05/14 12:15:21 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
-int	set_last_status(int status)
+t_builtin	get_builtin(char *key)
 {
-	g_shell.last_stts = status;
-	return (0);
+	t_keyvalue	*kv;
+
+	kv = find_in_dictionary(g_shell.builtins, key);
+	if (kv == NULL)
+		return (NULL);
+	return ((t_builtin)kv->value);
 }

@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_compound_command.c                             :+:      :+:    :+:   */
+/*   new_compound_command_bonus.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/12 16:01:09 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/12 16:00:36 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+t_list	*new_subshell_command(t_list **start, t_cmd_exec_cond cond);
 
 //		get the number of commands in a compound command
 //	compound command is a pipeline "|" of simple or compound commands either
@@ -23,14 +25,23 @@
 int	get_commands_count(t_list *start)
 {
 	int	count;
+	int	parentheses;
 
 	if (start == NULL)
 		return (0);
+	parentheses = 0;
 	count = 1;
 	while (start)
 	{
-		if (ft_strcmp(start->content, "|") == 0)
+		if (ft_strcmp(start->content, "|") == 0 && parentheses == 0)
 			count++;
+		else if (ft_strcmp(start->content, "(") == 0)
+			parentheses++;
+		else if (ft_strcmp(start->content, ")") == 0 && --parentheses < 0)
+			break ;
+		else if (parentheses == 0 && BONUS
+			&& ft_templatecmp(start->content, "&&:||", ':'))
+			break ;
 		start = start->next;
 	}
 	return (count);
@@ -49,8 +60,12 @@ t_list	**get_commands_arr(t_list **head, int count)
 	start = *head;
 	while (start)
 	{
-		if (ft_strcmp(start->content, "|") == 0)
+		if (ft_templatecmp(start->content, "&&:||:)", ':'))
+			break ;
+		else if (ft_strcmp(start->content, "|") == 0)
 			ft_lstdel_first(&start, free);
+		else if (ft_strcmp(start->content, "(") == 0)
+			arr[i++] = new_subshell_command(&start, NONE);
 		else
 			arr[i++] = new_simple_command(&start, NONE);
 	}

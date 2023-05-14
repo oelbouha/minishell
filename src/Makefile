@@ -6,17 +6,18 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:36:56 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/11 17:36:51 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/14 13:20:36 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-include core/Makefile lexer/Makefile
+include core/Makefile lexer/Makefile parser/Makefile executer/Makefile
 
 I := -I../inc \
 		-I../libft/inc \
 		-Icore \
 		-Ilexer \
 		-Iparser \
+		-Iexecuter \
 		-Idatastructures
 
 READLINE := -lreadline \
@@ -32,11 +33,15 @@ DS_LIB := datastructures/datastructures.a
 
 CORE_SRC := $(addprefix core/, $(CORE_SRC))
 LEXER_SRC := $(addprefix lexer/, $(LEXER_SRC))
+PARSER_SRC := $(addprefix parser/, $(PARSER_SRC))
+EXECUTER_SRC := $(addprefix executer/, $(EXECUTER_SRC))
 
 LEXER_BONUS := $(addprefix lexer/, $(LEXER_BONUS))
+PARSER_BONUS := $(addprefix parser/, $(PARSER_BONUS))
 
-SRC := index.c $(CORE_SRC) $(LEXER_SRC)
-BONUS := index.c $(CORE_SRC) $(LEXER_BONUS)
+SRC := index.c $(CORE_SRC) $(LEXER_SRC) $(PARSER_SRC) $(EXECUTER_SRC)
+BONUS := index.c $(CORE_SRC) $(LEXER_BONUS) $(PARSER_BONUS) $(EXECUTER_SRC)
+
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
@@ -53,6 +58,14 @@ btest: $(BOBJ) libft dslib
 	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $(BOBJ) $(LIBFT) $(DS_LIB)
 	./$@
 
+echo:
+	@echo $(SRC)
+	@echo ++++++++++++++++++++++++
+	@echo $(OBJ)
+
+echo_bonus:
+	@echo $(BONUS)
+
 obj/%.o: %.c
 	@mkdir -p $(shell dirname $@)
 	@$(CC) $(CFLAGS) $I -c $< -o $@
@@ -63,3 +76,7 @@ libft:
 dslib: 
 	@make -s -C $(DS_DIR)
 
+fclean:
+	@rm -rf obj mtest btest
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(DS_DIR) fclean

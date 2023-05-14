@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_last_status.c                                  :+:      :+:    :+:   */
+/*   get_env_arr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:46:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/13 17:25:35 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/13 18:35:01 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
-int	set_last_status(int status)
+char	**get_env_arr(void)
 {
-	g_shell.last_stts = status;
-	return (0);
+	return (ft_lst_to_arr(g_shell.env));
 }

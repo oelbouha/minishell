@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/29 11:17:13 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/03 15:07:47 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/13 18:24:21 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRC := ft_atoi.c \
 		ft_lstnew.c \
 		ft_lstsize.c \
 		ft_lstremove_if.c \
+		ft_lst_to_arr.c \
 		ft_printf.c \
 		ft_print_str.c \
 		ft_print_const_str.c \

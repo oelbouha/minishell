@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/12 15:26:02 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/14 14:27:59 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	cd_home(void)
 		msh_log("cd", strerror(errno), "", FALSE);
 		return (1);
 	}
+	set_env_var("OLDPWD", g_shell.wd);
 	free(g_shell.wd);
 	g_shell.wd = getcwd(NULL, 0);
 	if (g_shell.wd == NULL)
@@ -37,6 +38,7 @@ int	cd_home(void)
 		msh_log("cd", strerror(errno), "", FALSE);
 		return (1);
 	}
+	set_env_var("PWD", g_shell.wd);
 	return (0);
 }
 
@@ -69,16 +71,15 @@ int	cd_path(char *path)
 	err = chdir(to);
 	if (err)
 		return (msh_log("cd", strerror(errno), "", FALSE), 1);
-	free(g_shell.wd);
+	set_env_var("OLDPWD", g_shell.wd);
 	if (ft_strcmp(path, "//") == 0)
-		g_shell.wd = ft_strdup("//");
-	else
-	{
-		g_shell.wd = getcwd(NULL, 0);
-		if (g_shell.wd == NULL)
-			return (msh_log("cd", strerror(errno), "", FALSE), 1);
-		cd_substitute(g_shell.wd, to);
-	}
+		return (ft_memcpy(g_shell.wd, "//", 3), 0);
+	free(g_shell.wd);
+	g_shell.wd = getcwd(NULL, 0);
+	if (g_shell.wd == NULL)
+		return (msh_log("cd", strerror(errno), "", FALSE), 1);
+	cd_substitute(g_shell.wd, to);
+	set_env_var("PWD", g_shell.wd);
 	return (0);
 }
 

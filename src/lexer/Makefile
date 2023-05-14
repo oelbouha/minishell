@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/11 16:39:45 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/11 21:46:53 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ DS_LIB := ../datastructures/datastructures.a
 CORE_DIR := ../core
 CORE_LIB := ../core/core.a
 
-SRC :=	get_line.c \
+LSRC :=	get_line.c \
 		tokenizer.c \
 		split_line.c \
 		handle_quotes.c \
@@ -50,8 +50,8 @@ SRC :=	get_line.c \
 		analyzer.new.c \
 		push_token_to_list.c
 
-OBJ := $(SRC:%.c=%.o)
-OBJ := $(addprefix obj/, $(OBJ))
+LOBJ := $(LSRC:%.c=%.o)
+LOBJ := $(addprefix obj/, $(LOBJ))
 
 
 
@@ -80,47 +80,12 @@ LEXER_SRC_OBJ := $(addprefix obj/, $(LEXER_SRC_OBJ))
 LEXER_BONUS_OBJ := $(LEXER_BONUS:%.c=%.o)
 LEXER_BONUS_OBJ := $(addprefix obj/, $(LEXER_BONUS_OBJ))
 
-lexer_bonus: main.c libft dslib corelib $(LEXER_BONUS_OBJ)
+lbtest: main.c libft dslib corelib $(LEXER_BONUS_OBJ)
 	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(LEXER_BONUS_OBJ) \
 		$(LIBFT) $(DS_LIB) $(CORE_LIB)
-	./lexer_bonus
+	./$@
 
-lexer_mandatory: main.c libft dslib corelib $(LEXER_SRC_OBJ)
+lmtest: main.c libft dslib corelib $(LEXER_SRC_OBJ)
 	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(LEXER_SRC_OBJ) \
 		$(LIBFT) $(DS_LIB) $(CORE_LIB)
-	./lexer_mandatory
-
-all: $(NAME)
-
-$(NAME): $(OBJ)
-	@ar rcs $@ $(OBJ)
-
-libft: 
-	@make -s -C $(LIBFT_DIR)
-
-dslib: 
-	@make -s -C $(DS_DIR)
-
-corelib:
-	@make -s -C $(CORE_DIR)
-
-obj/%.o: %.c lexer.h
-	@mkdir -p $(shell dirname $@)
-	@$(CC) $(CFLAGS) $I -c $< -o $@
-
-clean:
-	@rm -rf obj/
-	@make -C $(LIBFT_DIR) clean
-	@make -C $(CORE_DIR) clean
-	@make -C $(DS_DIR) clean
-
-fclean: clean
-	@rm -rf $(NAME) lexer test
-	@rm -rf test
-	@make -C $(LIBFT_DIR) fclean
-	@make -C $(CORE_DIR) fclean
-	@make -C $(DS_DIR) fclean
-
-re: fclean all
-
-.PHONY: all lib clean fclean re
+	./$@

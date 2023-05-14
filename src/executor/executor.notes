@@ -1,6 +1,0 @@
-if redir is a heredoc and expand is set to true: brefore execve:
-	read from pipe expand and write to the 1 of another pipe
-	connect the new pipe to the fd:0 of the child then execve
-	
-
-test

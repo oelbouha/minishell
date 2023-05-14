@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 22:41:58 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/11 14:42:20 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/11 17:53:30 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	check_word(t_list *prev, t_list *cur, t_analyzer_stats *stats)
 		if (stats->unclosed_quote)
 			return ;
 		err = stats->cant_be_word;
-		err = err && !ft_templatecmp(prev->content, REDIRS, ':');
+		err = (err && !ft_templatecmp(prev->content, REDIRS, ':'));
 		err += ft_strcmp(prev->content, ")") == 0;
 		stats->syntax_error += err;
 	}
