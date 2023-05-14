@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/11 21:46:53 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/14 14:41:00 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,10 @@ LSRC :=	get_line.c \
 		utils.c	\
 		simple_word.c \
 		analyzer.c \
-		analyzer.new.c \
-		push_token_to_list.c
+		tokenizer.c \
+		utils.c \
+		analyzer.check_common.c \
+		lexer.utils.c
 
 LOBJ := $(LSRC:%.c=%.o)
 LOBJ := $(addprefix obj/, $(LOBJ))

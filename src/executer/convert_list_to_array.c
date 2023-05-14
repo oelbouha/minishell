@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   convert_list_to_array.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/08 14:25:47 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/14 14:39:48 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/05/12 10:47:31 by oelbouha          #+#    #+#             */
+/*   Updated: 2023/05/12 10:48:31 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "../parser/parser.h"
 
-int	main(int c, char **v, char **env)
+char	**convert_list_to_array(t_list	*lst)
 {
-	char	*line;
-	t_list	*l;
-	(void)c;
-	(void)v;
-	setup(env);
-	while (1)
+	t_list	*temp;
+	char	**arr;
+	int		len;
+	int		i;
+
+	if (!lst)
+		return (NULL);
+	len = ft_lstsize(lst) + 1;
+	arr = malloc(len * sizeof(char *));
+	if (arr == NULL)
+		return (NULL);
+	i = 0;
+	while (lst)
 	{
-		line = read_line(0);
-		if (line == NULL)
-			return (0);
-		l = tokenize(line);
-		analyze(&l);
-		print(l);
-		free(line);
-		ft_lstclear(&l, free);
+		temp = lst;
+		arr[i] = lst->content;
+		lst = lst->next;
+		free(temp);
+		i++;
 	}
-	return (0);
+	arr[i] = NULL;
+	return (arr);
 }

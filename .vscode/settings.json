@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"minishell_types.h": "c",
+		"parser.h": "c"
+	}
+}

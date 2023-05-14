@@ -12,15 +12,6 @@
 
 #include "../parser/parser.h"
 
-int	should_expand_wildcard(char *line)
-{
-	if (ft_templatecmp(line, "'\"/", ':'))
-		return (0);
-	else if (ft_strchr(line, '*'))
-		return (1);
-	return (0);
-}
-
 int	is_tail_matched(char *file_name, char *str, char *line)
 {
 	char	*tail;
@@ -31,16 +22,6 @@ int	is_tail_matched(char *file_name, char *str, char *line)
 	if (tail && ft_strcmp(tail, str) == 0)
 		return (1);
 	return (0);
-}
-
-int	get_length(char **arr)
-{
-	int	i;
-
-	i = -1;
-	while (arr[++i])
-		;
-	return (i);
 }
 
 int	is_midlde_name_matched(char *filename, int arr_len, char **arr, char *line)
@@ -66,7 +47,7 @@ int	is_midlde_name_matched(char *filename, int arr_len, char **arr, char *line)
 	return (0);
 }
 
-int	is_matched(char *file_name, char *line, char **arr, int arr_len)
+int	find_matching(char *file_name, char *line, char **arr, int arr_len)
 {
 	char	*tail;
 	int		ret;
@@ -103,7 +84,7 @@ int	add_filename_to_list(t_list **lst, char *line, char **arr, DIR *dir)
 		name = ft_strdup(entry->d_name);
 		if (name == NULL)
 			return (-1);
-		if (is_matched(entry->d_name, line, arr, get_length(arr)))
+		if (find_matching(entry->d_name, line, arr, get_length(arr)))
 		{
 			node = ft_lstnew(name);
 			if (node == NULL)

@@ -12,10 +12,10 @@
 
 #include "../parser/parser.h"
 
-int	change_var(char *line, int fd, int *i)
+int	get_value(char *line, int fd, int *i)
 {
-	char 	*value;
-	char 	*key;
+	char	*value;
+	char	*key;
 
 	if (*line == '$')
 		*i += 1;
@@ -35,7 +35,7 @@ int	change_var(char *line, int fd, int *i)
 	return (0);
 }
 
-int	replace_var_with_value(char *line, int fd)
+int	get_var_value(char *line, int fd)
 {
 	int		i;
 
@@ -43,7 +43,7 @@ int	replace_var_with_value(char *line, int fd)
 	while (line[i])
 	{
 		if (line[i] == '$')
-			change_var(&line[++i], fd, &i);
+			get_value(&line[++i], fd, &i);
 		else
 			ft_putchar_fd(line[i++], fd);
 	}
@@ -64,7 +64,7 @@ int	expand_heredoc(int fd)
 			break ;
 		if (ft_strchr(line, '$'))
 		{
-			if (replace_var_with_value(line, pipe1[1]) == -1)
+			if (get_var_value(line, pipe1[1]) == -1)
 				return (free(line), -1);
 		}
 		else

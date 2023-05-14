@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_replace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/08 14:25:47 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/14 14:39:48 by ysalmi           ###   ########.fr       */
+/*   Created: 2023/05/12 11:18:36 by oelbouha          #+#    #+#             */
+/*   Updated: 2023/05/12 11:18:37 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "libft.h"
 
-int	main(int c, char **v, char **env)
+char	*ft_replace(char *str, char c)
 {
-	char	*line;
-	t_list	*l;
-	(void)c;
-	(void)v;
-	setup(env);
-	while (1)
+	char	*temp;
+	int		i;
+
+	temp = str;
+	i = 0;
+	while (*temp && (*temp == ' ' || *temp == '\t'))
+		temp++;
+	while (*temp)
 	{
-		line = read_line(0);
-		if (line == NULL)
-			return (0);
-		l = tokenize(line);
-		analyze(&l);
-		print(l);
-		free(line);
-		ft_lstclear(&l, free);
+		if (*temp == ' ' || *temp == '\t')
+		{
+			while (*temp && (*temp == ' ' || *temp == '\t'))
+				temp++;
+			if (*temp == 0)
+				break ;
+			str[i++] = c;
+		}
+		else
+		{
+			str[i++] = *temp;
+			temp++;
+		}
 	}
-	return (0);
+	str[i] = '\0';
+	return (str);
 }
