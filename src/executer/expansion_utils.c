@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser/parser.h"
+#include "executer.h"
 
 int	should_expand_wildcard(char *line)
 {
@@ -21,10 +21,12 @@ int	should_expand_wildcard(char *line)
 	return (0);
 }
 
-int	get_length(char **arr)
+int	arr_length(char **arr)
 {
 	int	i;
 
+	if (arr == NULL)
+		return (0);
 	i = -1;
 	while (arr[++i])
 		;

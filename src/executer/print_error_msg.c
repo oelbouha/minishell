@@ -1,39 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_list_to_array.c                            :+:      :+:    :+:   */
+/*   print_error_msg.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/12 10:47:31 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/12 10:48:31 by oelbouha         ###   ########.fr       */
+/*   Created: 2023/05/15 21:56:54 by oelbouha          #+#    #+#             */
+/*   Updated: 2023/05/15 21:56:57 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser/parser.h"
+#include "executer.h"
 
-char	**convert_list_to_array(t_list	*lst)
+void	print_error_msg(char *cmd_name, char *msg, int exit_status)
 {
-	t_list	*temp;
-	char	**arr;
-	int		len;
-	int		i;
-
-	if (!lst)
-		return (NULL);
-	len = ft_lstsize(lst) + 1;
-	arr = malloc(len * sizeof(char *));
-	if (arr == NULL)
-		return (NULL);
-	i = 0;
-	while (lst)
-	{
-		temp = lst;
-		arr[i] = lst->content;
-		lst = lst->next;
-		free(temp);
-		i++;
-	}
-	arr[i] = NULL;
-	return (arr);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd_name, 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+	exit (exit_status);
 }

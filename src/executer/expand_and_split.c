@@ -1,7 +1,6 @@
 
 
-#include "../parser/parser.h"
-#define EMPTY_LST	(t_list *)-1
+#include "executer.h"
 
 int	needs_spliting(char *str)
 {

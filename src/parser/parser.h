@@ -40,36 +40,9 @@ int			is_heredoc(t_redir *redir);
 void		del_heredoc(t_redir *redir);
 void		destroy_redir(t_redir *redir);
 int			read_heredoc(char *limiter);
-
-
-/*+++++++++++++++++++++++++++  expand functions +++++++++++++++++++++++++++++*/
-
 char		*remove_quotes(char *arg);
-char		*expand_var(char *str);
-char		*get_key(char *str);
-char		*remove_quotes_and_get_expanded(char *content);
-char		*get_key(char *str);
-char		**convert_list_to_array(t_list	*lst);
 
-int			expand_heredoc(int fd);
-int			is_invalid_key(const char *key);
-int			remove_quotes_and_expand(t_list **prev, t_list **lst, t_list **new_lst);
-int			should_expand(char *str);
-int			needs_spliting(char *str);
-int			get_length(char **arr);
-int			should_expand_wildcard(char *line);
-int			is_invalid_key(const char *key);
-int			get_expanded_length(char *str);
-int			quotes_len(char *str);
-int			get_key_len(char *str);
 
-t_list		*split_content(char *line);
-t_list		*get_expanded(t_list *lst);
-t_list		*expand(t_list *cur, t_list *prev, t_list **lst_ptr);
-t_list		*expand_wildcard(char *line);
-t_list		*split_and_join(t_list *lst);
-
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 int			is_redirection(const char *token);
 int			is_an_operator(const char *token);

@@ -39,8 +39,6 @@ int	setup(char *env[])
 	}// if path is still NULL return (1);
 	g_shell.paths = ft_split(path, ':');
 	free(path);
-	for (int i = 0; g_shell.paths[i]; i++)
-		ft_printf("%s\n", g_shell.paths[i]);
 	g_shell.last_stts = 0;
 	return (0);
 }
