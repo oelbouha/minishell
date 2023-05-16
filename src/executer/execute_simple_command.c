@@ -26,11 +26,13 @@ void	prep_redirs(t_list *redirs)
 	return;
 }
 
-char	**prep_args(t_list *args_lst)
+char	**prep_args(t_list **args_lst)
 {
 	t_list	*args;
 
-	args = get_expanded(args_lst);
+	args = get_expanded(*args_lst);
+	*args_lst = args;
+	// print(args);
 	return (ft_lst_to_arr(args));
 }
 
@@ -40,28 +42,22 @@ int	is_builtind(t_cmd *cmd)
 	return (0);
 }
 
-int	command_not_found(char *cmd_name)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd_name, 2);
-	ft_putstr_fd(": command not found\n", 2);
-	exit (127);
-}
 
 int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 {
 	t_builtin	builtin;
 	pid_t		pid;
 	char		**args;
+	char		*cmd_path;
 	int			ret;
 
-	args = prep_args(cmd->data._simple.args);
+	args = prep_args(&cmd->data._simple.args);
 	if (args == NULL || *args == NULL)
-		return (0);
-	builtin = get_builtin(args[0]);
+		return (free (args), 0);
+	builtin = get_builtin(*args);
+	cmd->count = arr_length(args);
 	if (builtin && force_fork == FALSE)
 	{
-		cmd->count = arr_length(args);
 		ret = builtin(cmd->count, args);
 		free (args);
 		return (ret);
@@ -71,16 +67,19 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	{
 		// CLOSE PIPE_IN;
 		if (wait_child == TRUE)
-			return (get_exit_status(pid));
-		return (0);
+		{
+			printf("waiting... \n");
+			return (free(args), get_exit_status(pid));
+		}
+		return (free(args), 0);
 	}
 	prep_redirs(cmd->redirs);
-	cmd->data._simple.path = get_cmd_path(*args);
-	if (cmd->data._simple.path == NULL)
-		return (command_not_found(*args));
+	cmd_path = get_cmd_path(*args);
+	if (cmd_path == NULL)
+		command_not_found(args[0]);
 	if (builtin)
 		exit(builtin(cmd->count, args));
-	if (execve(cmd->data._simple.path, args, get_env_arr()))
+	if (execve(cmd_path, args, get_env_arr()))
 		return (perror("minishell"), exit(126), 0);
 	return (0);
 }

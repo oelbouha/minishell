@@ -12,11 +12,5 @@
 
 #include "executer.h"
 
-void	print_error_msg(char *cmd_name, char *msg, int exit_status)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd_name, 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
-	exit (exit_status);
-}
+
+

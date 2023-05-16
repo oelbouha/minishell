@@ -6,7 +6,7 @@ int	check_cmd_path(char *cmd)
 {
 	DIR		*dir;
 
-	if (*cmd == '/')
+	if (ft_strchr(cmd, '/'))
 	{
 		dir = opendir(cmd);
 		if (dir)
@@ -25,6 +25,15 @@ int	check_cmd_path(char *cmd)
 	return (1);
 }
 
+int	command_not_found(char *cmd_name)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd_name, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	exit (127);
+}
+
+
 char	*get_cmd_path(char *cmd_name)
 {
 	char	**path;
@@ -33,7 +42,7 @@ char	*get_cmd_path(char *cmd_name)
 	int		i;
 
 	path = g_shell.paths;
-	if (ft_strchr(cmd_name, '/') && check_cmd_path(cmd_name))
+	if (ft_strchr(cmd_name, '/'))
 		return (cmd_name);
 	i = -1;
 	while (path[++i] && *cmd_name)

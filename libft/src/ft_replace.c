@@ -19,16 +19,12 @@ char	*ft_replace(char *str, char c)
 
 	temp = str;
 	i = 0;
-	while (*temp && (*temp == ' ' || *temp == '\t'))
-		temp++;
 	while (*temp)
 	{
 		if (*temp == ' ' || *temp == '\t')
 		{
 			while (*temp && (*temp == ' ' || *temp == '\t'))
 				temp++;
-			if (*temp == 0)
-				break ;
 			str[i++] = c;
 		}
 		else

@@ -48,6 +48,7 @@ int			get_expanded_length(char *str);
 int			quotes_len(char *str);
 int			get_key_len(char *str);
 int			check_cmd_path(char *cmd);
+int			command_not_found(char *cmd_name);
 
 
 t_list		*split_content(char *line);
