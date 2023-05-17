@@ -50,13 +50,11 @@ EXECUTER_SRC := executer.c \
 				executer.utils.c \
 				expand_var.c \
 				split_content.c \
-				split_expanded_and_join.c \
 				expand.c \
-				remove_quotes_and_expand.c\
 				split_utils.c\
-				print_error_msg.c \
-				expansion_utils.c \
+				expand_and_join.c\
 				convert_lst_to_array.c \
+				expansion_utils.c \
 				../../gnline/get_next_line.c \
 				../../gnline/get_next_line_utils.c \
 				get_cmd_path.c \

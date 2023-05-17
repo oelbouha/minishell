@@ -13,7 +13,8 @@
 #ifndef EXECUTER_H
 # define EXECUTER_H
 
-#define EMPTY_LST	(t_list *)-1
+
+#define EMPTY_VAR (char *)-1
 
 # include <dirent.h>
 # include <signal.h>
@@ -31,14 +32,13 @@ int		get_exit_status(pid_t pid);
 char		*remove_quotes(char *arg);
 char		*expand_var(char *str);
 char		*get_key(char *str);
-char		*remove_quotes_and_get_expanded(char *content);
 char		*get_key(char *str);
 char		**convert_lst_to_array(t_list	*lst);
 void		print_error_msg(char *cmd_name, char *msg, int exit_status);
 
 int			expand_heredoc(int fd);
 int			is_invalid_key(const char *key);
-int			remove_quotes_and_expand(t_list **prev, t_list **lst, t_list **new_lst);
+char		*remove_quotes_and_expand(char *content);
 int			should_expand(char *str);
 int			needs_spliting(char *str);
 int			arr_length(char **arr);
@@ -51,11 +51,13 @@ int			check_cmd_path(char *cmd);
 int			command_not_found(char *cmd_name);
 
 
+t_list		*expand(t_list *lst);
 t_list		*split_content(char *line);
-t_list		*get_expanded(t_list *lst);
-t_list		*expand(t_list *cur, t_list *prev, t_list **lst_ptr);
+t_list		*get_expanded(char *content);
+// void		expand(t_list *cur, t_list *prev, t_list **lst_ptr);
 t_list		*expand_wildcard(char *line);
-t_list		*split_and_join(t_list *lst);
+char	*expand_and_join(t_list *lst);
+char	**convert_lst_to_array(t_list *lst);
 
 char		*get_cmd_path(char *cmd_name);
 
