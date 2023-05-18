@@ -6,12 +6,22 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:30:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 13:06:43 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 13:32:44 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "executer.h"
+
+void	print_cmd(t_list *lst, int parser_output)
+{
+	for (t_list *cur = command; parser_output && cur; indent++)
+		{
+			print_cmd(cur->content, indent);
+			cur = cur->next;
+		}
+
+}
 
 int	main(int c, char **v, char **e)
 {
@@ -20,6 +30,7 @@ int	main(int c, char **v, char **e)
 	t_list	*command;
 	int		err;
 	int		parser_output = 1;
+	int		lexer_output = 0;
 
 	(void)c;
 	(void)v;
@@ -29,22 +40,16 @@ int	main(int c, char **v, char **e)
 		int		indent = 0;
 		line = read_line(1);
 		if (line == NULL)
-			return (ft_printf("line is null\n"), get_last_status());
+			return (get_last_status());
 		tokens = tokenize(line);
 		err = analyze(&tokens);
-		// print(tokens);
+		print(tokens, lexer_output);
 		command = new_command(&tokens, NONE);
-		// print(command);
-		for (t_list *cur = command; parser_output && cur; indent++)
-		{
-			print_cmd(cur->content, indent);
-			cur = cur->next;
-		}
+		print_cmd(command, parser_output);
 		execute(command);
-		ft_printf("%d|", get_last_status());
 		free(line);
 		ft_lstclear(&command, (t_lstdel)destroy_command);
-		//char s[222];
-		//read(0, s, 22);
+		if (get_last_status() < 0)
+			return (1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 21:53:49 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 11:32:54 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 13:22:32 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_pipe_redirs	create_pipes(int p1[2], int p2[2], int count, int i)
 		ft_memset(p1, -1, 2 * sizeof(int));
 		ft_memset(p2, -1, 2 * sizeof(int));
 	}
-	if (count > 1 && i % 2 == 0)
+	if (i % 2 == 0)
 	{
 		if (i == count - 1)
 			return ((t_pipe_redirs){.in = p2[0], .out = -1, .unused = -1});
@@ -85,32 +85,12 @@ t_pipe_redirs	create_pipes(int p1[2], int p2[2], int count, int i)
 		if (pipe(p2) == 0)
 			return ((t_pipe_redirs){.in = p1[0], .out = p2[1], .unused = p2[0]});
 	}
-	if (count > 1)
-		perror("-minishell");
+	perror("-minishell");
 	close_pipe(p1);
 	close_pipe(p2);
 	return ((t_pipe_redirs){.in = -1, .out = -1, .unused = -1});
 }
 
-
-/*
-
-if (subshell)
-	prep_redirs
-	fork
-	loop and execute
-	wait for last cmd status
-	wait for the rest
-	return status
-
-else
-	loop and execute
-	wait for last cmd status
-	wait for the rest
-	return status
-
-
-*/
 int	execute_compound_command(t_cmd *cmd)
 {
 	pid_t			child_pid;
