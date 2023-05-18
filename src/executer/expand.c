@@ -77,7 +77,7 @@ void add_nodes_to_lst(t_list *temp, t_list **lst)
 		*lst = temp;
 }
 
-int	dup_and_remove_quotes(char *content, t_list **lst)
+int	get_new_node(char *content, t_list **lst)
 {
 	char	*str;
 	t_list	*node;
@@ -113,7 +113,7 @@ t_list	*expand(t_list *lst)
 		}
 		else
 		{
-			if (dup_and_remove_quotes(cur->content, &expanded_lst))
+			if (get_new_node(cur->content, &expanded_lst))
 				return(ft_lstclear(&expanded_lst, free), NULL);
 		}
 		cur = cur->next;

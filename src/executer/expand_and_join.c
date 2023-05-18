@@ -18,13 +18,12 @@ char	*remove_quotes_and_expand(char *content)
 
 	if (should_expand(content))
 	{
-		expanded = remove_quotes(content);
 		expanded = expand_var(content);
 		if (expanded == NULL)
 			return (NULL);
 	}
 	else
-		expanded = ft_strdup(remove_quotes(content));
+		expanded = ft_strdup(content);
 	return (expanded);
 }
 
@@ -37,6 +36,7 @@ char	*join_expanded(char *expanded, char *content)
 	{
 		if (expanded != EMPTY_VAR)
 			str = expanded;
+		content = remove_quotes(content);
 		expanded = ft_strjoin(str, content);
 		if (expanded == NULL)
 			return (NULL);
