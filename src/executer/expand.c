@@ -109,7 +109,6 @@ t_list	*expand(t_list *lst)
 			temp = expand_wildcard(cur->content);
 			if (temp == NULL)
 				return (ft_lstclear(&expanded_lst, free), NULL);
-			print(temp);
 			add_nodes_to_lst(temp, &expanded_lst);
 		}
 		else if (should_expand(cur->content))

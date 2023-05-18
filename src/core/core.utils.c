@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:03:28 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 14:33:21 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 20:24:31 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ void	msh_log(char *cmd, char *msg, char *arg, t_bool quotes)
 	ft_putstr_fd("-minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
-	if (arg && *arg && quotes == TRUE)
-		ft_putchar_fd('`', 2);
-	ft_putstr_fd(arg, 2);
-	if (arg && *arg && quotes == TRUE)
-		ft_putchar_fd('\'', 2);
 	if (arg)
+	{
+		if (*arg && quotes == TRUE)
+			ft_putchar_fd('`', 2);
+		ft_putstr_fd(arg, 2);
+		if (*arg && quotes == TRUE)
+			ft_putchar_fd('\'', 2);
 		ft_putstr_fd(": ", 2);
+	}
 	ft_putstr_fd(msg, 2);
 	ft_putchar_fd('\n', 2);
 }

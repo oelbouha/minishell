@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 10:20:43 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 15:53:44 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_list	**get_commands_arr(t_list **head, int count)
 		else if (ft_strcmp(start->content, "|") == 0)
 			ft_lstdel_first(&start, free);
 		else if (ft_strcmp(start->content, "(") == 0)
-			arr[i] = new_subshell_command(&start, NONE);
+			arr[i++] = new_subshell_command(&start, NONE);
 		else
 			arr[i++] = new_simple_command(&start, NONE);
 	}

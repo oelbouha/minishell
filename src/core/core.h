@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 12:07:23 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 20:27:03 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_builtin	get_builtin(char *key);
 char		*get_current_wd(void);
 int			get_last_status(void);
 int			set_last_status(int status);
+void		msh_log(char *cmd, char *msg, char *arg, t_bool quotes);
 void		msh_err(char *msg, char *token);
 
 #endif

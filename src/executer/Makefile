@@ -63,7 +63,6 @@ EXECUTER_SRC := executer.c \
 		check_cmd_path.c \
 		command_not_found.c \
 		print_error_msg.c \
-		lst_to_arr.c \
 		wildcard.c \
 		expand_heredoc.c
 

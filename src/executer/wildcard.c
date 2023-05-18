@@ -119,7 +119,6 @@ t_list	*expand_wildcard(char *line)
 			return (closedir(dir), ft_lstclear(&matches, free),
 				free_arr(arr), NULL);
 		ft_lstadd_back(&matches, node);
-		msh_err("no matches found:", line);
 	}
 	return (closedir(dir), free_arr(arr), matches);
 }
