@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_cmd_path.c                                     :+:      :+:    :+:   */
+/*   check_cmd_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 14:55:59 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/18 14:56:08 by oelbouha         ###   ########.fr       */
+/*   Created: 2023/05/18 15:03:12 by oelbouha          #+#    #+#             */
+/*   Updated: 2023/05/18 15:03:28 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
 
-char	*get_cmd_path(char *cmd_name)
+int	check_cmd_path(char *cmd)
 {
-	char	**path;
-	char	*cmd_path;
-	char	*str;
-	int		i;
+	DIR		*dir;
 
-	path = g_shell.paths;
-	if (ft_strchr(cmd_name, '/') || *cmd_name == '.')
+	if (ft_strchr(cmd, '/'))
 	{
-		if (check_cmd_path(cmd_name))
-			return (cmd_name);
+		dir = opendir(cmd);
+		if (dir)
+		{
+			closedir (dir);
+			print_error_msg(cmd, ": is a directory", 126);
+		}
 	}
-	i = -1;
-	while (path[++i] && *cmd_name)
+	if (*cmd == '.' || ft_strchr(cmd, '/'))
 	{
-		str = ft_strjoin(path[i], "/");
-		cmd_path = ft_strjoin(str, cmd_name);
-		free(str);
-		if (access(cmd_path, F_OK) == 0)
-			return (cmd_path);
-		free(cmd_path);
+		if (access(cmd,  F_OK) < 0)
+			print_error_msg(cmd, ": No such file or directory", 127);
+		else if (access(cmd,  X_OK) < 0)
+			print_error_msg(cmd, ": permission denied", 126);
 	}
-	return (NULL);
+	return (1);
 }

@@ -25,13 +25,26 @@ void	do_nth(void *ptr)
 	(void)ptr;
 }
 
+int	execute_builtin(t_builtin builtin, t_cmd *cmd, char **args)
+{
+	int fd[2];
+
+	fd[0] = dup(0);
+	fd[1] = dup(1);
+	prep_redirs(cmd->redirs);
+	cmd->count = arr_length(args);
+	int ret = builtin(cmd->count, args);
+	dup2(0, fd[0]);
+	dup2(1, fd[1]);
+}
+
 char	**prep_args(t_list *args_lst)
 {
 	char	**arr;
 	t_list	*args;
 
 	args = expand(args_lst);
-	arr = convert_lst_to_array(args);
+	arr = ft_lst_to_arr(args);
 	ft_lstclear(&args, do_nth);
 	return (arr);
 }
@@ -49,8 +62,12 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	builtin = get_builtin(*args);
 	if (builtin && force_fork == FALSE)
 	{
-		ret = builtin(cmd->count, args);
+		ret = execute_builtin(builtin, cmd, args);
+		//dup 0 1
+		//prep_redirs;
+		// ret = builtin(cmd->count, args);
 		free_arr(args);
+		//dup back 0 1
 		return (ret);
 	}
 	pid = fork();

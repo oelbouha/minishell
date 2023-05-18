@@ -13,15 +13,10 @@
 #include "minishell.h"
 #include "executer.h"
 
-void	print_cmd(t_list *lst, int parser_output)
-{
-	for (t_list *cur = command; parser_output && cur; indent++)
-		{
-			print_cmd(cur->content, indent);
-			cur = cur->next;
-		}
+// void	print_cmd(t_list *lst, int parser_output)
+// {
 
-}
+// }
 
 int	main(int c, char **v, char **e)
 {
@@ -30,7 +25,7 @@ int	main(int c, char **v, char **e)
 	t_list	*command;
 	int		err;
 	int		parser_output = 1;
-	int		lexer_output = 0;
+	// int		lexer_output = 0;
 
 	(void)c;
 	(void)v;
@@ -44,7 +39,12 @@ int	main(int c, char **v, char **e)
 		tokens = tokenize(line);
 		err = analyze(&tokens);
 		command = new_command(&tokens, NONE);
-		print_cmd(command, parser_output);
+		// print_cmd(command, parser_output);
+		for (t_list *cur = command; parser_output && cur; indent++)
+		{
+			print_cmd(cur->content, indent);
+			cur = cur->next;
+		}
 		execute(command);
 		free(line);
 		ft_lstclear(&command, (t_lstdel)destroy_command);
