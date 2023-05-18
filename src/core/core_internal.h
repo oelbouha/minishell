@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 15:34:05 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/15 19:48:30 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 # include <sys/errno.h>
 # include <string.h>
+# include <stdio.h>
+# include <signal.h>
+# include "core.h"
 # include "libft.h"
 # include "datastructures.h"
-# include "core.h"
-# include <stdio.h>
 
 /* ***  Definitions  **** */
 

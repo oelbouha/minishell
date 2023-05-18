@@ -6,13 +6,14 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 09:05:57 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/12 16:08:30 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 10:32:48 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 t_list	*new_subshell_command(t_list **start, t_cmd_exec_cond cond);
+void	destroy_subshell_command(t_cmd *cmd);
 
 t_list	*get_next_cmd(t_list **head)
 {
@@ -59,6 +60,8 @@ void	destroy_command(t_cmd *cmd)
 {
 	if (cmd->type == SIMPLE_CMD)
 		destroy_simple_command(cmd);
+	else if (cmd->type == SUBSHELL_CMD)
+		destroy_subshell_command(cmd);
 	else if (cmd->type == COMPOUND_CMD)
 		destroy_compound_command(cmd);
 }

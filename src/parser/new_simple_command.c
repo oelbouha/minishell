@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:41:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/03 21:33:27 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 10:21:18 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ t_list	*new_simple_command(t_list **head, t_cmd_exec_cond cond)
 		return (free(cmd_node), NULL);
 	cmd->type = SIMPLE_CMD;
 	cmd->cond = cond;
-	cmd->simple.args = get_cmd_args_list(head);
-	cmd->count = ft_lstsize(cmd->simple.args);
+	cmd->data.args = get_cmd_args_list(head);
+	cmd->count = ft_lstsize(cmd->data.args);
 	cmd->redirs = get_cmd_redirs(head);
 	if (cmd->redirs == NULL)
 		return (free(cmd_node), destroy_simple_command(cmd), NULL);
@@ -106,7 +106,7 @@ t_list	*new_simple_command(t_list **head, t_cmd_exec_cond cond)
 
 void	destroy_simple_command(t_cmd *cmd)
 {
-	ft_lstclear(&cmd->simple.args, free);
+	ft_lstclear(&cmd->data.args, free);
 	if (cmd->redirs != NO_REDIRS)
 		ft_lstclear(&cmd->redirs, (t_lstdel)destroy_redir);
 	free(cmd);

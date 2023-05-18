@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 15:38:27 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/16 15:39:35 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	setup(char *env[])
 	}// if path is still NULL return (1);
 	g_shell.paths = ft_split(path, ':');
 	free(path);
-	for (int i = 0; g_shell.paths[i]; i++)
-		ft_printf("%s\n", g_shell.paths[i]);
 	g_shell.last_stts = 0;
 	return (0);
 }

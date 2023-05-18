@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:30:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 15:35:04 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 11:35:35 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int c, char **v, char **e)
 		int		indent = 0;
 		line = read_line(1);
 		if (line == NULL)
-			return (get_last_status());
+			return (ft_printf("line is null\n"), get_last_status());
 		tokens = tokenize(line);
 		err = analyze(&tokens);
 		//print(tokens);
@@ -40,8 +40,10 @@ int	main(int c, char **v, char **e)
 			cur = cur->next;
 		}
 		execute(command);
-		ft_printf("executed [ %d ]\n", get_last_status());
+		ft_printf("%d|", get_last_status());
 		free(line);
 		ft_lstclear(&command, (t_lstdel)destroy_command);
+		//char s[222];
+		//read(0, s, 22);
 	}
 }

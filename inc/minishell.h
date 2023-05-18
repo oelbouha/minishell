@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:25:44 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 15:43:11 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/15 17:59:40 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include "core.h"
 # include "debug.h"
 # define BONUS 1
+
+# define NO_REDIRS (t_list *)-1
+# define EMPTY_LST	(t_list *)-1
 
 typedef unsigned long long		t_ull;
 

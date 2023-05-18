@@ -6,15 +6,12 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 23:27:11 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 14:38:29 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/15 17:59:53 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
-# define NO_REDIRS (t_list *)-1
-# define EMPTY_LST	(t_list *)-1
 
 # include <unistd.h>
 # include <dirent.h>

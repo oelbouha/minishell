@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/11 18:10:38 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/15 20:13:53 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ char	*read_line(t_ull state)
 
 	if (state == 0)
 		configure_readline();
-	prompt = get_prompt();
+	//prompt = get_prompt();
+	prompt = NULL;
 	line = NULL;
 	while (line == NULL || ft_issubset(" \t", line))
 	{

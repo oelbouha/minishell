@@ -6,18 +6,11 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:38:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 16:11:31 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 10:42:00 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executer.h"
-
-
-void	prep_redirs(t_list *redirs)
-{
-	(void)redirs;
-	return;
-}
 
 char	*get_cmd_path(const char *cmd_name)
 {
@@ -47,31 +40,35 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	pid_t		pid;
 	t_builtin	builtin;
 	char		**args;
+	char		*path;
 	int			ret;
 
-	builtin = get_builtin(cmd->data._simple.args->content);
+	(void)force_fork;
+	builtin = get_builtin(cmd->data.args->content);
 	if (builtin && force_fork == FALSE)
 	{
-		args = prep_args(cmd->data._simple.args); // if alloc fails exit
+		args = prep_args(cmd->data.args); // if alloc fails exit
 		ret = builtin(cmd->count, args);
 		return (free(args), ret);
 	}
 	pid = fork();
 	if (pid)
 	{
-		// CLOSE PIPE_IN;
 		if (wait_child == TRUE)
 			return (get_exit_status(pid));
-		return (0);
+		return ((int)pid);
 	}
+	if (ft_strcmp(cmd->data.args->content, "yes") == 0)
+		close(3);
 	prep_redirs(cmd->redirs); // handles its errors and exit if any
-	cmd->data._simple.path = get_cmd_path(cmd->data._simple.args->content);
-	if (cmd->data._simple.path == NULL)
-		return (command_not_found(cmd->data._simple.args->content));
-	args = prep_args(cmd->data._simple.args); // if alloc fails exit
+	path = get_cmd_path(cmd->data.args->content);
+	if (path == NULL)
+		return (command_not_found(cmd->data.args->content));
+	args = prep_args(cmd->data.args); // if alloc fails exit
 	if (builtin)
 		exit(builtin(cmd->count, args));
-	if (execve(cmd->data._simple.path, args, get_env_arr()))
-		return (perror("minishell"), exit(-1), 0);
+	else if (execve(path, args, get_env_arr()))
+		perror("minishell");
+	exit(-1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/14 14:31:10 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/18 11:31:49 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,9 @@ LEXER_LIB := ../lexer/lexer.a
 
 EXECUTER_SRC := executer.c \
 		execute_simple_command.c \
+		execute_compound_command.c \
+		execute_subshell_command_bonus.c \
+		prep_redirs.c \
 		executer.utils.c
 
 EXECUTER_BONUS :=
