@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 09:21:19 by ysalmi            #+#    #+#             */
-/*   Updated: 2022/10/01 12:51:09 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 13:17:53 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	int		i;
 
 	if (!s2)
-		return (0);
+		return (NULL);
+	else if (s1 == NULL)
+		return (ft_strdup(s2));
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	i = 0;

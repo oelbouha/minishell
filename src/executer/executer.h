@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 16:02:41 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 14:25:41 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:36:06 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@
 # include "core_internal.h"
 # include "../gnline/get_next_line.h"
 
-int		execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child);
+int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child);
+int	execute_compound_command(t_cmd *cmd);
+int	execute_subshell_command(t_cmd *cmd, t_bool wait_child);
+int	prep_redirs(t_list *redirs);
 
-int		get_exit_status(pid_t pid);
+int	get_exit_status(pid_t pid);
 
 char		*remove_quotes(char *arg);
 char		*expand_var(char *str);

@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 22:41:58 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/11 21:30:12 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 13:25:32 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	analyze(t_list **lst)
 	cur = *lst;
 	ft_bzero(&stats, sizeof(t_analyzer_stats));
 	check_first_node(cur, &stats);
-	while (check_errs(stats, lst, prev, cur) == 0 && (cur || prev))
+	while ((cur || prev) && check_errs(stats, lst, prev, cur) == 0)
 	{
 		prev = cur;
 		if (prev == NULL)

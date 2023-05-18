@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 23:22:03 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 15:30:05 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 10:30:00 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,11 @@
 
 # include "libft.h"
 
-# define simple data._simple
-# define compound data._compound
-# define heredocfd to.heredoc.fd
-# define rfilename to.filename
-# define SIMPLE dats._simple
-
 typedef enum e_cmd_type
 {
 	SIMPLE_CMD,
-	COMPOUND_CMD
+	COMPOUND_CMD,
+	SUBSHELL_CMD
 }	t_cmd_type;
 
 typedef enum e_cmd_exec_cond
@@ -39,6 +34,7 @@ typedef enum e_redir_type
 	HEREDOC,
 	PIPE_IN,
 	PIPE_OUT,
+	PIPE_UNUSED,
 	FILE_IN,
 	FILE_OUT,
 	FILE_APPEND,
@@ -63,13 +59,15 @@ struct s_simple_cmd
 struct s_compound_cmd
 {
 	t_list	**arr;
+	t_list	*next;
 	t_bool	subshell;
 };
 
 union u_cmd
 {
-	t_simple_cmd	_simple;
-	t_compound_cmd	_compound;
+	t_list	*args;
+	t_list	*lst;
+	t_list	**arr;
 };
 
 struct s_cmd
@@ -83,14 +81,14 @@ struct s_cmd
 
 struct s_heredoc
 {
-	int		fd;
+	int		val;
 	t_bool	expand;
 };
 
 union u_redir
 {
 	t_file_redir	filename;
-	t_heredoc		heredoc;//fildes
+	t_heredoc		fd;
 };
 
 struct s_redir

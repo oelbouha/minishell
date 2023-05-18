@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:41:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/04 17:41:22 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/16 20:09:23 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ void	destroy_redir(t_redir *redir)
 {
 	if (redir)
 	{
-		if (redir->type == HEREDOC)
-			close(redir->heredocfd);
+		if (redir->type == HEREDOC || redir->type == PIPE_IN
+			|| redir->type == PIPE_OUT || redir->type == PIPE_UNUSED)
+			close(redir->to.fd.val);
 		else
 			free(redir->to.filename);
 		free(redir);

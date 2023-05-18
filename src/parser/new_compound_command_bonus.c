@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/12 16:00:36 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 10:20:43 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_list	**get_commands_arr(t_list **head, int count)
 		else if (ft_strcmp(start->content, "|") == 0)
 			ft_lstdel_first(&start, free);
 		else if (ft_strcmp(start->content, "(") == 0)
-			arr[i++] = new_subshell_command(&start, NONE);
+			arr[i] = new_subshell_command(&start, NONE);
 		else
 			arr[i++] = new_simple_command(&start, NONE);
 	}
@@ -86,10 +86,9 @@ t_list	*new_compound_command(t_list **start, t_cmd_exec_cond cond)
 		return (free(cmd_node), NULL);
 	cmd->type = COMPOUND_CMD;
 	cmd->cond = cond;
-	cmd->compound.subshell = FALSE;
 	cmd->count = get_commands_count(*start);
-	cmd->compound.arr = get_commands_arr(start, cmd->count);
-	if (cmd->compound.arr == NULL)
+	cmd->data.arr = get_commands_arr(start, cmd->count);
+	if (cmd->data.arr == NULL)
 		return (free(cmd_node), free(cmd), NULL);
 	cmd_node->content = cmd;
 	return (cmd_node);
@@ -101,9 +100,9 @@ void	destroy_compound_command(t_cmd *cmd)
 
 	i = -1;
 	while (++i < cmd->count)
-		ft_lstclear(&(cmd->compound.arr[i]), (t_lstdel)destroy_command);
+		ft_lstclear(&(cmd->data.arr[i]), (t_lstdel)destroy_command);
 	if (cmd->redirs && cmd->redirs != NO_REDIRS)
 		ft_lstclear(&cmd->redirs, (t_lstdel)destroy_redir);
-	free(cmd->compound.arr);
+	free(cmd->data.arr);
 	free(cmd);
 }

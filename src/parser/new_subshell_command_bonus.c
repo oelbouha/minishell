@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/12 16:01:35 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 10:36:08 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,23 @@ t_list	*new_subshell_command(t_list **start, t_cmd_exec_cond cond)
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (free(cmd_node), NULL);
-	cmd->type = COMPOUND_CMD;
+	cmd->type = SUBSHELL_CMD;
 	cmd->cond = cond;
-	cmd->compound.subshell = TRUE;
 	ft_lstdel_first(start, free);
 	cmd->count = get_commands_count(*start);
-	cmd->compound.arr = get_commands_arr(start, cmd->count);
-	if (cmd->compound.arr == NULL)
+	cmd->data.lst = new_command(start, NONE);
+	if (cmd->data.lst == NULL)
 		return (free(cmd_node), free(cmd), NULL);
 	cmd_node->content = cmd;
-	cmd_node->next = get_next_cmd(start);
 	ft_lstdel_first(start, free);
 	cmd->redirs = get_cmd_redirs(start);
 	return (cmd_node);
+}
+
+void	destroy_subshell_command(t_cmd *cmd)
+{
+	ft_lstclear(&cmd->data.lst, (t_lstdel)destroy_command);
+	if (cmd->redirs && cmd->redirs != NO_REDIRS)
+		ft_lstclear(&cmd->redirs, (t_lstdel)destroy_redir);
+	free(cmd);
 }

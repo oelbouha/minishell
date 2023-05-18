@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/13 14:38:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 14:25:27 by oelbouha         ###   ########.fr       */
+/*   Created: 2023/05/18 14:41:11 by oelbouha          #+#    #+#             */
+/*   Updated: 2023/05/18 14:41:32 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,21 @@ void	print_arr(char **arr)
 		printf("arr[%d]: %s\n", i, arr[i]);
 }
 
-void	prep_redirs(t_list *redirs)
+void	do_nth(void *ptr)
 {
-	(void)redirs;
-	return;
+	(void)ptr;
 }
 
 char	**prep_args(t_list *args_lst)
 {
+	char	**arr;
 	t_list	*args;
 
 	args = expand(args_lst);
-	return (convert_lst_to_array(args));
+	arr = convert_lst_to_array(args);
+	ft_lstclear(&args, do_nth);
+	return (arr);
 }
-
-int	is_builtind(t_cmd *cmd)
-{
-	(void)cmd;
-	return (0);
-}
-
 
 int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 {
@@ -49,11 +44,9 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	char		*cmd_path;
 	int			ret;
 
-	args = prep_args(cmd->data._simple.args);
-	if (args == NULL || *args == NULL)
-		return (free_arr(args), 0);
-	builtin = get_builtin(*args);
+	args = prep_args(cmd->data.args);
 	cmd->count = arr_length(args);
+	builtin = get_builtin(*args);
 	if (builtin && force_fork == FALSE)
 	{
 		ret = builtin(cmd->count, args);
@@ -63,13 +56,13 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	pid = fork();
 	if (pid)
 	{
+		free_arr(args);
 		if (wait_child == TRUE)
 		{
 			int exit_status = get_exit_status(pid);
-			free_arr(args);
 			return (exit_status);
 		}
-		return (0);
+		return ((int)pid);
 	}
 	prep_redirs(cmd->redirs);
 	cmd_path = get_cmd_path(*args);
@@ -78,6 +71,7 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	if (builtin)
 		exit(builtin(cmd->count, args));
 	if (execve(cmd_path, args, get_env_arr()))
-		return (perror("minishell"), exit(126), 0);
+		perror("minishell");
+	exit(126);
 	return (0);
 }

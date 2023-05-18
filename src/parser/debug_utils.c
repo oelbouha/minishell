@@ -11,15 +11,15 @@ void	print_heredoc(t_redir *r, int n)
 {
 	int	newline = 0;
 	print_tabs(n);
-	ft_printf("|\theredoc: %d - ", r->to.heredoc.fd);
-	if (r->to.heredoc.expand == TRUE)
+	ft_printf("|\theredoc: %d - ", r->to.fd.val);
+	if (r->to.fd.expand == TRUE)
 		ft_printf("expand\n");
 	else
 		ft_printf("no-expand\n");
 	char s;
 	print_tabs(n);
 	ft_printf("|\t\t|");
-	while (read(r->to.heredoc.fd, &s, 1))
+	while (read(r->to.fd.val, &s, 1))
 	{
 		if (newline)
 		{
@@ -45,7 +45,8 @@ void	print_redirections(t_list *redirs, int n, char wall)
 		t_redir *r = cur->content;
 		if (r->type == HEREDOC)
 			print_heredoc(r, n);
-		else
+		else if (r->type != PIPE_IN && r->type != PIPE_OUT)
+
 		{
 			print_tabs(n);
 			ft_printf("%c\t%s: ", wall, r->to.filename);
@@ -70,11 +71,11 @@ void	print_simple_cmd(t_cmd *cmd, int n)
 	ft_printf("| cond: %s\n", cond[cmd->cond]);
 	print_tabs(n);
 	ft_printf("| argc: %d\n", cmd->count);
-	if (cmd->count && cmd->simple.args)
+	if (cmd->count && cmd->data.args)
 	{
 		print_tabs(n);
 		ft_printf("| argv: [ ");
-		t_list *cur = cmd->simple.args;
+		t_list *cur = cmd->data.args;
 		while (cur)
 		{
 			ft_printf("%s", cur->content);
@@ -97,20 +98,32 @@ void	print_compound_cmd(t_cmd *cmd, int n)
 	ft_printf("+**********************************+\n");
 	print_tabs(n);
 	ft_printf("* cond: %s\n", cond[cmd->cond]);
-	print_tabs(n);
-	ft_printf("* subshell: ");
-	if (cmd->compound.subshell == TRUE)
-		ft_printf("Yes\n");
-	else
-		ft_printf("No\n");
 	for (int i = 0; i < cmd->count; i++)
 	{
 		int j = 1;
-		for (t_list *cur = cmd->compound.arr[i]; cur;)
+		for (t_list *cur = cmd->data.arr[i]; cur;)
 		{
 			print_cmd(cur->content, n + j++);
 			cur = cur->next;
 		}
+	}
+	print_redirections(cmd->redirs, n, '*');
+	print_tabs(n);
+	ft_printf("+**********************************+\n");
+}
+
+void	print_subshell_cmd(t_cmd *cmd, int n)
+{
+	char cond[3][5] = {"NONE", "AND", "OR"};
+	print_tabs(n);
+	ft_printf("+############# subshell ############+\n");
+	print_tabs(n);
+	ft_printf("* cond: %s\n", cond[cmd->cond]);
+	int	indent = n;
+	for (t_list *cur = cmd->data.lst; cur;)
+	{
+		print_cmd(cur->content, ++indent);
+		cur = cur->next;
 	}
 	print_redirections(cmd->redirs, n, '*');
 	print_tabs(n);
@@ -123,4 +136,6 @@ void	print_cmd(t_cmd *cmd, int n)
 		print_simple_cmd(cmd, n);
 	else if (cmd->type == COMPOUND_CMD)
 		print_compound_cmd(cmd, n);
+	else if (cmd->type == SUBSHELL_CMD)
+		print_subshell_cmd(cmd, n);
 }
