@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/18 11:31:49 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/18 12:18:57 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,18 @@ EXECUTER_SRC := executer.c \
 		execute_compound_command.c \
 		execute_subshell_command_bonus.c \
 		prep_redirs.c \
-		executer.utils.c
+		executer.utils.c \
+		expand_var.c \
+		split_content.c \
+		expand.c \
+		split_utils.c\
+		expand_and_join.c\
+		convert_lst_to_array.c \
+		expansion_utils.c \
+		../../gnline/get_next_line.c \
+		../../gnline/get_next_line_utils.c \
+		get_cmd_path.c \
+		expand_heredoc.c
 
 EXECUTER_BONUS :=
 
@@ -59,7 +70,7 @@ EXECUTER_BONUS :=
 
 #**************************************************************************************#
 
-SRC_T := 	../../gnline/get_next_line.c \
+SRC := 	../../gnline/get_next_line.c \
 		../../gnline/get_next_line_utils.c \
 		test.c \
 		expand_heredoc.c \
@@ -86,5 +97,5 @@ test: libft $(EXECUTER_SRC)
 	@./$@
 
 
-OBJ := $(SRC_T:%.c=%.o)
+OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser/parser.h"
+#include "executer.h"
 
 int	is_tail_matched(char *file_name, char *str, char *line)
 {
@@ -84,7 +84,7 @@ int	add_filename_to_list(t_list **lst, char *line, char **arr, DIR *dir)
 		name = ft_strdup(entry->d_name);
 		if (name == NULL)
 			return (-1);
-		if (find_matching(entry->d_name, line, arr, get_length(arr)))
+		if (find_matching(entry->d_name, line, arr, arr_length(arr)))
 		{
 			node = ft_lstnew(name);
 			if (node == NULL)

@@ -14,8 +14,9 @@ int		main(int c, char **v, char **env)
 	while (1)
 	{
 		char *line = readline("-> ");
-		temp = tokenize(line);
-		lst = get_expanded(temp);
+		// temp = tokenize(line);
+		// lst = get_expanded(temp);
+		lst = expand_wildcard(line);
 		add_history(line);
 		// print(lst);
 		char **arr = convert_list_to_array(lst);

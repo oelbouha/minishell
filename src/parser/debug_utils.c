@@ -116,7 +116,7 @@ void	print_subshell_cmd(t_cmd *cmd, int n)
 {
 	char cond[3][5] = {"NONE", "AND", "OR"};
 	print_tabs(n);
-	ft_printf("+**********************************+\n");
+	ft_printf("+############# subshell ############+\n");
 	print_tabs(n);
 	ft_printf("* cond: %s\n", cond[cmd->cond]);
 	int	indent = n;
