@@ -9,14 +9,14 @@ void	print_tabs(int n)
 
 void	print_heredoc(t_redir *r, int n)
 {
-	int	newline = 0;
+	//int	newline = 0;
 	print_tabs(n);
 	ft_printf("|\theredoc: %d - ", r->to.fd.val);
 	if (r->to.fd.expand == TRUE)
 		ft_printf("expand\n");
 	else
 		ft_printf("no-expand\n");
-	char s;
+	/*char s;
 	print_tabs(n);
 	ft_printf("|\t\t|");
 	while (read(r->to.fd.val, &s, 1))
@@ -30,7 +30,7 @@ void	print_heredoc(t_redir *r, int n)
 		write(1, &s, 1);
 		if (s == '\n')
 			newline = 1;
-	}
+	}*/
 }
 
 void	print_redirections(t_list *redirs, int n, char wall)

@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 21:53:49 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 13:22:32 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/18 15:59:49 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	execute_compound_command(t_cmd *cmd)
 		command = cmd->data.arr[i]->content;
 		if (p_redirs.in != -1 || p_redirs.out != -1)
 			add_pipe_redirs(&command->redirs, p_redirs);
-		child_pid = execute_simple_command(command, TRUE, FALSE);
+		child_pid = execute_command(command, TRUE, FALSE);
 		close(p_redirs.in);
 		close(p_redirs.out);
 	}
