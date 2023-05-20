@@ -12,12 +12,32 @@
 
 #include "executer.h"
 
+int	skip_quotes(char *str)
+{
+	char	quote;
+	int		i;
+
+	i = 0;
+	quote = str[i];
+	i++;
+	while (str[i] && str[i] != quote)
+		i++;
+	i++;
+	return (i);
+}
+
 int	should_expand_wildcard(char *line)
 {
-	if (ft_templatecmp(line, "'\"/", ':'))
+	if (ft_strchr(line, '$'))
 		return (0);
-	else if (ft_strchr(line, '*'))
-		return (1);
+	while (*line)
+	{
+		if (*line == '"' || *line == '\'')
+			line += skip_quotes(line);
+		if (*line == '*')
+			return (1);
+		line++;
+	}
 	return (0);
 }
 
@@ -25,8 +45,6 @@ int	arr_length(char **arr)
 {
 	int	i;
 
-	if (arr == NULL)
-		return (0);
 	i = -1;
 	while (arr[++i])
 		;
@@ -54,8 +72,7 @@ int	check_double_quote(char *str, int *i)
 
 int	should_expand(char *str)
 {
-	char	quote;
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -66,13 +83,7 @@ int	should_expand(char *str)
 				return (1);
 		}
 		else if (str[i] == '\'')
-		{
-			quote = str[i];
-			i++;
-			while (str[i] && str[i] != quote)
-				i++;
-			i++;
-		}
+			i += skip_quotes(&str[i]);
 		else if (str[i] == '$')
 			return (1);
 		else

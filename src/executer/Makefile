@@ -56,11 +56,14 @@ EXECUTER_SRC := executer.c \
 		expand.c \
 		split_utils.c\
 		expand_and_join.c\
-		convert_lst_to_array.c \
 		expansion_utils.c \
 		../../gnline/get_next_line.c \
 		../../gnline/get_next_line_utils.c \
 		get_cmd_path.c \
+		check_cmd_path.c \
+		command_not_found.c \
+		print_error_msg.c \
+		wildcard.c \
 		expand_heredoc.c
 
 EXECUTER_BONUS :=
@@ -79,11 +82,10 @@ SRC := 	../../gnline/get_next_line.c \
 		split_content.c \
 		split_expanded_and_join.c \
 		expand.c \
-		remove_quotes_and_expand.c\
 		split_utils.c\
 		wildcard.c\
 		expansion_utils.c \
-		convert_list_to_array.c 
+		lst_to_arr.c 
 
 
 ex:  libft corelib dslib

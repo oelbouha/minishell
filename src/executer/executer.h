@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 16:02:41 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/20 12:27:58 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/20 12:45:32 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ char		*remove_quotes(char *arg);
 char		*expand_var(char *str);
 char		*get_key(char *str);
 char		*get_key(char *str);
-char		**convert_lst_to_array(t_list	*lst);
-void		print_error_msg(char *cmd_name, char *msg, int exit_status);
+char		**lst_to_arr(t_list	*lst);
 
 int			expand_heredoc(int fd);
 int			is_invalid_key(const char *key);
@@ -50,16 +49,16 @@ int			quotes_len(char *str);
 int			get_key_len(char *str);
 int			check_cmd_path(char *cmd);
 int			command_not_found(char *cmd_name);
+int			check_cmd_path(char *cmd);
 
 
 t_list		*expand(t_list *lst);
 t_list		*split_content(char *line);
 t_list		*get_expanded(char *content);
-// void		expand(t_list *cur, t_list *prev, t_list **lst_ptr);
 t_list		*expand_wildcard(char *line);
-char	*expand_and_join(t_list *lst);
-char	**convert_lst_to_array(t_list *lst);
-
+char		*expand_and_join(t_list *lst);
 char		*get_cmd_path(char *cmd_name);
+
+void	print_error_msg(char *cmd_name, char *msg, int status);
 
 #endif

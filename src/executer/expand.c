@@ -104,7 +104,14 @@ t_list	*expand(t_list *lst)
 	expanded_lst = NULL;
 	while (cur)
 	{
-		if (should_expand(cur->content))
+		if (should_expand_wildcard(cur->content))
+		{
+			temp = expand_wildcard(cur->content);
+			if (temp == NULL)
+				return (ft_lstclear(&expanded_lst, free), NULL);
+			add_nodes_to_lst(temp, &expanded_lst);
+		}
+		else if (should_expand(cur->content))
 		{
 			temp = get_expanded(cur->content);
 			if (temp == NULL)
