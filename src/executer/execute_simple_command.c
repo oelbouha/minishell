@@ -33,28 +33,14 @@ int	execute_builtin(t_builtin builtin, t_cmd *cmd, char **args)
 
 	fdin = dup(0);
 	fdout = dup(1);
-	prep_redirs(cmd->redirs);
+	if (prep_redirs(cmd->redirs))
+		return (1);
 	cmd->count = arr_length(args);
 	ret = builtin(cmd->count, args);
 	dup2(fdin, 0);
 	dup2(fdout, 1);
 	free_arr(args);
 	return (ret);
-}
-
-int	execute_cmd(t_builtin builtin, t_cmd *cmd, char **args)
-{
-	char	*cmd_path;
-
-	prep_redirs(cmd->redirs);
-	cmd_path = get_cmd_path(*args);
-	if (cmd_path == NULL)
-		command_not_found(*args);
-	if (builtin)
-		exit(builtin(cmd->count, args));
-	if (execve(cmd_path, args, get_env_arr()))
-		perror("minishell");
-	exit(126);
 }
 
 char	**prep_args(t_list *args_lst)
@@ -75,12 +61,18 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	t_builtin	builtin;
 	pid_t		pid;
 	char		**args;
+	char		*cmd_path;
 
-	args = prep_args(cmd->data.args);
-	if (args == NULL || *args == NULL)
-		return (free_arr(args), 0);
-	cmd->count = arr_length(args);
-	builtin = get_builtin(*args);
+	builtin = NULL;
+	args = NULL;
+	if (cmd->data.args)
+	{
+		args = prep_args(cmd->data.args);
+		if (args == NULL || *args == NULL)
+			return (free_arr(args), 0);
+		cmd->count = arr_length(args);
+		builtin = get_builtin(*args);
+	}
 	if (builtin && force_fork == FALSE)
 		return (execute_builtin(builtin, cmd, args));
 	pid = fork();
@@ -91,6 +83,15 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 			return (get_exit_status(pid));
 		return ((int)pid);
 	}
-	execute_cmd(builtin, cmd, args);
+	if (prep_redirs(cmd->redirs))
+		exit(1);
+	if (builtin)
+		exit(builtin(cmd->count, args));
+	cmd_path = get_cmd_path(*args);
+	if (cmd_path == NULL)
+		command_not_found(*args);
+	if (execve(cmd_path, args, get_env_arr()))
+		perror("minishell");
+	exit(126);
 	return (0);
 }

@@ -28,6 +28,8 @@ int	skip_quotes(char *str)
 
 int	should_expand_wildcard(char *line)
 {
+	if (ft_strchr(line, '$'))
+		return (0);
 	while (*line)
 	{
 		if (*line == '"' || *line == '\'')
