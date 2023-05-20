@@ -6,25 +6,21 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 16:02:41 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 19:59:50 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/20 12:27:58 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTER_H
 # define EXECUTER_H
 
-
-#define EMPTY_VAR (char *)-1
-
-# include <dirent.h>
-# include <signal.h>
+# include "minishell.h"
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <fcntl.h>
-# include "minishell.h"
 # include "minishell_types.h"
-# include "core_internal.h"
 # include "../gnline/get_next_line.h"
+
+#define EMPTY_VAR (char *)-1
 
 int	execute_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child);
 int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child);

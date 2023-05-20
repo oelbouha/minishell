@@ -6,21 +6,16 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:14:18 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 14:40:15 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/20 12:16:19 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <dirent.h>
-# include <sys/errno.h>
 # include "minishell.h"
+# include <readline/history.h>
+# include <dirent.h>
 
 # define OPERATORS "|:>:<:>>:<<"
 # define REDIRS ">:>>:<:<<"

@@ -6,12 +6,18 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/16 15:39:35 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/19 17:54:21 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
+void	sig_int_handler(int signo)
+{
+	(void)signo;
+	g_shell.interupted = 1;
+	ft_printf("\n");
+}
 /*
  *
  *	handle error properly when get_current_wd() returns NULL
@@ -39,6 +45,18 @@ int	setup(char *env[])
 	}// if path is still NULL return (1);
 	g_shell.paths = ft_split(path, ':');
 	free(path);
+	g_shell.interupted = 0;
+	signal(SIGINT, sig_int_handler);
 	g_shell.last_stts = 0;
 	return (0);
+}
+
+int	has_been_interupted(void)
+{
+	return (g_shell.interupted);
+}
+
+void	reset_interupted(void)
+{
+	g_shell.interupted = 0;
 }

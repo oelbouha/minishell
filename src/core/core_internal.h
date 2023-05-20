@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/15 19:48:30 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/19 17:47:33 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct s_shell
 	char	*wd;
 	char	**paths;
 	int		last_stts;
+	int		interupted;
 };
 
 /* ***  Global variable  **** */

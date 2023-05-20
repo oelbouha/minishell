@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 17:57:36 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 15:53:44 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/20 12:19:05 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	get_commands_count(t_list *start)
 			parentheses++;
 		else if (ft_strcmp(start->content, ")") == 0 && --parentheses < 0)
 			break ;
-		else if (parentheses == 0 && BONUS
+		else if (parentheses == 0
 			&& ft_templatecmp(start->content, "&&:||", ':'))
 			break ;
 		start = start->next;

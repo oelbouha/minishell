@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:30:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 20:36:13 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/19 17:54:27 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int c, char **v, char **e)
 	setup(e);
 	while (1)
 	{
+		reset_interupted();
 		line = read_line(1);
 		if (line == NULL)
 			return (get_last_status());
@@ -47,9 +48,9 @@ int	main(int c, char **v, char **e)
 			print(tokens);
 		command = new_command(&tokens, NONE);
 		print_cmmd(command, parser_output);
-		if (err)
+		if (err && has_been_interupted() == 0)
 			set_last_status(258);
-		else
+		else if (has_been_interupted() == 0)
 			execute(command);
 		free(line);
 		ft_lstclear(&command, (t_lstdel)destroy_command);

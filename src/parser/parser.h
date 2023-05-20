@@ -6,17 +6,15 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 23:27:11 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/15 17:59:53 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/20 12:16:44 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include <unistd.h>
-# include <dirent.h>
-# include <readline/readline.h>
 # include "minishell.h"
+# include <dirent.h>
 # include "minishell_types.h"
 
 int			get_commands_count(t_list *start);

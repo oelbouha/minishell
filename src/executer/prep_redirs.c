@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:02:44 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 20:37:34 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/20 12:06:40 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_fd_redir(t_redir *redir)
 		close(redir->to.fd.val);
 }
 
-void	handle_filename_redir(t_redir *redir)
+int	handle_filename_redir(t_redir *redir)
 {
 	t_list	*expanded;
 	int		fd;
@@ -45,24 +45,25 @@ void	handle_filename_redir(t_redir *redir)
 	else if (redir->type == FILE_APPEND && ++to)
 		oflags = O_WRONLY | O_CREAT | O_APPEND;
 	else
-		return ;
+		return (0);
 	expanded = get_expanded(redir->to.filename);
 	if (expanded == NULL)
-		exit(1);
+		return (1);
 	else if (expanded == (t_list *)EMPTY_VAR || ft_lstsize(expanded) > 1)
 	{
 		msh_log(redir->to.filename, "ambiguous redirect", NULL, FALSE);
-		exit(1);
+		return (1);
 	}
 	fd = open(expanded->content, oflags, 0644);
 	if (fd == -1)
 	{
 		msh_log(expanded->content, strerror(errno), NULL, FALSE);
-		exit(1);
+		return (1);
 	}
 	dup2(fd, to);
 	close(fd);
 	ft_lstclear(&expanded, free);
+	return (0);
 }
 
 int	prep_redirs(t_list *redirs)
@@ -75,7 +76,8 @@ int	prep_redirs(t_list *redirs)
 	while (cur)
 	{
 		handle_fd_redir(cur->content);
-		handle_filename_redir(cur->content);
+		if (handle_filename_redir(cur->content))
+			return (1);
 		cur = cur->next;
 	}
 	return (0);

@@ -18,7 +18,7 @@ char	*get_cmd_path(char *cmd_name)
 	char	*str;
 	int		i;
 
-	path = g_shell.paths;
+	path = get_path();
 	if (ft_strchr(cmd_name, '/'))
 		return (cmd_name);
 	i = -1;

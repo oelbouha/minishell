@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 16:34:55 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/15 14:13:33 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/19 19:08:03 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ int	read_heredoc(char *limiter)
 	if (pipe(fds))
 		return (-1);
 	remove_quotes(limiter);
-	while (1)
+	while (has_been_interupted() == 0)
 	{
 		line = readline("> ");
+		ft_printf("_\n");
 		if (line == NULL || ft_strcmp(line, limiter) == 0)
 		{
 			free(line);

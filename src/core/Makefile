@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/14 14:33:35 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/20 12:39:45 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ CORE_SRC := builtins.c \
 		get_builtin.c \
 		get_last_status.c \
 		set_last_status.c \
+		get_path.c \
 		core.utils.c \
 
 CORE_OBJ := $(CORE_SRC:%.c=%.o)
