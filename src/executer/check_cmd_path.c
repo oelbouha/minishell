@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:03:12 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/18 15:03:28 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/20 13:08:33 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,9 @@ int	check_cmd_path(char *cmd)
 		closedir (dir);
 		print_error_msg(cmd, ": is a directory", 126);
 	}
-	if (ft_strchr(cmd, '/'))
-	{
-		if (access(cmd,  F_OK) < 0)
-			print_error_msg(cmd, ": No such file or directory", 127);
-		else if (access(cmd,  X_OK) < 0)
-			print_error_msg(cmd, ": permission denied", 126);
-	}
+	else if (access(cmd,  F_OK) < 0)
+		print_error_msg(cmd, ": No such file or directory", 127);
+	else if (access(cmd,  X_OK) < 0)
+		print_error_msg(cmd, ": permission denied", 126);
 	return (1);
 }
