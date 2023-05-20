@@ -20,9 +20,8 @@ char	*get_cmd_path(char *cmd_name)
 	int		i;
 
 	path = get_path();
-	if (ft_strchr(cmd_name, '/'))
-		if (check_cmd_path(cmd_name))
-			return (cmd_name);
+	if (ft_strchr(cmd_name, '/') && check_cmd_path(cmd_name))
+		return (cmd_name);
 	cmd_name = ft_strjoin("/", cmd_name);
 	i = -1;
 	while (path[++i] && *cmd_name)

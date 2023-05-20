@@ -33,6 +33,8 @@ t_list	*split_expanded(char *expanded)
 		ft_lstadd_back(&newlst, node);
 	}
 	free(arr);
+	if (newlst == NULL)
+		return ((t_list *)EMPTY_VAR);
 	return (newlst);
 }
 

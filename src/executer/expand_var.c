@@ -14,7 +14,7 @@
 
 int	is_invalid_key(const char *key)
 {
-	return (!(ft_isalpha(*key) || ft_strchr("$?_", *key) || ft_isdigit(*key)));
+	return (!(ft_isalpha(*key) || ft_strchr("$?_@", *key) || ft_isdigit(*key)));
 }
 
 int	get_expanded_length(char *str)
