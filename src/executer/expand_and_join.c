@@ -59,12 +59,14 @@ char	*expand_and_join(t_list *lst)
 		if (needs_spliting(cur->content))
 		{
 			content = expand_var(cur->content);
-			content = ft_replace(content, 30);
+			ft_replace(content, 30);
 		}
 		else
 			content = remove_quotes_and_expand(cur->content);
 		if (content == NULL)
+		{
 			return (ft_lstclear(&lst, free), NULL);
+		}
 		expanded = join_expanded(expanded, content);
 		if (expanded == NULL)
 			return (ft_lstclear(&lst, free), NULL);
