@@ -6,13 +6,15 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/19 17:47:33 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/22 11:32:11 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CORE_INTERNAL_H
 # define CORE_INTERNAL_H
 
+# include "minishell.h"
+# include <readline/readline.h>
 # include <sys/errno.h>
 # include <string.h>
 # include <stdio.h>
@@ -33,7 +35,7 @@ struct s_shell
 	char	*wd;
 	char	**paths;
 	int		last_stts;
-	int		interupted;
+	int		state;
 };
 
 /* ***  Global variable  **** */

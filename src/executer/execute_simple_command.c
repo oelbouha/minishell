@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 14:41:11 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/18 14:41:32 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:39:15 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	execute_builtin(t_builtin builtin, t_cmd *cmd, char **args)
 	fdin = dup(0);
 	fdout = dup(1);
 	if (prep_redirs(cmd->redirs))
-		return (1);
+		return (free_arr(args), 1);
 	cmd->count = arr_length(args);
 	ret = builtin(cmd->count, args);
 	dup2(fdin, 0);
@@ -83,6 +83,7 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 			return (get_exit_status(pid));
 		return ((int)pid);
 	}
+	signal(SIGINT, SIG_DFL);
 	if (prep_redirs(cmd->redirs))
 		exit(1);
 	if (builtin)

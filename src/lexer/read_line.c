@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:13:39 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/15 20:13:53 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/21 13:24:44 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,13 @@ char	*read_line(t_ull state)
 	//prompt = get_prompt();
 	prompt = NULL;
 	line = NULL;
-	while (line == NULL || ft_issubset(" \t", line))
+	while (ft_issubset(" \t", line))
 	{
 		free(line);
-		if (prompt)
-			line = readline(prompt);
-		else
-			line = readline("→ ");
+		line = readline("→ ");
 		if (line == NULL)
 			return (line);
 	}
-	if (*line == 0)
-		return (line);
 	add_history(line);
 	trimmed = ft_strtrim(line, " \t");
 	return (free(line), trimmed);

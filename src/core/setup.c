@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/19 17:54:21 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/22 16:07:25 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,45 @@
 
 void	sig_int_handler(int signo)
 {
-	(void)signo;
-	g_shell.interupted = 1;
-	ft_printf("\n");
+	if (signo == SIGINT)
+	{
+		set_last_status(1);
+		if (get_state() == 0)
+		{
+			ft_printf("\n");
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+		else if (get_state() == 1)
+			ft_printf("\n");
+		else if (get_state() == 2)
+			set_state(1);
+	}
+}
+
+void	setup_sighandler(void)
+{
+	struct sigaction	act;
+
+	act.sa_handler = sig_int_handler;
+	sigemptyset(&act.sa_mask);
+	sigaddset(&act.sa_mask, SIGINT);
+	act.sa_flags = 0;
+	sigaction(SIGINT, &act, NULL);
+}
+
+int	getc(FILE *stream)
+{
+	int		res;
+	char	c;
+
+	(void)stream;
+	errno = 0;
+	res = read(0, &c, sizeof(unsigned char));
+	if (res == 0 || errno == EINTR)
+		return (EOF);
+	return (c);
 }
 /*
  *
@@ -45,18 +81,19 @@ int	setup(char *env[])
 	}// if path is still NULL return (1);
 	g_shell.paths = ft_split(path, ':');
 	free(path);
-	g_shell.interupted = 0;
+	//setup_sighandler();
 	signal(SIGINT, sig_int_handler);
 	g_shell.last_stts = 0;
+	//rl_getc_function = getc;
 	return (0);
 }
 
-int	has_been_interupted(void)
+int	get_state(void)
 {
-	return (g_shell.interupted);
+	return (g_shell.state);
 }
 
-void	reset_interupted(void)
+void	set_state(int value)
 {
-	g_shell.interupted = 0;
+	g_shell.state = value;
 }

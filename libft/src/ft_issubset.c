@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:21:12 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/12 15:21:37 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/21 13:14:41 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_issubset(char *set, char *str)
 	int	present;
 
 	i = -1;
-	while (str[++i])
+	while (str && set && str[++i])
 	{
 		present = 0;
 		j = -1;

@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:36:56 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/18 12:20:17 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/22 15:14:11 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ include core/Makefile lexer/Makefile parser/Makefile executer/Makefile
 CFLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
 
 I := -I../inc \
+		-I/goinfre/$(USER)/brew/opt/readline/include \
 		-I../libft/inc \
 		-Icore \
 		-Ilexer \
@@ -25,6 +26,7 @@ I := -I../inc \
 READLINE := -lreadline \
 		-I/goinfre/$(USER)/brew/opt/readline/include \
 		-L/goinfre/$(USER)/brew/opt/readline/lib
+
 
 LIBFT_DIR := ../../libft
 LIBFT_DIR := ../libft
@@ -53,17 +55,14 @@ BOBJ := $(addprefix obj/, $(BOBJ))
 
 
 mtest: $(OBJ) libft dslib
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB)
+	@$(CC) $(CFLAGS) $(READLINE) $I -o $@ $(OBJ) $(LIBFT) $(DS_LIB)
 	./$@
 	
 btest: $(BOBJ) libft dslib
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $(BOBJ) $(LIBFT) $(DS_LIB)
-	./$@
+	@$(CC) $(CFLAGS) $(READLINE) $I -o $@ $(BOBJ) $(LIBFT) $(DS_LIB)
 
 echo:
-	@echo $(SRC)
-	@echo ++++++++++++++++++++++++
-	@echo $(OBJ)
+	@echo $(READLINE)
 
 echo_bonus:
 	@echo $(BONUS)

@@ -6,16 +6,17 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:25:44 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/20 12:28:50 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/22 15:15:21 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <readline/readline.h>
-# include <sys/errno.h>
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/errno.h>
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
