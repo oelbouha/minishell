@@ -85,7 +85,7 @@ t_pipe_redirs	create_pipes(int p1[2], int p2[2], int count, int i)
 		if (pipe(p2) == 0)
 			return ((t_pipe_redirs){.in = p1[0], .out = p2[1], .unused = p2[0]});
 	}
-	perror("-minishell");
+	perror("minishell");
 	close_pipe(p1);
 	close_pipe(p2);
 	return ((t_pipe_redirs){.in = -1, .out = -1, .unused = -1});

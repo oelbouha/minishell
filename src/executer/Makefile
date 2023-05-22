@@ -63,7 +63,9 @@ EXECUTER_SRC := executer.c \
 		check_cmd_path.c \
 		command_not_found.c \
 		print_error_msg.c \
+		prep_args_bonus.c \
 		wildcard.c \
+		expand_wildcard.c \
 		expand_heredoc.c
 
 EXECUTER_BONUS :=
@@ -84,6 +86,7 @@ SRC := 	../../gnline/get_next_line.c \
 		expand.c \
 		split_utils.c\
 		wildcard.c\
+		exopand_wildcard.c\
 		expansion_utils.c \
 		lst_to_arr.c 
 

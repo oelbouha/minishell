@@ -52,9 +52,9 @@ int	check_errs(t_analyzer_stats s, t_list **lst, t_list *prev, t_list *cur)
 	else if ((s.parentheses_count && !cur) || s.heredoc_count > 16)
 	{
 		if (s.heredoc_count > 16)
-			msh_err("-minishell: maximum here-document count exceeded", 0);
+			msh_err("minishell: maximum here-document count exceeded", 0);
 		else
-			msh_err("-minishell: syntax error: unexpected end of file", 0);
+			msh_err("minishell: syntax error: unexpected end of file", 0);
 		ft_lstclear(lst, free);
 		*lst = NULL;
 		return (1);

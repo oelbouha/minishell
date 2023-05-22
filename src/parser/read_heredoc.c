@@ -23,7 +23,6 @@ int	read_heredoc(char *limiter)
 	while (has_been_interupted() == 0)
 	{
 		line = readline("> ");
-		ft_printf("_\n");
 		if (line == NULL || ft_strcmp(line, limiter) == 0)
 		{
 			free(line);

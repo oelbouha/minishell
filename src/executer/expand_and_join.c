@@ -16,7 +16,7 @@ char	*remove_quotes_and_expand(char *content)
 {
 	char	*expanded;
 
-	if (should_expand(content))
+	if (should_expand_var(content))
 	{
 		expanded = expand_var(content);
 		if (expanded == NULL)
@@ -64,9 +64,7 @@ char	*expand_and_join(t_list *lst)
 		else
 			content = remove_quotes_and_expand(cur->content);
 		if (content == NULL)
-		{
 			return (ft_lstclear(&lst, free), NULL);
-		}
 		expanded = join_expanded(expanded, content);
 		if (expanded == NULL)
 			return (ft_lstclear(&lst, free), NULL);

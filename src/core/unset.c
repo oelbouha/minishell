@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/04/06 15:57:15 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/22 21:38:48 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ int	unset(int c, char **v)
 				continue ;
 			}
 			remove_env_var(key);
+			if (ft_strcmp(key,"PATH"))
+			{
+				free_arr(g_shell.paths);
+				g_shell.paths = NULL;
+			}
 		}
 	}
 	return (ret);

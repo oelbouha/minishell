@@ -14,10 +14,10 @@
 
 int	valid_number(char *str)
 {
-	if (ft_templatecmp(&str[1], "-:+", ':'))
-		return (0);
 	if (*str == '+' || *str == '-')
 		str++;
+	if (*str == 0 || ft_templatecmp(&str[1], "-:+", ':'))
+		return (0);
 	while (*str)
 	{
 		if (!ft_isdigit(*str))
@@ -34,7 +34,10 @@ int	shell_exit(int c, char **v)
 		exit(g_shell.last_stts);
 	else if (!valid_number(v[1]))
 	{
-		msh_err("exit: numeric argument required", v[1]);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(v[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		set_last_status(-1);
 	}
 	else if (v[2])

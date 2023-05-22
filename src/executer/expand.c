@@ -68,7 +68,7 @@ void add_nodes_to_lst(t_list *temp, t_list **lst)
 {
 	t_list	*last;
 
-	if (temp == (t_list *)EMPTY_VAR)
+	if (temp == EMPTY_LST)
 		return ;
 	if (*lst)
 	{
@@ -102,30 +102,21 @@ t_list	*expand(t_list *lst)
 	t_list	*cur;
 
 	cur = lst;
-	temp = NULL;
+	temp = EMPTY_LST;
 	expanded_lst = NULL;
 	while (cur)
 	{
-		if (should_expand_wildcard(cur->content))
-		{
-			temp = expand_wildcard(cur->content);
-			if (temp == NULL)
-				return (ft_lstclear(&expanded_lst, free), NULL);
-			add_nodes_to_lst(temp, &expanded_lst);
-		}
-		else if (should_expand(cur->content))
+		if (should_expand_var(cur->content))
 		{
 			temp = get_expanded(cur->content);
 			if (temp == NULL)
 				return (ft_lstclear(&expanded_lst, free), NULL);
 			add_nodes_to_lst(temp, &expanded_lst);
 		}
-		else
-		{
-			if (get_new_node(cur->content, &expanded_lst))
-				return(ft_lstclear(&expanded_lst, free), NULL);
-		}
+		else if (get_new_node(cur->content, &expanded_lst))
+			return(ft_lstclear(&expanded_lst, free), NULL);
 		cur = cur->next;
 	}
 	return (expanded_lst);
 }
+

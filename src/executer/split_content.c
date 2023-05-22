@@ -14,20 +14,13 @@
 
 int	simple_word_len(char *str)
 {
-	char	next_quote;
 	int		i;
 
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '"' || str[i] == '\'')
-		{
-			next_quote = str[i];
-			while (str[++i] && str[i] != next_quote)
-				;
-			i++;
-			return (i);
-		}
+			i += skip_quotes(&str[i]);
 		else if (str[i] == '$')
 			return (i);
 		else

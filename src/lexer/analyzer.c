@@ -50,7 +50,7 @@ int	check_errs(t_analyzer_stats stats, t_list **lst, t_list *prev, t_list *cur)
 	}
 	else if (stats.heredoc_count > 16)
 	{
-		ft_putstr_fd("-minishell: maximum here-document count exceeded\n", 2);
+		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
 		ft_lstclear(lst, free);
 		*lst = NULL;
 		return (1);

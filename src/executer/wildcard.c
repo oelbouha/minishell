@@ -91,11 +91,13 @@ int	add_filename_to_list(t_list **lst, char *line, char **arr, DIR *dir)
 				return (-1);
 			ft_lstadd_back(lst, node);
 		}
+		else
+			free(name);
 	}
 	return (0);
 }
 
-t_list	*expand_wildcard(char *line)
+t_list	*wildcard(char *line)
 {
 	t_list		*matches;
 	t_list		*node;
@@ -108,7 +110,7 @@ t_list	*expand_wildcard(char *line)
 	matches = NULL;
 	dir = opendir(".");
 	if (dir == NULL)
-		return (perror("-minishell"), free_arr(arr), NULL);
+		return (perror("minishell"), free_arr(arr), NULL);
 	if (add_filename_to_list(&matches, line, arr, dir) == -1)
 		return (closedir(dir), ft_lstclear(&matches, free),
 			free_arr(arr), NULL);

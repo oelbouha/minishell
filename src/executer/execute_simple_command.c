@@ -31,14 +31,20 @@ int	execute_builtin(t_builtin builtin, t_cmd *cmd, char **args)
 	int 	fdout;
 	int 	ret;
 
+	ret = 0;
 	fdin = dup(0);
 	fdout = dup(1);
 	if (prep_redirs(cmd->redirs))
-		return (1);
-	cmd->count = arr_length(args);
-	ret = builtin(cmd->count, args);
+		ret = 1;
+	if (ret == 0)
+	{
+		cmd->count = arr_length(args);
+		ret = builtin(cmd->count, args);
+	}
 	dup2(fdin, 0);
 	dup2(fdout, 1);
+	close(fdin);
+	close(fdout);
 	free_arr(args);
 	return (ret);
 }
@@ -52,8 +58,35 @@ char	**prep_args(t_list *args_lst)
 	if (args == NULL)
 		return (NULL);
 	arr = ft_lst_to_arr(args);
+	if (arr == NULL)
+		return (ft_lstclear(&args, free), NULL);
 	ft_lstclear(&args, do_nothing);
 	return (arr);
+}
+
+int	execute_cmd(t_cmd *cmd, t_builtin builtin, char **args)
+{
+	char	*cmd_path;
+
+	if (prep_redirs(cmd->redirs))
+		exit(1);
+	if (builtin)
+		exit(builtin(cmd->count, args));
+	if (args)
+	{
+		cmd_path = get_cmd_path(*args);
+		if (cmd_path == NULL)
+			command_not_found(*args);
+		if (execve(cmd_path, args, get_env_arr()))
+		{
+			free(cmd_path);
+			free_arr(args);
+			perror("minishell");
+		}
+		exit(126);
+	}
+	exit(0);
+	return (0);
 }
 
 int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
@@ -61,20 +94,19 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	t_builtin	builtin;
 	pid_t		pid;
 	char		**args;
-	char		*cmd_path;
 
-	builtin = NULL;
 	args = NULL;
+	builtin = NULL;
 	if (cmd->data.args)
 	{
-		args = prep_args(cmd->data.args);
+		args = prep_args_bonus(cmd->data.args);
 		if (args == NULL || *args == NULL)
 			return (free_arr(args), 0);
 		cmd->count = arr_length(args);
 		builtin = get_builtin(*args);
+		if (builtin && force_fork == FALSE)
+			return (execute_builtin(builtin, cmd, args));
 	}
-	if (builtin && force_fork == FALSE)
-		return (execute_builtin(builtin, cmd, args));
 	pid = fork();
 	if (pid)
 	{
@@ -83,15 +115,5 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 			return (get_exit_status(pid));
 		return ((int)pid);
 	}
-	if (prep_redirs(cmd->redirs))
-		exit(1);
-	if (builtin)
-		exit(builtin(cmd->count, args));
-	cmd_path = get_cmd_path(*args);
-	if (cmd_path == NULL)
-		command_not_found(*args);
-	if (execve(cmd_path, args, get_env_arr()))
-		perror("minishell");
-	exit(126);
-	return (0);
+	return (execute_cmd(cmd, builtin, args));
 }

@@ -14,7 +14,6 @@
 
 int	command_not_found(char *cmd_name)
 {
-	(void)cmd_name;
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd_name, 2);
 	ft_putstr_fd(": command not found\n", 2);

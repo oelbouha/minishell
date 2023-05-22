@@ -28,17 +28,18 @@ int	skip_quotes(char *str)
 
 int	should_expand_wildcard(char *line)
 {
-	if (ft_strchr(line, '$'))
-		return (0);
+	int	ret;
+
+	ret = 0;
 	while (*line)
 	{
-		if (*line == '"' || *line == '\'')
-			line += skip_quotes(line);
-		if (*line == '*')
-			return (1);
+		if (*line == '$' || *line == '"' || *line == '\'')
+			return (0);
+		else if (*line == '*')
+			ret = 1;
 		line++;
 	}
-	return (0);
+	return (ret);
 }
 
 int	arr_length(char **arr)
@@ -70,7 +71,7 @@ int	check_double_quote(char *str, int *i)
 	return (0);
 }
 
-int	should_expand(char *str)
+int	should_expand_var(char *str)
 {
 	int	i;
 
@@ -96,6 +97,5 @@ int	needs_spliting(char *str)
 {
 	if (ft_strchr(str, '"') || ft_strchr(str, '\''))
 		return (0);
-	else
-		return (1);
+	return (1);
 }

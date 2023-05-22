@@ -35,11 +35,12 @@ char		*expand_var(char *str);
 char		*get_key(char *str);
 char		*get_key(char *str);
 char		**lst_to_arr(t_list	*lst);
+char		**prep_args_bonus(t_list *args_lst);
 
 int			expand_heredoc(int fd);
 int			is_invalid_key(const char *key);
 char		*remove_quotes_and_expand(char *content);
-int			should_expand(char *str);
+int			should_expand_var(char *str);
 int			needs_spliting(char *str);
 int			arr_length(char **arr);
 int			should_expand_wildcard(char *line);
@@ -50,12 +51,18 @@ int			get_key_len(char *str);
 int			check_cmd_path(char *cmd);
 int			command_not_found(char *cmd_name);
 int			check_cmd_path(char *cmd);
+int			get_new_node(char *content, t_list **lst);
+int			skip_quotes(char *str);
 
+void		do_nothing(void *ptr);
+void 		add_nodes_to_lst(t_list *temp, t_list **lst);
 
 t_list		*expand(t_list *lst);
+t_list		*expand_bonus(t_list *lst);
 t_list		*split_content(char *line);
 t_list		*get_expanded(char *content);
-t_list		*expand_wildcard(char *line);
+t_list		*wildcard(char *line);
+t_list		*expand_wildcard(t_list *lst);
 char		*expand_and_join(t_list *lst);
 char		*get_cmd_path(char *cmd_name);
 

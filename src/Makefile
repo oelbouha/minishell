@@ -53,8 +53,8 @@ BOBJ := $(addprefix obj/, $(BOBJ))
 
 
 mtest: $(OBJ) libft dslib
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $(OBJ) $(LIBFT) $(DS_LIB)
-	./$@
+	@$(CC) $(CFLAGS) $I $(READLINE) -o minishell $(OBJ) $(LIBFT) $(DS_LIB)
+	
 	
 btest: $(BOBJ) libft dslib
 	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $(BOBJ) $(LIBFT) $(DS_LIB)

@@ -12,21 +12,22 @@
 
 #include "executer.h"
 
-char	*get_cmd_path(char *cmd_name)
+char	*make_cmd_path(char **path, char *cmd_name)
 {
-	char	**path;
 	char	*cmd_path;
 	DIR		*dir;
 	int		i;
 
-	path = get_path();
-	if (ft_strchr(cmd_name, '/') && check_cmd_path(cmd_name))
-		return (cmd_name);
-	cmd_name = ft_strjoin("/", cmd_name);
 	i = -1;
+	cmd_path = NULL;
+	cmd_name = ft_strjoin("/", cmd_name);
+	if (cmd_name == NULL)
+		exit (-1);
 	while (path[++i] && *cmd_name)
 	{
 		cmd_path = ft_strjoin(path[i], cmd_name);
+		if (cmd_path == NULL)
+			return (free(cmd_name), exit (-1), NULL);
 		if (access(cmd_path, F_OK) == 0)
 			break ;
 		free(cmd_path);
@@ -37,4 +38,20 @@ char	*get_cmd_path(char *cmd_name)
 	if (dir)
 		return (free(cmd_path), closedir(dir), NULL);
 	return (cmd_path);
+}
+
+char	*get_cmd_path(char *cmd_name)
+{
+	char	**shell_path;
+	char	*path;
+
+	path = get_env_var("PATH");
+	if (path == NULL && check_cmd_path(cmd_name))
+		return (cmd_name);
+	shell_path = ft_split(path, ':');
+	if (shell_path == NULL)
+		exit (-1);
+	if (ft_strchr(cmd_name, '/') && check_cmd_path(cmd_name))
+		return (cmd_name);
+	return (make_cmd_path(shell_path, cmd_name));
 }
