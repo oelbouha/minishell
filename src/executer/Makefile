@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/23 19:47:28 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/23 20:35:31 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,9 +65,11 @@ BASE := executer.c \
 
 
 EXECUTER_SRC :=	$(BASE) \
+				execute_command.c \
 				prep_args.c
 
 EXECUTER_BONUS :=	$(BASE) \
+				execute_command_bonus.c \
 				wildcard.c \
 				expand_wildcard.c \
 				prep_args_bonus.c 
