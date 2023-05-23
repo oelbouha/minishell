@@ -6,11 +6,14 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:36:56 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/23 20:23:11 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/23 20:50:35 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 include core/Makefile lexer/Makefile parser/Makefile executer/Makefile
+
+NAME := minishell
+BONUS := minishell_bonus
 
 CFLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
 
@@ -44,39 +47,38 @@ PARSER_BONUS := $(addprefix parser/, $(PARSER_BONUS))
 EXECUTER_BONUS := $(addprefix executer/, $(EXECUTER_BONUS))
 
 SRC := index.c $(CORE_SRC) $(LEXER_SRC) $(PARSER_SRC) $(EXECUTER_SRC)
-BONUS := index.c $(CORE_SRC) $(LEXER_BONUS) $(PARSER_BONUS) $(EXECUTER_BONUS)
-
+BSRC := index.c $(CORE_SRC) $(LEXER_BONUS) $(PARSER_BONUS) $(EXECUTER_BONUS)
 
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))
 
-BOBJ := $(BONUS:%.c=%.o)
+BOBJ := $(BSRC:%.c=%.o)
 BOBJ := $(addprefix obj/, $(BOBJ))
 
+all: libft dslib $(NAME)
 
-mtest: $(OBJ) libft dslib
-	@$(CC) $(CFLAGS) $I $(READLINE) -o minishell $(OBJ) $(LIBFT_DIR)/libft.a $(DS_LIB)
-	
-btest: $(BOBJ) libft dslib
-	@$(CC) $(CFLAGS) $(READLINE) $I -o $@ $(BOBJ) $(LIBFT_DIR)/libft.a $(DS_LIB)
+bonus: libft dslib $(BONUS)
 
-echo:
-	@echo $(READLINE)
+$(NAME): $(OBJ) $(LIBFT_DIR)/libft.a $(DS_DIR)/datastructures.a
+	@$(CC) $(CFLAGS) $I $(READLINE) -o minishell $^
 
-echo_bonus:
-	@echo $(BONUS)
+$(BONUS): $(BOBJ) $(LIBFT_DIR)/libft.a $(DS_DIR)/datastructures.a
+	@$(CC) $(CFLAGS) $(READLINE) $I -o $@ $^
 
 obj/%.o: %.c
 	@mkdir -p $(shell dirname $@)
 	@$(CC) $(CFLAGS) $I -c $< -o $@
 
-libft: 
+libft:
 	@make -s -C $(LIBFT_DIR)
 
-dslib: 
+dslib:
 	@make -s -C $(DS_DIR)
 
+clean:
+	@rm -rf obj
+
 fclean:
-	@rm -rf obj mtest btest
+	@rm -rf obj $(NAME) $(BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@$(MAKE) -C $(DS_DIR) fclean
