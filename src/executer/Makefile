@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/23 16:36:00 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/23 19:47:28 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ CORE_LIB := ../core/core.a
 LEXER_DIR := ../lexer
 LEXER_LIB := ../lexer/lexer.a
 
-EXECUTER_SRC :=	executer.c \
+BASE := executer.c \
 				execute_simple_command.c \
 				execute_compound_command.c \
 				execute_subshell_command_bonus.c \
@@ -55,17 +55,22 @@ EXECUTER_SRC :=	executer.c \
 				expand.c \
 				expand_and_join.c\
 				expansion_utils.c \
-				../../gnline/get_next_line.c \
-				../../gnline/get_next_line_utils.c \
 				get_cmd_path.c \
 				check_cmd_path.c \
 				command_not_found.c \
 				print_error_msg.c \
-				expand_heredoc.c
+				expand_heredoc.c \
+				../../gnline/get_next_line.c \
+				../../gnline/get_next_line_utils.c
 
-EXECUTER_BONUS :=	wildcard.c \
-					expand_wildcard.c \
-					prep_args_bonus.c 
+
+EXECUTER_SRC :=	$(BASE) \
+				prep_args.c
+
+EXECUTER_BONUS :=	$(BASE) \
+				wildcard.c \
+				expand_wildcard.c \
+				prep_args_bonus.c 
 
 
 etest: libft $(EXECUTER_SRC)

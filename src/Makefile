@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:36:56 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/23 16:28:31 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/23 20:23:11 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,23 +28,23 @@ READLINE := -lreadline \
 		-L/goinfre/$(USER)/brew/opt/readline/lib
 
 
-LIBFT_DIR := ../../libft
 LIBFT_DIR := ../libft
-LIBFT := ../libft/libft.a
 
 DS_DIR := datastructures
 DS_LIB := datastructures/datastructures.a
 
 CORE_SRC := $(addprefix core/, $(CORE_SRC))
+
 LEXER_SRC := $(addprefix lexer/, $(LEXER_SRC))
 PARSER_SRC := $(addprefix parser/, $(PARSER_SRC))
 EXECUTER_SRC := $(addprefix executer/, $(EXECUTER_SRC))
 
 LEXER_BONUS := $(addprefix lexer/, $(LEXER_BONUS))
 PARSER_BONUS := $(addprefix parser/, $(PARSER_BONUS))
+EXECUTER_BONUS := $(addprefix executer/, $(EXECUTER_BONUS))
 
 SRC := index.c $(CORE_SRC) $(LEXER_SRC) $(PARSER_SRC) $(EXECUTER_SRC)
-BONUS := index.c $(CORE_SRC) $(LEXER_BONUS) $(PARSER_BONUS) $(EXECUTER_SRC)
+BONUS := index.c $(CORE_SRC) $(LEXER_BONUS) $(PARSER_BONUS) $(EXECUTER_BONUS)
 
 
 OBJ := $(SRC:%.c=%.o)
@@ -55,10 +55,10 @@ BOBJ := $(addprefix obj/, $(BOBJ))
 
 
 mtest: $(OBJ) libft dslib
-	@$(CC) $(CFLAGS) $I $(READLINE) -o minishell $(OBJ) $(LIBFT) $(DS_LIB)
+	@$(CC) $(CFLAGS) $I $(READLINE) -o minishell $(OBJ) $(LIBFT_DIR)/libft.a $(DS_LIB)
 	
 btest: $(BOBJ) libft dslib
-	@$(CC) $(CFLAGS) $(READLINE) $I -o $@ $(BOBJ) $(LIBFT) $(DS_LIB)
+	@$(CC) $(CFLAGS) $(READLINE) $I -o $@ $(BOBJ) $(LIBFT_DIR)/libft.a $(DS_LIB)
 
 echo:
 	@echo $(READLINE)

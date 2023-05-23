@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:22:29 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/22 17:22:30 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:35:44 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	should_expand(t_list *lst)
 	return (0);
 }
 
-char	**prep_args_bonus(t_list *args_lst)
+char	**prep_args(t_list *args_lst)
 {
 	char	**arr;
 	t_list	*args;
@@ -41,7 +41,6 @@ char	**prep_args_bonus(t_list *args_lst)
 		if (args == NULL)
 			return (ft_lstclear(&lst, free), NULL);
 		ft_lstclear(&lst, free);
-		print(args);
 		arr = ft_lst_to_arr(args);
 		ft_lstclear(&args, do_nothing);
 	}

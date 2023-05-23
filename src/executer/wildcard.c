@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 21:41:55 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/07 21:41:56 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:32:56 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	add_filename_to_list(t_list **lst, char *line, char **arr, DIR *dir)
 		entry = readdir(dir);
 		if (entry == NULL)
 			break ;
+		if (*line != '.' && ft_templatecmp(entry->d_name, ".:..", ':'))
+			continue ;
 		name = ft_strdup(entry->d_name);
 		if (name == NULL)
 			return (-1);

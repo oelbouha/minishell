@@ -6,13 +6,13 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/23 16:20:03 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/23 20:19:21 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
 
-void	sig_int_handler(int signo)
+void	sig_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
@@ -29,6 +29,8 @@ void	sig_int_handler(int signo)
 		else if (get_state() == 2)
 			set_state(1);
 	}
+	else if (signo == SIGQUIT)
+		rl_redisplay();
 }
 
 int	update_env(void)
@@ -71,7 +73,8 @@ int	setup(char *env[])
 	path = get_env_var("PATH");
 	g_shell.paths = ft_split(path, ':');
 	free(path);
-	signal(SIGINT, sig_int_handler);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	if (update_env())
 		return (1);
 	return (0);

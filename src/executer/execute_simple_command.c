@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 14:41:11 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/23 16:34:42 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/23 19:48:05 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,6 @@ int	execute_builtin(t_builtin builtin, t_cmd *cmd, char **args)
 	close(fdout);
 	free_arr(args);
 	return (ret);
-}
-
-char	**prep_args(t_list *args_lst)
-{
-	char	**arr;
-	t_list	*args;
-
-	args = expand(args_lst);
-	if (args == NULL)
-		return (NULL);
-	arr = ft_lst_to_arr(args);
-	if (arr == NULL)
-		return (ft_lstclear(&args, free), NULL);
-	ft_lstclear(&args, do_nothing);
-	return (arr);
 }
 
 int	execute_cmd(t_cmd *cmd, t_builtin builtin, char **args)
