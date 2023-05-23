@@ -12,6 +12,22 @@
 
 #include "core_internal.h"
 
+static void print_value(char *value)
+{
+	int i;
+
+	printf("=\"");
+	i = -1;
+	while (value[++i])
+	{
+		if (value[i]  == '"' || value[i] == '$')
+			printf("\\%c", value[i]);
+		else
+			printf("%c", value[i]);
+	}
+	printf("\"\n");
+}
+
 static void	print_exports(void)
 {
 	t_list		*cur;
@@ -25,8 +41,7 @@ static void	print_exports(void)
 		value = (char *)kv->value;
 		printf("declare -x %s", kv->key);
 		if (value)
-			printf("=\"%s\"", value);
-		printf("\n");
+			print_value(value);
 		cur = cur->next;
 	}
 }

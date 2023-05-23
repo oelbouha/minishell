@@ -21,7 +21,8 @@ int	pwd(int c, char **v)
 	wd = get_current_wd();
 	if (wd == NULL)
 		return (1);
-	printf("%s\n", wd);
+	ft_putstr_fd(wd, 1);
+	ft_putstr_fd("\n", 1);
 	free(wd);
 	return (0);
 }

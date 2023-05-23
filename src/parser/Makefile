@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/12 16:05:31 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/23 16:36:11 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,5 +83,5 @@ ex:  libft dslib corelib lexerlib
 PARSER_OBJ := $(PARSER_SRC:%.c=%.o)
 PARSER_OBJ := $(addprefix obj/, $(PARSER_OBJ))
 
-test: $(testfile) libft dslib corelib lexerlib $(NAME)
+ptest: $(testfile) libft dslib corelib lexerlib $(NAME)
 	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< debug_utils.c $(PARSER_OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB) $(LEXER_LIB)

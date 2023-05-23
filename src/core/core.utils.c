@@ -26,7 +26,7 @@ int	check_identifier(char *key)
 
 void	msh_log(char *cmd, char *msg, char *arg, t_bool quotes)
 {
-	ft_putstr_fd("-minishell: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
 	if (arg)
@@ -44,7 +44,7 @@ void	msh_log(char *cmd, char *msg, char *arg, t_bool quotes)
 
 void	msh_err(char *msg, char *token)
 {
-	ft_putstr_fd("-minishell: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(msg, 2);
 	if (token)
 	{

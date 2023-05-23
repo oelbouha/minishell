@@ -14,24 +14,33 @@
 
 int	simple_word_len(char *str)
 {
-	char	next_quote;
 	int		i;
 
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '"' || str[i] == '\'')
-		{
-			next_quote = str[i];
-			while (str[++i] && str[i] != next_quote)
-				;
-			i++;
-			return (i);
-		}
+			i += skip_quotes(&str[i]);
 		else if (str[i] == '$')
 			return (i);
 		else
 			i++;
+	}
+	return (i);
+}
+
+int	get_key_len(char *str)
+{
+	int		i;
+
+	i = 1;
+	while (str[i] && str[i] == '$')
+		i++;
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'' || str[i] == '$')
+			return (i);
+		i++;
 	}
 	return (i);
 }
@@ -42,7 +51,7 @@ int	get_token_len(char *line)
 
 	len = 0;
 	if (line[0] == '\'' || line[0] == '"')
-		len = quotes_len(line);
+		len = skip_quotes(line);
 	else if (*line == '$')
 		len = get_key_len(line);
 	else

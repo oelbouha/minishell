@@ -20,16 +20,16 @@ void	print_syntax_error(t_list *cur)
 	{
 		//if (is_redirection(prev->content))
 		//	msh_err("syntax error near unexpected token", "newline");
-		ft_putstr_fd("-minishell: syntax error: unexpected end of file\n", 2);
+		ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
 	}
 }
 
 void	print_quote_error(const char quote)
 {
-	ft_putstr_fd("-minishell: unexpected EOF while looking for matching `", 2);
+	ft_putstr_fd("minishell: unexpected EOF while looking for matching `", 2);
 	ft_putchar_fd(quote, 2);
 	ft_putstr_fd("'\n", 2);
-	ft_putstr_fd("-minishell: syntax error: unexpected end of file\n", 2);
+	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
 }
 
 void	remove_last_if(t_list **lst, t_lstcmp cmp)
