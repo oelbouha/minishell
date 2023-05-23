@@ -12,11 +12,27 @@
 
 #include "executer.h"
 
+int	should_expand_wildcard(char *line)
+{
+	int	ret;
+
+	ret = 0;
+	while (*line)
+	{
+		if (*line == '$' || *line == '"' || *line == '\'')
+			return (0);
+		else if (*line == '*')
+			ret = 1;
+		line++;
+	}
+	return (ret);
+}
+
 t_list	*expand_wildcard(t_list *lst)
 {
-	t_list *cur;
-	t_list *newlst;
-	t_list *expanded;
+	t_list	*cur;
+	t_list	*newlst;
+	t_list	*expanded;
 
 	cur = lst;
 	newlst = EMPTY_LST;

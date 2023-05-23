@@ -12,14 +12,6 @@
 
 #include "executer.h"
 
-void	print_arr(char **arr)
-{
-	if (!arr)
-		return ;
-	for (int i = 0; arr[i]; i++)
-		printf("arr[%d]: %s\n", i, arr[i]);
-}
-
 void	do_nothing(void *ptr)
 {
 	(void)ptr;
@@ -27,9 +19,9 @@ void	do_nothing(void *ptr)
 
 int	execute_builtin(t_builtin builtin, t_cmd *cmd, char **args)
 {
-	int 	fdin;
-	int 	fdout;
-	int 	ret;
+	int		fdin;
+	int		fdout;
+	int		ret;
 
 	ret = 0;
 	fdin = dup(0);
@@ -99,7 +91,7 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	builtin = NULL;
 	if (cmd->data.args)
 	{
-		args = prep_args_bonus(cmd->data.args);
+		args = prep_args(cmd->data.args);
 		if (args == NULL || *args == NULL)
 			return (free_arr(args), 0);
 		cmd->count = arr_length(args);

@@ -22,9 +22,9 @@ int	check_cmd_path(char *cmd)
 		closedir (dir);
 		print_error_msg(cmd, ": is a directory", 126);
 	}
-	else if (access(cmd,  F_OK) < 0)
+	else if (access(cmd, F_OK) < 0)
 		print_error_msg(cmd, ": No such file or directory", 127);
-	else if (access(cmd,  X_OK) < 0)
+	else if (access(cmd, X_OK) < 0)
 		print_error_msg(cmd, ": permission denied", 126);
 	return (1);
 }

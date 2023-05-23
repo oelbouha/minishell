@@ -29,13 +29,29 @@ int	simple_word_len(char *str)
 	return (i);
 }
 
+int	get_key_len(char *str)
+{
+	int		i;
+
+	i = 1;
+	while (str[i] && str[i] == '$')
+		i++;
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'' || str[i] == '$')
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
 int	get_token_len(char *line)
 {
 	int		len;
 
 	len = 0;
 	if (line[0] == '\'' || line[0] == '"')
-		len = quotes_len(line);
+		len = skip_quotes(line);
 	else if (*line == '$')
 		len = get_key_len(line);
 	else

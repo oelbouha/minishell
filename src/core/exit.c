@@ -29,18 +29,16 @@ int	valid_number(char *str)
 
 int	shell_exit(int c, char **v)
 {
-	(void)c;
-	if (!v[1])
+	if (c == 1)
 		exit(g_shell.last_stts);
 	else if (!valid_number(v[1]))
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(v[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		set_last_status(-1);
 	}
-	else if (v[2])
+	else if (c > 2)
 	{
 		msh_err("exit: too many arguments", NULL);
 		set_last_status(1);

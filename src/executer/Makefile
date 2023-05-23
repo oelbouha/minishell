@@ -44,58 +44,29 @@ CORE_LIB := ../core/core.a
 LEXER_DIR := ../lexer
 LEXER_LIB := ../lexer/lexer.a
 
+EXECUTER_SRC :=	executer.c \
+				execute_simple_command.c \
+				execute_compound_command.c \
+				execute_subshell_command_bonus.c \
+				prep_redirs.c \
+				executer.utils.c \
+				expand_var.c \
+				split_content.c \
+				expand.c \
+				expand_and_join.c\
+				expansion_utils.c \
+				../../gnline/get_next_line.c \
+				../../gnline/get_next_line_utils.c \
+				get_cmd_path.c \
+				check_cmd_path.c \
+				command_not_found.c \
+				print_error_msg.c \
+				expand_heredoc.c
 
-EXECUTER_SRC := executer.c \
-		execute_simple_command.c \
-		execute_compound_command.c \
-		execute_subshell_command_bonus.c \
-		prep_redirs.c \
-		executer.utils.c \
-		expand_var.c \
-		split_content.c \
-		expand.c \
-		split_utils.c\
-		expand_and_join.c\
-		expansion_utils.c \
-		../../gnline/get_next_line.c \
-		../../gnline/get_next_line_utils.c \
-		get_cmd_path.c \
-		check_cmd_path.c \
-		command_not_found.c \
-		print_error_msg.c \
-		prep_args_bonus.c \
-		wildcard.c \
-		expand_wildcard.c \
-		expand_heredoc.c
+EXECUTER_BONUS :=	wildcard.c \
+					expand_wildcard.c \
+					prep_args_bonus.c 
 
-EXECUTER_BONUS :=
-
-
-
-
-#**************************************************************************************#
-
-SRC := 	../../gnline/get_next_line.c \
-		../../gnline/get_next_line_utils.c \
-		test.c \
-		expand_heredoc.c \
-		../parser/remove_quotes.c \
-		expand_var.c \
-		split_content.c \
-		split_expanded_and_join.c \
-		expand.c \
-		split_utils.c\
-		wildcard.c\
-		exopand_wildcard.c\
-		expansion_utils.c \
-		lst_to_arr.c 
-
-
-ex:  libft corelib dslib
-	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT)  $(DS_LIB) $(CORE_LIB) $(LEXER_LIB)  $(SRC_T) -o ex
-	./ex
-
-#***************************************************************************************#
 
 test: libft $(EXECUTER_SRC)
 	@$(CC) $I $(CFLAGS) $(READLINE) -o $@ $(EXECUTER_SRC) $(LIBFT)

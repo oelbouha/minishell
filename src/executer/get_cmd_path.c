@@ -43,15 +43,11 @@ char	*make_cmd_path(char **path, char *cmd_name)
 char	*get_cmd_path(char *cmd_name)
 {
 	char	**shell_path;
-	char	*path;
 
-	path = get_env_var("PATH");
-	if (path == NULL && check_cmd_path(cmd_name))
+	shell_path = get_path();
+	if (shell_path == NULL && check_cmd_path(cmd_name))
 		return (cmd_name);
-	shell_path = ft_split(path, ':');
-	if (shell_path == NULL)
-		exit (-1);
-	if (ft_strchr(cmd_name, '/') && check_cmd_path(cmd_name))
+	else if (ft_strchr(cmd_name, '/') && check_cmd_path(cmd_name))
 		return (cmd_name);
 	return (make_cmd_path(shell_path, cmd_name));
 }

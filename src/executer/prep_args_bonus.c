@@ -12,7 +12,7 @@
 
 #include "executer.h"
 
-int should_expand(t_list *lst)
+int	should_expand(t_list *lst)
 {
 	t_list	*cur;
 
@@ -38,8 +38,8 @@ char	**prep_args_bonus(t_list *args_lst)
 	if (should_expand(lst))
 	{
 		args = expand_wildcard(lst);
-		if (args == NULL)	
-			return (ft_lstclear(&lst, free), NULL);	
+		if (args == NULL)
+			return (ft_lstclear(&lst, free), NULL);
 		ft_lstclear(&lst, free);
 		print(args);
 		arr = ft_lst_to_arr(args);

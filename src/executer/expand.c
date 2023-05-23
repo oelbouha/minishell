@@ -14,10 +14,10 @@
 
 t_list	*split_expanded(char *expanded)
 {
-	t_list	*newlst;
-	t_list	*node;
-	char 	**arr;
-	int		i;
+	t_list		*newlst;
+	t_list		*node;
+	char		**arr;
+	int			i;
 
 	newlst = NULL;
 	arr = ft_split(expanded, 30);
@@ -37,7 +37,6 @@ t_list	*split_expanded(char *expanded)
 		return ((t_list *)EMPTY_VAR);
 	return (newlst);
 }
-
 
 t_list	*get_expanded(char *content)
 {
@@ -64,7 +63,7 @@ t_list	*get_expanded(char *content)
 	return (temp);
 }
 
-void add_nodes_to_lst(t_list *temp, t_list **lst)
+void	add_nodes_to_lst(t_list *temp, t_list **lst)
 {
 	t_list	*last;
 
@@ -114,9 +113,8 @@ t_list	*expand(t_list *lst)
 			add_nodes_to_lst(temp, &expanded_lst);
 		}
 		else if (get_new_node(cur->content, &expanded_lst))
-			return(ft_lstclear(&expanded_lst, free), NULL);
+			return (ft_lstclear(&expanded_lst, free), NULL);
 		cur = cur->next;
 	}
 	return (expanded_lst);
 }
-
