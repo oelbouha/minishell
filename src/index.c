@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:30:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/22 16:06:42 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/23 16:25:03 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ int	main(int c, char **v, char **e)
 
 	(void)c;
 	(void)v;
-	setup(e);
+	if (setup(e))
+		return (destroy(), 1);
 	while (1)
 	{
-		//ft_printf("new iter [ %d ]\n", has_been_interupted());
 		line = get_line();
 		if (line == NULL)
-			return (get_last_status());
+			return (destroy(), get_last_status());
 		tokens = tokenize(line);
 		err = analyze(&tokens);
 		command = new_command(&tokens, NONE);

@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 12:52:45 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 12:56:01 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/23 16:26:34 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,19 @@ int	valid_number(char *str)
 
 int	shell_exit(int c, char **v)
 {
-	(void)c;
-	if (!v[1])
-		exit(g_shell.last_stts);
-	else if (!valid_number(v[1]))
+	if (c == 2 && !valid_number(v[1]))
 	{
 		msh_err("exit: numeric argument required", v[1]);
 		set_last_status(-1);
 	}
-	else if (v[2])
+	else if (c > 2)
 	{
 		msh_err("exit: too many arguments", NULL);
 		set_last_status(1);
 	}
-	else
+	else if (c == 2)
 		set_last_status(ft_atoi(v[1]));
+	destroy();
 	exit(g_shell.last_stts);
 	return (0);
 }

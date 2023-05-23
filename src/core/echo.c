@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:52:09 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/20 12:02:46 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/22 20:18:42 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int check_args(char **v)
 	i = 1;
 	while (v[i])
 	{
-		if (ft_strcmp(v[i], "-n") == 0)
-			i++;
-		else if (v[i][0] == '-' && ft_issubset("n", &v[i][1]))
+		if (v[i][0] == '-' && ft_issubset("n", &v[i][1]))
 			i++;
 		else			
 			break ;	

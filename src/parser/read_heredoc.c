@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 16:34:55 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/22 15:40:59 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/23 15:07:49 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	hgetc(FILE *stream)
 	char	c;
 
 	(void)stream;
-	errno = 0;
 	res = read(0, &c, sizeof(unsigned char));
 	if (res == 0 || errno == EINTR)
 		return (EOF);
@@ -41,17 +40,15 @@ int	read_heredoc(char *limiter)
 	{
 		line = readline("> ");
 		if (line == NULL || ft_strcmp(line, limiter) == 0)
-		{
-			free(line);
 			break ;
-		}
 		ft_putstr_fd(line, fds[1]);
 		ft_putstr_fd("\n", fds[1]);
 		free(line);
+		line = NULL;
 	}
-	close(fds[1]);
+	free(line);
 	if (get_state() == 2)
 		set_state(0);
 	rl_getc_function = ptr;
-	return (fds[0]);
+	return (close(fds[1]), fds[0]);
 }
