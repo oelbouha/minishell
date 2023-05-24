@@ -12,7 +12,7 @@
 
 #include "executer.h"
 
-int	should_expand_wildcard(char *line)
+int	should_expand(char *line)
 {
 	int	ret;
 
@@ -39,7 +39,7 @@ t_list	*expand_wildcard(t_list *lst)
 	expanded = NULL;
 	while (cur)
 	{
-		if (should_expand_wildcard(cur->content))
+		if (should_expand(cur->content))
 		{
 			newlst = wildcard(cur->content);
 			if (newlst == NULL)

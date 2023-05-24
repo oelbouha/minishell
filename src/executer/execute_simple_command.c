@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 14:41:11 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/23 19:48:05 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/23 22:05:19 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	execute_cmd(t_cmd *cmd, t_builtin builtin, char **args)
 	char	*cmd_path;
 
 	if (prep_redirs(cmd->redirs))
-		exit(1);
+		exit (1);
 	if (builtin)
 		exit(builtin(cmd->count, args));
 	if (args)
@@ -59,10 +59,10 @@ int	execute_cmd(t_cmd *cmd, t_builtin builtin, char **args)
 			free(cmd_path);
 			free_arr(args);
 			perror("minishell");
+			exit(126);
 		}
-		exit(126);
 	}
-	exit(0);
+	exit (0);
 	return (0);
 }
 
@@ -72,7 +72,6 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	pid_t		pid;
 	char		**args;
 
-	args = NULL;
 	builtin = NULL;
 	if (cmd->data.args)
 	{

@@ -22,4 +22,3 @@ int	execute_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 		ret = execute_compound_command(cmd);
 	return (ret);
 }
-

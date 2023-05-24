@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 13:26:18 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/09 15:30:51 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/24 08:44:01 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	is_invalid_key(const char *key)
 {
-	return (!(ft_isalpha(*key) || ft_strchr("$?_@", *key) || ft_isdigit(*key)));
+	return (!(ft_isalpha(*key) || ft_strchr("$?*_@", *key)
+			|| ft_isdigit(*key)));
 }
 
 int	get_expanded_length(char *str)
