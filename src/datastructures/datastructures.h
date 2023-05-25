@@ -23,7 +23,6 @@ struct s_keyvalue
 	void	*value;
 };
 
-
 t_keyvalue	*new_keyvalue(char *key, void *value);
 void		update_keyvalue(t_keyvalue *kv, char *key, void *value);
 void		destroy_keyvalue(t_keyvalue *kv);

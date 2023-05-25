@@ -12,15 +12,15 @@
 
 #include "core_internal.h"
 
-static void print_value(char *value)
+static void	print_value(char *value)
 {
-	int i;
+	int	i;
 
 	printf("=\"");
 	i = -1;
 	while (value[++i])
 	{
-		if (value[i]  == '"' || value[i] == '$')
+		if (value[i] == '"' || value[i] == '$')
 			printf("\\%c", value[i]);
 		else
 			printf("%c", value[i]);

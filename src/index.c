@@ -13,7 +13,6 @@
 #include "minishell.h"
 #include "executer.h"
 
-
 void	print_cmmd(t_list *lst, int parser_output)
 {
 	int	indent;
@@ -25,7 +24,7 @@ void	print_cmmd(t_list *lst, int parser_output)
 		cur = cur->next;
 	}
 }
-
+	
 char	*get_line(void)
 {
 	char	*trimmed;
@@ -44,7 +43,6 @@ char	*get_line(void)
 	trimmed = ft_strtrim(line, " \t");
 	return (free(line), trimmed);
 }
-
 
 int	main(int c, char **v, char **e)
 {

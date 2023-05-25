@@ -55,4 +55,3 @@ void	msh_err(char *msg, char *token)
 	}
 	ft_putstr_fd("\n", 2);
 }
-

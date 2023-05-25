@@ -52,5 +52,4 @@ void	remove_last_if(t_list **lst, t_lstcmp cant_be_last);
 
 void	configure_readline(void);
 
-
 #endif

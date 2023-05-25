@@ -14,6 +14,7 @@
 # define CORE_H
 
 # include "libft.h"
+
 typedef int					(*t_builtin)(int c, char *v[]);
 
 int			setup(char *env[]);

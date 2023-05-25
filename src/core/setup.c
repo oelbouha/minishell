@@ -40,7 +40,7 @@ int	update_env(void)
 
 	val = get_env_var("PATH");
 	if (val == NULL)
-		set_env_var("PATH","/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+		set_env_var("PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	free(val);
 	val = get_env_var("SHLVL");
 	if (val)
@@ -55,7 +55,6 @@ int	update_env(void)
 	}
 	return (0);
 }
-
 
 int	setup(char *env[])
 {

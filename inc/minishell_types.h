@@ -97,17 +97,4 @@ struct s_redir
 	t_redir_type	type;
 };
 
-
-/*
-
-t_redir	*redir;
-
-redir = cur->content;
-if (redir->type == HEREDOC)					to = (redir->type == PIPE_OUT) // 1 0
- // HEREDOC									dup2(redir->to.heredoc.fd, to);
-else if (redir->type == PIPE_OUT)
- // pipe output
-
-*/
-
 #endif

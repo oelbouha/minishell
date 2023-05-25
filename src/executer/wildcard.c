@@ -74,7 +74,7 @@ int	add_filename_to_list(t_list **lst, char *line, char **arr, DIR *dir)
 {
 	struct dirent	*entry;
 	t_list			*node;
-	char			*name;
+	char			*file_name;
 
 	while (1)
 	{
@@ -83,18 +83,18 @@ int	add_filename_to_list(t_list **lst, char *line, char **arr, DIR *dir)
 			break ;
 		if (*line != '.' && ft_templatecmp(entry->d_name, ".:..", ':'))
 			continue ;
-		name = ft_strdup(entry->d_name);
-		if (name == NULL)
+		file_name = ft_strdup(entry->d_name);
+		if (file_name == NULL)
 			return (-1);
 		if (find_matching(entry->d_name, line, arr, arr_length(arr)))
 		{
-			node = ft_lstnew(name);
+			node = ft_lstnew(file_name);
 			if (node == NULL)
 				return (-1);
 			ft_lstadd_back(lst, node);
 		}
 		else
-			free(name);
+			free(file_name);
 	}
 	return (0);
 }

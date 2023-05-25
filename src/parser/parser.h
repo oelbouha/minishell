@@ -37,8 +37,6 @@ void		destroy_redir(t_redir *redir);
 int			read_heredoc(char *limiter);
 char		*remove_quotes(char *arg);
 
-
-
 int			is_redirection(const char *token);
 int			is_an_operator(const char *token);
 t_list		*move_node(t_list **to, t_list *node, t_list *prev);
