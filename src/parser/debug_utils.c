@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/25 12:00:10 by ysalmi            #+#    #+#             */
+/*   Updated: 2023/05/25 12:03:04 by ysalmi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
+
 void	print_cmd(t_cmd *cmd, int n);
 
 void	print_tabs(int n)
@@ -9,40 +22,27 @@ void	print_tabs(int n)
 
 void	print_heredoc(t_redir *r, int n)
 {
-	//int	newline = 0;
 	print_tabs(n);
 	ft_printf("|\theredoc: %d - ", r->to.fd.val);
 	if (r->to.fd.expand == TRUE)
 		ft_printf("expand\n");
 	else
 		ft_printf("no-expand\n");
-	/*char s;
-	print_tabs(n);
-	ft_printf("|\t\t|");
-	while (read(r->to.fd.val, &s, 1))
-	{
-		if (newline)
-		{
-			newline = 0;
-			print_tabs(n);
-			ft_printf("|\t\t|");
-		}
-		write(1, &s, 1);
-		if (s == '\n')
-			newline = 1;
-	}*/
 }
 
 void	print_redirections(t_list *redirs, int n, char wall)
 {
-	t_list *cur = redirs;
+	t_list	*cur;
+	t_redir	*r;
+	
+	cur = redirs;
 	if (cur == NO_REDIRS || cur == NULL)
 		return ;
 	print_tabs(n);
 	ft_printf("%c redirections:\n", wall);
 	while (cur)
 	{
-		t_redir *r = cur->content;
+		r = cur->content;
 		if (r->type == HEREDOC)
 			print_heredoc(r, n);
 		else if (r->type != PIPE_IN && r->type != PIPE_OUT)
@@ -63,7 +63,8 @@ void	print_redirections(t_list *redirs, int n, char wall)
 
 void	print_simple_cmd(t_cmd *cmd, int n)
 {
-	char cond[3][5] = {"NONE", "AND", "OR"};
+	t_list	*cur;
+	char	cond[3][5] = {"NONE", "AND", "OR"};
 
 	print_tabs(n);
 	ft_printf("+------------\n");
@@ -75,7 +76,7 @@ void	print_simple_cmd(t_cmd *cmd, int n)
 	{
 		print_tabs(n);
 		ft_printf("| argv: [ ");
-		t_list *cur = cmd->data.args;
+		cur = cmd->data.args;
 		while (cur)
 		{
 			ft_printf("%s", cur->content);

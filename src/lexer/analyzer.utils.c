@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 22:41:58 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 13:24:41 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/25 12:03:32 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ void	print_syntax_error(t_list *cur)
 	if (cur)
 		msh_err("syntax error near unexpected token", cur->content);
 	else
-	{
-		//if (is_redirection(prev->content))
-		//	msh_err("syntax error near unexpected token", "newline");
 		ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
-	}
 }
 
 void	print_quote_error(const char quote)

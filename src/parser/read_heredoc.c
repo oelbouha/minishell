@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 16:34:55 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/23 20:09:43 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/24 12:48:26 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ int	hgetc(FILE *stream)
 	char	c;
 
 	(void)stream;
-	res = read(0, &c, sizeof(unsigned char));
-	if (res == 0 || errno == EINTR)
+	if (get_state() == 1)
+		return (EOF);
+	c = 0;
+	res = read(0, &c, 1);
+	if (res == 0)
 		return (EOF);
 	return (c);
 }

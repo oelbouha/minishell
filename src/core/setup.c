@@ -6,11 +6,12 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/23 20:19:21 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/24 12:52:07 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
+void	setup_sig_handlers(void);
 
 void	sig_handler(int signo)
 {
@@ -25,12 +26,30 @@ void	sig_handler(int signo)
 			rl_redisplay();
 		}
 		else if (get_state() == 1)
-			ft_printf("\n");
+			write(1, "\n", 1);
 		else if (get_state() == 2)
+		{
 			set_state(1);
+			rl_done = 1;
+			ft_printf("\n");
+		}
 	}
 	else if (signo == SIGQUIT)
 		rl_redisplay();
+}
+
+void	setup_sig_handlers(void)
+{
+	struct sigaction	act;
+
+	ft_bzero(&act, sizeof(struct sigaction));
+	sigemptyset(&act.sa_mask);
+	sigaddset(&act.sa_mask, SIGINT);
+	sigaddset(&act.sa_mask, SIGQUIT);
+	act.sa_flags = SA_RESTART;
+	act.sa_handler = sig_handler;
+	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGQUIT, &act, NULL);
 }
 
 int	update_env(void)
@@ -72,8 +91,9 @@ int	setup(char *env[])
 	path = get_env_var("PATH");
 	g_shell.paths = ft_split(path, ':');
 	free(path);
-	signal(SIGINT, sig_handler);
+	//setup_sig_handlers();
 	signal(SIGQUIT, sig_handler);
+	signal(SIGINT, sig_handler);
 	if (update_env())
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 22:31:32 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/14 16:59:37 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/25 09:45:23 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_redir	*new_heredoc_redirection(char *eof)
 	if (ft_strchr(eof, '"') || ft_strchr(eof, '\''))
 		redir->to.fd.expand = FALSE;
 	redir->to.fd.val = read_heredoc(eof);
+	if (redir->to.fd.val == -1)
+		return (free(redir), NULL);
 	return (redir);
 }
 
