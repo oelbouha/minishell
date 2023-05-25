@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:02:44 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/22 16:36:21 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/25 12:16:50 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_fd_redir(t_redir *redir)
 {
 	int	to;
 
-	if (redir->type == HEREDOC 
+	if (redir->type == HEREDOC
 		|| redir->type == PIPE_IN
 		|| redir->type == PIPE_OUT)
 	{
@@ -50,20 +50,13 @@ int	handle_filename_redir(t_redir *redir)
 	if (expanded == NULL)
 		return (1);
 	else if (expanded == (t_list *)EMPTY_VAR || ft_lstsize(expanded) > 1)
-	{
-		msh_log(redir->to.filename, "ambiguous redirect", NULL, FALSE);
-		return (1);
-	}
+		return (msh_log(redir->to.filename, "ambiguous redirect", 0, FALSE), 1);
 	fd = open(expanded->content, oflags, 0644);
 	if (fd == -1)
-	{
-		msh_log(expanded->content, strerror(errno), NULL, FALSE);
-		return (1);
-	}
+		return (msh_log(expanded->content, strerror(errno), NULL, FALSE), 1);
 	dup2(fd, to);
-	close(fd);
 	ft_lstclear(&expanded, free);
-	return (0);
+	return (close(fd), 0);
 }
 
 int	prep_redirs(t_list *redirs)

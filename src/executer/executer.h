@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 16:02:41 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/23 19:37:59 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/25 12:28:43 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 
 # define EMPTY_VAR (char *)-1
 
+typedef struct s_pipe_redirs
+{
+	int	in;
+	int	out;
+	int	unused;
+}	t_pipe_redirs;
+
 int		execute_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child);
 int		execute_compound_command(t_cmd *cmd);
 int		execute_subshell_command(t_cmd *cmd, t_bool wait_child);
@@ -30,7 +37,7 @@ int		get_exit_status(pid_t pid);
 int		expand_heredoc(int fd);
 int		is_invalid_key(const char *key);
 
-int		execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child);
+int		execute_simple_command(t_cmd *cmd, t_bool forcefork, t_bool waitchild);
 char	**prep_args(t_list *args_lst);
 
 char	*remove_quotes(char *arg);

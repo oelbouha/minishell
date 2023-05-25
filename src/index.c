@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:30:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/23 20:15:17 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/25 12:31:27 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ char	*get_line(void)
 	{
 		free(line);
 		set_state(0);
-		line = readline("-> ");
+		if (get_last_status())
+			line = readline("\x1b[31;01m→ \x1b[0m");
+		else
+			line = readline("\x1b[32;01m→ \x1b[0m");
 		if (line == NULL)
 			return (line);
 	}
