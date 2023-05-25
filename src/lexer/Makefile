@@ -38,29 +38,11 @@ DS_LIB := ../datastructures/datastructures.a
 CORE_DIR := ../core
 CORE_LIB := ../core/core.a
 
-LSRC :=	get_line.c \
-		tokenizer.c \
-		split_line.c \
-		handle_quotes.c \
-		handle_token.c \
-		handle_redir_and_pipe.c \
-		utils.c	\
-		simple_word.c \
-		analyzer.c \
-		tokenizer.c \
-		utils.c \
-		analyzer.check_common.c \
-		lexer.utils.c
-
-LOBJ := $(LSRC:%.c=%.o)
 LOBJ := $(addprefix obj/, $(LOBJ))
 
-
-
-BASE := read_line.c \
-	tokenizer.c \
-	analyzer.utils.c \
-	utils.c
+BASE :=	tokenizer.c \
+		analyzer.utils.c \
+		utils.c
 
 LEXER_SRC := $(BASE) \
 	tokenizer.utils.c \

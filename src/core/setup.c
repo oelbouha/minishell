@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "core_internal.h"
+
 void	setup_sig_handlers(void);
 
 void	sig_handler(int signo)
