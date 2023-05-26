@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:36:56 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/26 17:19:04 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/26 18:45:49 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,10 +94,14 @@ dslib:
 
 clean:
 	@rm -rf obj
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(DS_DIR) clean
 
 fclean:
 	@rm -rf obj $(NAME) $(BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@$(MAKE) -C $(DS_DIR) fclean
+
+re: fclean all
 
 .PHONY: all clean fclean re bonus libft dslib

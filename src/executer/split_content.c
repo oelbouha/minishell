@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 22:08:08 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/11 22:08:13 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:43:24 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	get_token_len(char *line)
 
 	len = 0;
 	if (line[0] == '\'' || line[0] == '"')
-		len = skip_quotes(line);
+		len = ft_strchr(line + 1, *line) - line + 1;
 	else if (*line == '$')
 		len = get_key_len(line);
 	else
