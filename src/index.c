@@ -6,13 +6,13 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:30:15 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/26 16:34:44 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 19:26:46 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+char	*get_next_line(int fd);
 
-	
 char	*get_line(void)
 {
 	char	*trimmed;

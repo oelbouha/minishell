@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 14:41:11 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/26 16:32:04 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 19:05:39 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	execute_cmd(t_cmd *cmd, t_builtin builtin, char **args)
 		exit(builtin(cmd->count, args));
 	if (args)
 	{
+		cmd->count = arr_length(args);
 		cmd_path = get_cmd_path(*args);
 		if (cmd_path == NULL)
 			command_not_found(*args);
@@ -73,12 +74,12 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	char		**args;
 
 	builtin = NULL;
+	args = NULL;
 	if (cmd->data.args)
 	{
 		args = prep_args(cmd->data.args);
 		if (args == NULL || *args == NULL)
 			return (free_arr(args), -1 * (args == NULL));
-		cmd->count = arr_length(args);
 		builtin = get_builtin(*args);
 		if (builtin && force_fork == FALSE)
 			return (execute_builtin(builtin, cmd, args));
