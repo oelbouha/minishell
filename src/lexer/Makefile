@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/14 14:41:00 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/26 15:36:28 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,7 @@ LOBJ := $(addprefix obj/, $(LOBJ))
 
 
 
-BASE := read_line.c \
-	tokenizer.c \
+BASE := tokenizer.c \
 	analyzer.utils.c \
 	utils.c
 
