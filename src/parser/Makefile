@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/26 16:45:45 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/26 17:15:45 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,7 @@ BASE :=	new_simple_command.c \
 		new_heredoc_redirection.c \
 		read_heredoc.c \
 		remove_quotes.c \
-		parser.utils.c \
-		debug_utils.c
+		parser.utils.c 
 
 PARSER_SRC := $(BASE) \
 		new_command.c \

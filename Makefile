@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:36:56 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/26 17:00:13 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/26 17:19:04 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ SRC := src/index.c \
 	$(PARSER_SRC) \
 	$(EXECUTER_SRC)
 
-BSRC := src\index.c \
+BSRC := src/index.c \
 	src/gnline/get_next_line.c \
 	src/gnline/get_next_line_utils.c \
 	$(CORE_SRC) \
