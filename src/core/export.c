@@ -12,15 +12,15 @@
 
 #include "core_internal.h"
 
-static void print_value(char *value)
+static void	print_value(char *value)
 {
-	int i;
+	int	i;
 
 	printf("=\"");
 	i = -1;
 	while (value[++i])
 	{
-		if (value[i]  == '"' || value[i] == '$')
+		if (value[i] == '"' || value[i] == '$')
 			printf("\\%c", value[i]);
 		else
 			printf("%c", value[i]);
@@ -46,6 +46,20 @@ static void	print_exports(void)
 	}
 }
 
+int	export_var(char *key, char *value)
+{
+	if (set_env_var(key, value))
+		return (free(key), 1);
+	else if (ft_strcmp(key, "PATH") == 0)
+	{
+		free_arr(g_shell.paths);
+		g_shell.paths = ft_split(value, ':');
+		if (g_shell.paths == NULL)
+			return (free(key), 1);
+	}
+	return (free(key), 0);
+}
+
 int	shell_export(int c, char **v)
 {
 	char	*key;
@@ -67,14 +81,8 @@ int	shell_export(int c, char **v)
 			key[value++ - key] = 0;
 		if (check_identifier(key) && ++err)
 			msh_log("export", "not a valid identifier", v[i], TRUE);
-		else if (set_env_var(key, value))
-			return (free(key), 1);
-		else if (ft_strcmp(key, "PATH") == 0)
-		{
-			free_arr(g_shell.paths);
-			g_shell.paths = ft_split(value, ':');
-		}
-		free(key);
+		else if (export_var(key, value))
+			return (1);
 	}
 	return (err > 0);
 }

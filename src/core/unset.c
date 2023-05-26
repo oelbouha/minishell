@@ -58,7 +58,7 @@ int	unset(int c, char **v)
 				continue ;
 			}
 			remove_env_var(key);
-			if (ft_strcmp(key,"PATH"))
+			if (ft_strcmp(key, "PATH") == 0)
 			{
 				free_arr(g_shell.paths);
 				g_shell.paths = NULL;

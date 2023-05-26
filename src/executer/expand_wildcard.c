@@ -12,7 +12,7 @@
 
 #include "executer.h"
 
-int	should_expand_wildcard(char *line)
+int	should_expand(char *line)
 {
 	int	ret;
 
@@ -32,23 +32,23 @@ t_list	*expand_wildcard(t_list *lst)
 {
 	t_list	*cur;
 	t_list	*newlst;
-	t_list	*expanded;
+	t_list	*matches;
 
 	cur = lst;
 	newlst = EMPTY_LST;
-	expanded = NULL;
+	matches = NULL;
 	while (cur)
 	{
-		if (should_expand_wildcard(cur->content))
+		if (should_expand(cur->content))
 		{
 			newlst = wildcard(cur->content);
 			if (newlst == NULL)
-				return (ft_lstclear(&expanded, free), NULL);
-			add_nodes_to_lst(newlst, &expanded);
+				return (ft_lstclear(&matches, free), NULL);
+			add_nodes_to_lst(newlst, &matches);
 		}
-		else if (get_new_node(cur->content, &expanded))
-			return (ft_lstclear(&expanded, free), NULL);
+		else if (get_new_node(cur->content, &matches))
+			return (ft_lstclear(&matches, free), NULL);
 		cur = cur->next;
 	}
-	return (expanded);
+	return (matches);
 }

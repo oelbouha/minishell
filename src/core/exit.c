@@ -29,7 +29,7 @@ int	valid_number(char *str)
 
 int	shell_exit(int c, char **v)
 {
-	if (c == 2 && !valid_number(v[1]))
+	if (c > 1 && !valid_number(v[1]))
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(v[1], 2);

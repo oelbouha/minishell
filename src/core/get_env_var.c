@@ -12,7 +12,7 @@
 
 #include "core_internal.h"
 
-int		get_env_var_len(char *key)
+int	get_env_var_len(char *key)
 {
 	t_keyvalue	*kv;
 
@@ -23,7 +23,7 @@ int		get_env_var_len(char *key)
 	kv = find_in_dictionary(g_shell.env, key);
 	if (kv == NULL)
 		return (0);
-	return (ft_strlen((char *)kv->value));	
+	return (ft_strlen((char *)kv->value));
 }
 
 char	*get_env_var(char *key)

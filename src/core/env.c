@@ -17,7 +17,6 @@ int	env(int c, char **v)
 	t_list		*cur;
 	t_keyvalue	*kv;
 
-	(void)c;
 	(void)v;
 	if (c > 1)
 		return (msh_log("env", "command args are NOT supported", "", FALSE),

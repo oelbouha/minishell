@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 16:02:41 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/25 12:28:43 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/23 19:37:59 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	*expand_var(char *str);
 char	*get_key(char *str);
 char	*get_key(char *str);
 char	**lst_to_arr(t_list	*lst);
-char	**prep_args_bonus(t_list *args_lst);
 char	*remove_quotes_and_expand(char *content);
 char	*expand_and_join(t_list *lst);
 char	*get_cmd_path(char *cmd_name);
@@ -53,7 +52,7 @@ char	*get_cmd_path(char *cmd_name);
 int		should_expand_var(char *str);
 int		needs_spliting(char *str);
 int		arr_length(char **arr);
-int		should_expand_wildcard(char *line);
+int		should_expand(char *line);
 int		is_invalid_key(const char *key);
 int		get_expanded_length(char *str);
 int		quotes_len(char *str);

@@ -12,17 +12,17 @@
 
 #include "core_internal.h"
 
-int check_args(char **v)
+int	check_args(char **v)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (v[i])
 	{
 		if (v[i][0] == '-' && ft_issubset("n", &v[i][1]))
 			i++;
-		else			
-			break ;	
+		else
+			break ;
 	}
 	return (i);
 }

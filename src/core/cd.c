@@ -19,10 +19,7 @@ int	cd_home(void)
 
 	to = get_env_var("HOME");
 	if (to == NULL)
-	{
-		ft_putstr_fd("minishell: cd: HOME not set\n", 1);
-		return (1);
-	}
+		return (ft_putstr_fd("minishell: cd: HOME not set\n", 1), 1);
 	err = chdir(to);
 	free(to);
 	if (err)

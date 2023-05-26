@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/26 15:36:28 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/26 15:44:00 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,24 +38,7 @@ DS_LIB := ../datastructures/datastructures.a
 CORE_DIR := ../core
 CORE_LIB := ../core/core.a
 
-LSRC :=	get_line.c \
-		tokenizer.c \
-		split_line.c \
-		handle_quotes.c \
-		handle_token.c \
-		handle_redir_and_pipe.c \
-		utils.c	\
-		simple_word.c \
-		analyzer.c \
-		tokenizer.c \
-		utils.c \
-		analyzer.check_common.c \
-		lexer.utils.c
-
-LOBJ := $(LSRC:%.c=%.o)
 LOBJ := $(addprefix obj/, $(LOBJ))
-
-
 
 BASE := tokenizer.c \
 	analyzer.utils.c \
@@ -81,12 +64,3 @@ LEXER_SRC_OBJ := $(addprefix obj/, $(LEXER_SRC_OBJ))
 LEXER_BONUS_OBJ := $(LEXER_BONUS:%.c=%.o)
 LEXER_BONUS_OBJ := $(addprefix obj/, $(LEXER_BONUS_OBJ))
 
-lbtest: main.c libft dslib corelib $(LEXER_BONUS_OBJ)
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(LEXER_BONUS_OBJ) \
-		$(LIBFT) $(DS_LIB) $(CORE_LIB)
-	./$@
-
-lmtest: main.c libft dslib corelib $(LEXER_SRC_OBJ)
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(LEXER_SRC_OBJ) \
-		$(LIBFT) $(DS_LIB) $(CORE_LIB)
-	./$@
