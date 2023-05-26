@@ -6,12 +6,11 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 16:34:55 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/26 19:25:20 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 19:34:24 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-char	*get_next_line(int fd);
 
 int	hgetc(FILE *stream)
 {

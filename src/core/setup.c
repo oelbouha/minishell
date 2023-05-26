@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/26 15:48:03 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 21:20:31 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	setup(char *env[])
 	setup_sig_handlers();
 	if (update_env())
 		return (1);
+	no_echo_ctl();
 	return (0);
 }
 
