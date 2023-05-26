@@ -1,6 +1,0 @@
-
-dictionary_to_array();
-
-allocat for shell.wd from the start a max value PATH_MAX
-and fix `cd' to only copy to it.`
-

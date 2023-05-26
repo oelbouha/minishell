@@ -53,7 +53,7 @@ int	main(int c, char **v, char **e)
 	t_list	*tokens;
 	t_list	*command;
 	int		err;
-	int		parser_output = 0;
+	int		parser_output = 1;
 
 	(void)c;
 	(void)v;
