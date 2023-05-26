@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:36:56 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/26 16:50:31 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/26 17:00:13 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ BONUS := minishell_bonus
 
 CFLAGS := -Wall -Wextra -Werror
 
-I := -I../inc \
+I := -Iinc \
 		-I/goinfre/$(USER)/brew/opt/readline/include \
 		-Ilibft/inc \
 		-Isrc/gnline \
@@ -82,8 +82,12 @@ obj/%.o: %.c
 	@mkdir -p $(shell dirname $@)
 	@$(CC) $(CFLAGS) $I -c $< -o $@
 
+$(LIBFT_DIR)/libft.a: libft
+
 libft: 
 	@make -s -C $(LIBFT_DIR)
+
+$(DS_DIR)/datastructures.a: dslib
 
 dslib: 
 	@make -s -C $(DS_DIR)
@@ -95,3 +99,5 @@ fclean:
 	@rm -rf obj $(NAME) $(BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@$(MAKE) -C $(DS_DIR) fclean
+
+.PHONY: all clean fclean re bonus libft dslib
