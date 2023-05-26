@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 09:05:57 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/18 10:32:48 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 15:49:44 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ t_list	*new_command(t_list **head, t_cmd_exec_cond cond)
 		cmd = new_simple_command(head, cond);
 	else
 		cmd = new_compound_command(head, cond);
-	cmd->next = get_next_cmd(head);
+	if (cmd)
+		cmd->next = get_next_cmd(head);
 	return (cmd);
 }
 

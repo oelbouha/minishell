@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 16:02:41 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/23 19:37:59 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 16:47:03 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <sys/types.h>
 # include <fcntl.h>
 # include "minishell_types.h"
-# include "../gnline/get_next_line.h"
+# include "get_next_line.h"
 
 # define EMPTY_VAR (char *)-1
 

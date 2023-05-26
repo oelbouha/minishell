@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 23:10:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/23 16:20:35 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 15:52:34 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef int					(*t_builtin)(int c, char *v[]);
 
 int			setup(char *env[]);
 void		destroy(void);
-void		set_state(int value);
+int			set_state(int value);
 int			get_state(void);
 int			set_env_var(char *key, char *value);
 char		*get_env_var(char *key);

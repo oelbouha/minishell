@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/23 20:35:31 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/26 16:46:24 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,8 +60,8 @@ BASE := executer.c \
 				command_not_found.c \
 				print_error_msg.c \
 				expand_heredoc.c \
-				../../gnline/get_next_line.c \
-				../../gnline/get_next_line_utils.c
+				../gnline/get_next_line.c \
+				../gnline/get_next_line_utils.c
 
 
 EXECUTER_SRC :=	$(BASE) \

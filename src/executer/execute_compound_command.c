@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 21:53:49 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/25 12:25:40 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 16:16:58 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,18 @@ int	add_pipe_redir(t_list **redirs, int fd, t_redir_type type)
 
 int	add_pipe_redirs(t_list **redirs, t_pipe_redirs pipes)
 {
+	int	err;
+
+	err = 0;
 	if (*redirs == NO_REDIRS)
 		*redirs = NULL;
 	if (pipes.in > 0)
-		add_pipe_redir(redirs, pipes.in, PIPE_IN);
-	if (pipes.out > 0)
-		add_pipe_redir(redirs, pipes.out, PIPE_OUT);
-	if (pipes.unused > 0)
-		add_pipe_redir(redirs, pipes.unused, PIPE_UNUSED);
-	return (0);
+		err = add_pipe_redir(redirs, pipes.in, PIPE_IN);
+	if (pipes.out > 0 && err == 0)
+		err = add_pipe_redir(redirs, pipes.out, PIPE_OUT);
+	if (pipes.unused > 0 && err == 0)
+		err = add_pipe_redir(redirs, pipes.unused, PIPE_UNUSED);
+	return (err);
 }
 
 t_pipe_redirs	create_pipes(int p1[2], int p2[2], int count, int i)
@@ -74,11 +77,15 @@ int	execute_piped_command(t_cmd *cmd, int i, int *p1, int *p2)
 	pid_t			child_pid;
 	t_pipe_redirs	p_redirs;
 	t_cmd			*command;
+	int				err;
 
 	p_redirs = create_pipes(p1, p2, cmd->count, i);
 	command = cmd->data.arr[i]->content;
+	err = 0;
 	if (p_redirs.in != -1 || p_redirs.out != -1)
-		add_pipe_redirs(&command->redirs, p_redirs);
+		err = add_pipe_redirs(&command->redirs, p_redirs);
+	if (err)
+		return (-1);
 	child_pid = execute_command(command, TRUE, FALSE);
 	close(p_redirs.in);
 	close(p_redirs.out);
@@ -95,10 +102,18 @@ int	execute_compound_command(t_cmd *cmd)
 
 	ft_memset(pipe1, -1, 2 * sizeof(int));
 	ft_memset(pipe2, -1, 2 * sizeof(int));
+	child_pid = 0;
 	i = -1;
-	while (++i < cmd->count)
+	while (++i < cmd->count && child_pid != -1)
 		child_pid = execute_piped_command(cmd, i, pipe1, pipe2);
-	status = get_exit_status(child_pid);
+	close(pipe1[0]);
+	close(pipe1[1]);
+	close(pipe2[0]);
+	close(pipe2[1]);
+	if (child_pid == -1)
+		status = -1;
+	else
+		status = get_exit_status(child_pid);
 	while (waitpid(-1, &i, 0) != -1)
 		;
 	return (status);

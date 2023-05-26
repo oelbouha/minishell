@@ -6,13 +6,11 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/24 12:52:07 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 15:48:03 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core_internal.h"
-
-void	setup_sig_handlers(void);
 
 void	sig_handler(int signo)
 {
@@ -92,9 +90,7 @@ int	setup(char *env[])
 	path = get_env_var("PATH");
 	g_shell.paths = ft_split(path, ':');
 	free(path);
-	//setup_sig_handlers();
-	signal(SIGQUIT, sig_handler);
-	signal(SIGINT, sig_handler);
+	setup_sig_handlers();
 	if (update_env())
 		return (1);
 	return (0);

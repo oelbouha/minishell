@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/26 15:44:00 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/26 16:45:35 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,6 @@ R :=\x1b[31;01m
 B :=\x1b[43;01m
 O :=\x1b[33;01m
 # **************************************************************************** #
-
-NAME := lexer.a
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
@@ -63,4 +61,3 @@ LEXER_SRC_OBJ := $(addprefix obj/, $(LEXER_SRC_OBJ))
 
 LEXER_BONUS_OBJ := $(LEXER_BONUS:%.c=%.o)
 LEXER_BONUS_OBJ := $(addprefix obj/, $(LEXER_BONUS_OBJ))
-

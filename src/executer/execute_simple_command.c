@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 14:41:11 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/23 22:05:19 by oelbouha         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:32:04 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	execute_simple_command(t_cmd *cmd, t_bool force_fork, t_bool wait_child)
 	{
 		args = prep_args(cmd->data.args);
 		if (args == NULL || *args == NULL)
-			return (free_arr(args), 0);
+			return (free_arr(args), -1 * (args == NULL));
 		cmd->count = arr_length(args);
 		builtin = get_builtin(*args);
 		if (builtin && force_fork == FALSE)

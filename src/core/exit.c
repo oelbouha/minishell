@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 12:52:45 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/23 16:29:48 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/26 16:06:58 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	shell_exit(int c, char **v)
 	}
 	else if (c == 2)
 		set_last_status(ft_atoi(v[1]));
-	destroy();
-	exit(g_shell.last_stts);
-	return (0);
+	set_state(3);
+	return (get_last_status());
 }
