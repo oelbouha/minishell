@@ -12,8 +12,6 @@
 
 #include "executer.h"
 
-// stts [byte1 byte2 byte3 byte4]
-
 int	get_exit_status(pid_t pid)
 {
 	int				ret;

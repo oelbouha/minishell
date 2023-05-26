@@ -15,7 +15,7 @@ include core/Makefile lexer/Makefile parser/Makefile executer/Makefile
 NAME := minishell
 BONUS := minishell_bonus
 
-CFLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS := -Wall -Wextra -Werror
 
 I := -I../inc \
 		-I/goinfre/$(USER)/brew/opt/readline/include \
@@ -29,7 +29,6 @@ I := -I../inc \
 READLINE := -lreadline \
 		-I/goinfre/$(USER)/brew/opt/readline/include \
 		-L/goinfre/$(USER)/brew/opt/readline/lib
-
 
 LIBFT_DIR := ../libft
 

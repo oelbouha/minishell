@@ -74,11 +74,5 @@ EXECUTER_BONUS :=	$(BASE) \
 				expand_wildcard.c \
 				prep_args_bonus.c 
 
-
-etest: libft $(EXECUTER_SRC)
-	@$(CC) $I $(CFLAGS) $(READLINE) -o $@ $(EXECUTER_SRC) $(LIBFT)
-	@./$@
-
-
 OBJ := $(SRC:%.c=%.o)
 OBJ := $(addprefix obj/, $(OBJ))

@@ -62,26 +62,5 @@ PARSER_BONUS := $(BASE) \
 		new_compound_command_bonus.c \
 		new_subshell_command_bonus.c
 
-#**************************************************************************************#
-
-		#../../gnline/get_next_line.c \
-		#../../gnline/get_next_line_utils.c \
-		#tests/main.c \
-		#expand_heredoc.c \
-		#expand_var.c 
-
-PARSER_SRC_T := wildcard.c \
-		tests/wildcard.c \
-
-ex:  libft dslib corelib lexerlib
-	@$(CC) $(CFLAGS) $I $(READLINE)  $(LIBFT) $(CORE_LIB) $(DS_LIB) $(LEXER_LIB) $(PARSER_SRC_T) -o ex
-	./ex
-
-#***************************************************************************************#
-
-
 PARSER_OBJ := $(PARSER_SRC:%.c=%.o)
 PARSER_OBJ := $(addprefix obj/, $(PARSER_OBJ))
-
-ptest: $(testfile) libft dslib corelib lexerlib $(NAME)
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< debug_utils.c $(PARSER_OBJ) $(LIBFT) $(DS_LIB) $(CORE_LIB) $(LEXER_LIB)

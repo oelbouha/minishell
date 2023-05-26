@@ -64,12 +64,3 @@ LEXER_SRC_OBJ := $(addprefix obj/, $(LEXER_SRC_OBJ))
 LEXER_BONUS_OBJ := $(LEXER_BONUS:%.c=%.o)
 LEXER_BONUS_OBJ := $(addprefix obj/, $(LEXER_BONUS_OBJ))
 
-lbtest: main.c libft dslib corelib $(LEXER_BONUS_OBJ)
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(LEXER_BONUS_OBJ) \
-		$(LIBFT) $(DS_LIB) $(CORE_LIB)
-	./$@
-
-lmtest: main.c libft dslib corelib $(LEXER_SRC_OBJ)
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $< $(LEXER_SRC_OBJ) \
-		$(LIBFT) $(DS_LIB) $(CORE_LIB)
-	./$@

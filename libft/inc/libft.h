@@ -39,8 +39,9 @@ typedef struct s_syntax
 	int		length;
 }	t_syntax;
 
-typedef void 				(*t_lstdel)(void *);
+typedef void				(*t_lstdel)(void *);
 typedef int					(*t_lstcmp)(void *);
+
 /*****************************************************************************/
 /*	libft																	 */
 /*****************************************************************************/
@@ -56,7 +57,7 @@ size_t	ft_strlcpy(char *dst, char const *src, size_t size);
 size_t	ft_strlcat(char *dst, char const *src, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
-int		ft_templatecmp(const char *str, const char *templatestr, char delimiter);
+int		ft_templatecmp(const char *str, const char *template, char delimiter);
 int		ft_issubset(char *set, char *str);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strrchr(const char *str, int c);
