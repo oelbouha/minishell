@@ -39,7 +39,7 @@ static void	print_exports(void)
 	{
 		kv = (t_keyvalue *)cur->content;
 		value = (char *)kv->value;
-		if(!value)
+		if (!value)
 			printf("declare -x %s\n", kv->key);
 		else
 			printf("declare -x %s", kv->key);
