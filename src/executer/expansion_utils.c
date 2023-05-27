@@ -19,7 +19,8 @@ int	skip_quotes(char *str)
 
 	i = 0;
 	quote = str[i];
-	while (str[++i] && str[i] != quote)
+	i++;
+	while (str[i] && str[i] != quote)
 		i++;
 	i++;
 	return (i);

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-char	*get_next_line(int fd);
 
 int	hgetc(FILE *stream)
 {

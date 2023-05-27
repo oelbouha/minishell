@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 22:08:08 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/26 18:43:24 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/27 11:02:22 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ t_list	*split_content(char *line)
 	i = 0;
 	while (line[i])
 	{
-		while (line[i] && (line[i] == ' ' || line[i] == '\t'))
-			i++;
 		token = create_token(&line[i]);
 		if (token == NULL)
 			return (ft_lstclear(&lst, free), NULL);

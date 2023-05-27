@@ -50,6 +50,4 @@ void	print_syntax_error(t_list *cur);
 void	print_quote_error(const char quote);
 void	remove_last_if(t_list **lst, t_lstcmp cant_be_last);
 
-void	configure_readline(void);
-
 #endif
