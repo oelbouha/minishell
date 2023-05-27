@@ -52,7 +52,7 @@ char	*get_cmd_path(char *cmd_name);
 int		should_expand_var(char *str);
 int		needs_spliting(char *str);
 int		arr_length(char **arr);
-int		should_expand(char *line);
+int		needs_wildcard_expansion(char *line);
 int		is_invalid_key(const char *key);
 int		get_expanded_length(char *str);
 int		quotes_len(char *str);
@@ -60,18 +60,18 @@ int		get_key_len(char *str);
 int		check_cmd_path(char *cmd);
 int		command_not_found(char *cmd_name);
 int		check_cmd_path(char *cmd);
-int		get_new_node(char *content, t_list **lst);
+int		duplicate_and_remove_quotes(char *content, t_list **expanded);
 int		skip_quotes(char *str);
 
 void	do_nothing(void *ptr);
-void	add_nodes_to_lst(t_list *temp, t_list **lst);
+void	add_newlst_to_expanded_lst(t_list *newlst, t_list **expanded);
 void	print_error_msg(char *cmd_name, char *msg, int status);
 
 t_list	*expand(t_list *lst);
 t_list	*expand_bonus(t_list *lst);
 t_list	*split_content(char *line);
 t_list	*get_expanded(char *content);
-t_list	*wildcard(char *line);
+t_list	*expand_wildcard_character(char *line);
 t_list	*expand_wildcard(t_list *lst);
 
 #endif

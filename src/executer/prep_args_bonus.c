@@ -19,7 +19,7 @@ int	should_expand_wildcard(t_list *lst)
 	cur = lst;
 	while (cur)
 	{
-		if (should_expand(cur->content))
+		if (needs_wildcard_expansion(cur->content))
 			return (1);
 		cur = cur->next;
 	}
@@ -35,6 +35,8 @@ char	**prep_args(t_list *args_lst)
 	expanded = expand(args_lst);
 	if (expanded == NULL)
 		return (NULL);
+	else if (expanded == (t_list *)EMPTY_VAR)
+		expanded = NULL;
 	if (should_expand_wildcard(expanded))
 	{
 		args = expand_wildcard(expanded);
@@ -49,7 +51,5 @@ char	**prep_args(t_list *args_lst)
 		arr = ft_lst_to_arr(expanded);
 		ft_lstclear(&expanded, do_nothing);
 	}
-	if (arr == NULL)
-		return (ft_lstclear(&args, free), NULL);
 	return (arr);
 }

@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:24:22 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/26 18:43:56 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/27 14:38:07 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	**prep_args(t_list *args_lst)
 	args = expand(args_lst);
 	if (args == NULL)
 		return (NULL);
+	else if (args == EMPTY_LST)
+		args = NULL;
 	arr = ft_lst_to_arr(args);
 	if (arr == NULL)
 		return (ft_lstclear(&args, free), NULL);

@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 22:07:46 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/26 18:43:45 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/27 14:23:56 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_list	*split_expanded(char *expanded)
 	}
 	free(arr);
 	if (newlst == NULL)
-		return ((t_list *)EMPTY_VAR);
+		return (EMPTY_LST);
 	return (newlst);
 }
 
@@ -63,22 +63,22 @@ t_list	*get_expanded(char *content)
 	return (temp);
 }
 
-void	add_nodes_to_lst(t_list *temp, t_list **lst)
+void	add_newlst_to_expanded_lst(t_list *newlst, t_list **lst)
 {
 	t_list	*last;
 
-	if (temp == EMPTY_LST)
+	if (newlst == EMPTY_LST)
 		return ;
 	if (*lst)
 	{
 		last = ft_lstlast(*lst);
-		last->next = temp;
+		last->next = newlst;
 	}
 	else
-		*lst = temp;
+		*lst = newlst;
 }
 
-int	get_new_node(char *content, t_list **lst)
+int	duplicate_and_remove_quotes(char *content, t_list **expanded)
 {
 	char	*str;
 	t_list	*node;
@@ -90,31 +90,33 @@ int	get_new_node(char *content, t_list **lst)
 	node = ft_lstnew(str);
 	if (node == NULL)
 		return (free(str), 1);
-	ft_lstadd_back(lst, node);
+	ft_lstadd_back(expanded, node);
 	return (0);
 }
 
 t_list	*expand(t_list *lst)
 {
 	t_list	*expanded_lst;
-	t_list	*temp;
+	t_list	*newlst;
 	t_list	*cur;
 
 	cur = lst;
-	temp = EMPTY_LST;
+	newlst = EMPTY_LST;
 	expanded_lst = NULL;
 	while (cur)
 	{
 		if (should_expand_var(cur->content))
 		{
-			temp = get_expanded(cur->content);
-			if (temp == NULL)
+			newlst = get_expanded(cur->content);
+			if (newlst == NULL)
 				return (ft_lstclear(&expanded_lst, free), NULL);
-			add_nodes_to_lst(temp, &expanded_lst);
+			add_newlst_to_expanded_lst(newlst, &expanded_lst);
 		}
-		else if (get_new_node(cur->content, &expanded_lst))
+		else if (duplicate_and_remove_quotes(cur->content, &expanded_lst))
 			return (ft_lstclear(&expanded_lst, free), NULL);
 		cur = cur->next;
 	}
+	if (expanded_lst == NULL)
+		return (EMPTY_LST);
 	return (expanded_lst);
 }

@@ -12,7 +12,7 @@
 
 #include "executer.h"
 
-char	*remove_quotes_and_expand(char *content)
+char	*duplicate_or_expand(char *content)
 {
 	char	*expanded;
 
@@ -62,7 +62,7 @@ char	*expand_and_join(t_list *lst)
 			ft_replace(content, 30);
 		}
 		else
-			content = remove_quotes_and_expand(cur->content);
+			content = duplicate_or_expand(cur->content);
 		if (content == NULL)
 			return (ft_lstclear(&lst, free), NULL);
 		expanded = join_expanded(expanded, content);

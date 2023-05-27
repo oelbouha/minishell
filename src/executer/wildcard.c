@@ -6,7 +6,7 @@
 /*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 21:41:55 by oelbouha          #+#    #+#             */
-/*   Updated: 2023/05/23 20:34:47 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/27 14:22:38 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,11 @@ int	is_tail_matched(char *file_name, char *str, char *line)
 int	is_midlde_name_matched(char *filename, int arr_len, char **arr, char *line)
 {
 	int		len_to_compare;
-	char	*tail;
 	char	*temp;
 	int		i;
 
 	i = 0;
 	len_to_compare = ft_strlen(filename) - ft_strlen(arr[arr_len - 1]);
-	tail = &filename[len_to_compare];
 	while (arr[i])
 	{
 		if (line[ft_strlen(line) - 1] != '*' && i == arr_len - 1)
@@ -99,7 +97,7 @@ int	add_filename_to_list(t_list **lst, char *line, char **arr, DIR *dir)
 	return (0);
 }
 
-t_list	*wildcard(char *line)
+t_list	*expand_wildcard_character(char *line)
 {
 	t_list		*matches;
 	t_list		*node;
