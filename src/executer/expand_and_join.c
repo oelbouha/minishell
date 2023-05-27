@@ -34,7 +34,7 @@ char	*join_expanded(char *expanded, char *content)
 	str = NULL;
 	if (*content != 0)
 	{
-		if (expanded != EMPTY_VAR)
+		if (expanded != (char *)-1)
 			str = expanded;
 		content = remove_quotes(content);
 		expanded = ft_strjoin(str, content);
@@ -53,7 +53,7 @@ char	*expand_and_join(t_list *lst)
 	char	*content;
 
 	cur = lst;
-	expanded = EMPTY_VAR;
+	expanded = (char *)-1;
 	while (cur)
 	{
 		if (needs_spliting(cur->content))

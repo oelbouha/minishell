@@ -101,7 +101,7 @@ void	destroy_compound_command(t_cmd *cmd)
 	i = -1;
 	while (++i < cmd->count)
 		ft_lstclear(&(cmd->data.arr[i]), (t_lstdel)destroy_command);
-	if (cmd->redirs && cmd->redirs != NO_REDIRS)
+	if (cmd->redirs && cmd->redirs != (t_list *)-1)
 		ft_lstclear(&cmd->redirs, (t_lstdel)destroy_redir);
 	free(cmd->data.arr);
 	free(cmd);

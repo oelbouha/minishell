@@ -26,9 +26,6 @@
 # include "core.h"
 # include "minishell_types.h"
 
-# define NO_REDIRS (t_list *)-1
-# define EMPTY_LST	(t_list *)-1
-
 t_list	*tokenize(const char *line);
 int		analyze(t_list **tokens);
 

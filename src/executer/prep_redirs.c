@@ -49,7 +49,7 @@ int	handle_filename_redir(t_redir *redir)
 	expanded = get_expanded(redir->to.filename);
 	if (expanded == NULL)
 		return (1);
-	else if (expanded == (t_list *)EMPTY_VAR || ft_lstsize(expanded) > 1)
+	else if (expanded == (t_list *)(char *)-1 || ft_lstsize(expanded) > 1)
 		return (msh_log(redir->to.filename, "ambiguous redirect", 0, FALSE), 1);
 	fd = open(expanded->content, oflags, 0644);
 	if (fd == -1)
@@ -63,7 +63,7 @@ int	prep_redirs(t_list *redirs)
 {
 	t_list	*cur;
 
-	if (redirs == NO_REDIRS)
+	if (redirs == (t_list *)-1)
 		return (0);
 	cur = redirs;
 	while (cur)

@@ -35,7 +35,7 @@ char	**prep_args(t_list *args_lst)
 	expanded = expand(args_lst);
 	if (expanded == NULL)
 		return (NULL);
-	else if (expanded == (t_list *)EMPTY_VAR)
+	else if (expanded == (t_list *)(char *)-1)
 		expanded = NULL;
 	if (should_expand_wildcard(expanded))
 	{

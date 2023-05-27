@@ -34,7 +34,7 @@ t_list	*split_expanded(char *expanded)
 	}
 	free(arr);
 	if (newlst == NULL)
-		return (EMPTY_LST);
+		return ((t_list *)-1);
 	return (newlst);
 }
 
@@ -52,8 +52,8 @@ t_list	*get_expanded(char *content)
 	expanded = expand_and_join(lst);
 	if (expanded == NULL)
 		return (NULL);
-	else if (expanded == EMPTY_VAR)
-		return ((t_list *)EMPTY_VAR);
+	else if (expanded == (char *)-1)
+		return ((t_list *)(char *)-1);
 	else if (ft_strchr(expanded, 30))
 		return (split_expanded(expanded));
 	node = ft_lstnew(expanded);
@@ -67,7 +67,7 @@ void	add_newlst_to_expanded_lst(t_list *newlst, t_list **lst)
 {
 	t_list	*last;
 
-	if (newlst == EMPTY_LST)
+	if (newlst == (t_list *)-1)
 		return ;
 	if (*lst)
 	{
@@ -101,7 +101,7 @@ t_list	*expand(t_list *lst)
 	t_list	*cur;
 
 	cur = lst;
-	newlst = EMPTY_LST;
+	newlst = (t_list *)-1;
 	expanded_lst = NULL;
 	while (cur)
 	{
@@ -117,6 +117,6 @@ t_list	*expand(t_list *lst)
 		cur = cur->next;
 	}
 	if (expanded_lst == NULL)
-		return (EMPTY_LST);
+		return ((t_list *)-1);
 	return (expanded_lst);
 }

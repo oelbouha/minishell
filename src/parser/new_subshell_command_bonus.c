@@ -39,7 +39,7 @@ t_list	*new_subshell_command(t_list **start, t_cmd_exec_cond cond)
 void	destroy_subshell_command(t_cmd *cmd)
 {
 	ft_lstclear(&cmd->data.lst, (t_lstdel)destroy_command);
-	if (cmd->redirs && cmd->redirs != NO_REDIRS)
+	if (cmd->redirs && cmd->redirs != (t_list *)-1)
 		ft_lstclear(&cmd->redirs, (t_lstdel)destroy_redir);
 	free(cmd);
 }

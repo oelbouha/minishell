@@ -46,7 +46,7 @@ t_list	*get_cmd_redirs(t_list **head)
 	}
 	*head = token;
 	if (redirs == NULL)
-		return (NO_REDIRS);
+		return ((t_list *)-1);
 	return (redirs);
 }
 

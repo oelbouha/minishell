@@ -35,7 +35,7 @@ int	add_pipe_redirs(t_list **redirs, t_pipe_redirs pipes)
 	int	err;
 
 	err = 0;
-	if (*redirs == NO_REDIRS)
+	if (*redirs == (t_list *)-1)
 		*redirs = NULL;
 	if (pipes.in > 0)
 		err = add_pipe_redir(redirs, pipes.in, PIPE_IN);

@@ -20,7 +20,7 @@ char	**prep_args(t_list *args_lst)
 	args = expand(args_lst);
 	if (args == NULL)
 		return (NULL);
-	else if (args == EMPTY_LST)
+	else if (args == (t_list *)-1)
 		args = NULL;
 	arr = ft_lst_to_arr(args);
 	if (arr == NULL)

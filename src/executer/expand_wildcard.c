@@ -35,7 +35,7 @@ t_list	*expand_wildcard(t_list *lst)
 	t_list	*matches;
 
 	cur = lst;
-	newlst = EMPTY_LST;
+	newlst = (t_list *)-1;
 	matches = NULL;
 	while (cur)
 	{

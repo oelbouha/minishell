@@ -20,8 +20,6 @@
 # include "minishell_types.h"
 # include "get_next_line.h"
 
-# define EMPTY_VAR (char *)-1
-
 typedef struct s_pipe_redirs
 {
 	int	in;
