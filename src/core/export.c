@@ -39,7 +39,10 @@ static void	print_exports(void)
 	{
 		kv = (t_keyvalue *)cur->content;
 		value = (char *)kv->value;
-		printf("declare -x %s", kv->key);
+		if(!value)
+			printf("declare -x %s\n", kv->key);
+		else
+			printf("declare -x %s", kv->key);
 		if (value)
 			print_value(value);
 		cur = cur->next;
@@ -49,15 +52,15 @@ static void	print_exports(void)
 int	export_var(char *key, char *value)
 {
 	if (set_env_var(key, value))
-		return (free(key), 1);
+		return (1);
 	else if (ft_strcmp(key, "PATH") == 0)
 	{
 		free_arr(g_shell.paths);
 		g_shell.paths = ft_split(value, ':');
 		if (g_shell.paths == NULL)
-			return (free(key), 1);
+			return (1);
 	}
-	return (free(key), 0);
+	return (0);
 }
 
 int	shell_export(int c, char **v)
@@ -82,7 +85,8 @@ int	shell_export(int c, char **v)
 		if (check_identifier(key) && ++err)
 			msh_log("export", "not a valid identifier", v[i], TRUE);
 		else if (export_var(key, value))
-			return (1);
+			return (free(key), 1);
+		free(key);
 	}
 	return (err > 0);
 }
