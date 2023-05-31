@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 13:26:16 by ysalmi            #+#    #+#              #
-#    Updated: 2023/04/07 16:32:14 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/31 10:58:20 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +32,10 @@ R :=\x1b[31;01m
 B :=\x1b[43;01m
 O :=\x1b[33;01m
 
-all: $(NAME)
-
 $(NAME): $(OBJ) 
 	ar -rcs $(NAME) $(OBJ)
 
-lib: 
-	@make -s -C $(LIBFT_DIR)
+all: $(NAME)
 
 obj/%.o: %.c
 	@mkdir -p $(shell dirname $@)

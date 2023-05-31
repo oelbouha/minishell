@@ -6,7 +6,7 @@
 /*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 12:52:45 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/26 16:06:58 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/05/30 18:55:43 by ysalmi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	valid_number(char *str)
 
 int	shell_exit(int c, char **v)
 {
+	ft_printf("exit\n");
 	if (c > 1 && !valid_number(v[1]))
 	{
 		ft_putstr_fd("minishell: exit: ", 2);

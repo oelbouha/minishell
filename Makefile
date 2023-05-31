@@ -6,7 +6,7 @@
 #    By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/11 16:36:56 by ysalmi            #+#    #+#              #
-#    Updated: 2023/05/26 18:45:49 by ysalmi           ###   ########.fr        #
+#    Updated: 2023/05/31 10:59:10 by ysalmi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,24 +73,24 @@ all: libft dslib $(NAME)
 bonus: libft dslib $(BONUS)
 
 $(NAME): $(OBJ) $(LIBFT_DIR)/libft.a $(DS_DIR)/datastructures.a
-	@$(CC) $(CFLAGS) $I $(READLINE) -o $@ $^
+	$(CC) $(CFLAGS) $I $(READLINE) -o $@ $^
 
 $(BONUS): $(BOBJ) $(LIBFT_DIR)/libft.a $(DS_DIR)/datastructures.a
-	@$(CC) $(CFLAGS) $(READLINE) $I -o $@ $^
+	$(CC) $(CFLAGS) $(READLINE) $I -o $@ $^
 
 obj/%.o: %.c
 	@mkdir -p $(shell dirname $@)
-	@$(CC) $(CFLAGS) $I -c $< -o $@
+	$(CC) $(CFLAGS) $I -c $< -o $@
 
 $(LIBFT_DIR)/libft.a: libft
 
 libft: 
-	@make -s -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 $(DS_DIR)/datastructures.a: dslib
 
 dslib: 
-	@make -s -C $(DS_DIR)
+	@$(MAKE) -C $(DS_DIR)
 
 clean:
 	@rm -rf obj
