@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysalmi <ysalmi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: oelbouha <oelbouha@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 12:21:05 by ysalmi            #+#    #+#             */
-/*   Updated: 2023/05/26 21:20:31 by ysalmi           ###   ########.fr       */
+/*   Updated: 2023/07/12 22:17:00 by oelbouha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sig_handler(int signo)
 		{
 			ft_printf("\n");
 			rl_on_new_line();
-			rl_replace_line("", 0);
+			// rl_replace_line("", 0);
 			rl_redisplay();
 		}
 		else if (get_state() == 1)
@@ -29,7 +29,7 @@ void	sig_handler(int signo)
 		else if (get_state() == 2)
 		{
 			set_state(1);
-			rl_done = 1;
+			// rl_done = 1;
 			ft_printf("\n");
 		}
 	}
